@@ -1,0 +1,118 @@
+[
+  {
+    "id": 1,
+    "user_id": 7,
+    "permissions": ["user_management", "report_generation", "dashboard_access"],
+    "activities": [
+      {
+        "id": 1,
+        "action": "Created new user",
+        "timestamp": "2024-04-10T11:23:45",
+        "target_type": "user",
+        "target_id": 3,
+        "details": "Created new consultant (ID: 3)"
+      },
+      {
+        "id": 2,
+        "action": "Generated report",
+        "timestamp": "2024-04-11T15:30:12",
+        "target_type": "report",
+        "target_id": null,
+        "details": "Monthly placement report"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "user_id": 11,
+    "permissions": ["user_management", "report_generation", "dashboard_access", "system_configuration"],
+    "activities": [
+      {
+        "id": 3,
+        "action": "Modified system settings",
+        "timestamp": "2024-04-12T09:15:30",
+        "target_type": "system",
+        "target_id": null,
+        "details": "Updated email notification settings"
+      },
+      {
+        "id": 4,
+        "action": "Created new user",
+        "timestamp": "2024-04-13T14:22:18",
+        "target_type": "user",
+        "target_id": 4,
+        "details": "Created new employer (ID: 4)"
+      },
+      {
+        "id": 5,
+        "action": "Generated report",
+        "timestamp": "2024-04-14T11:05:47",
+        "target_type": "report",
+        "target_id": null,
+        "details": "Quarterly recruitment analytics"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "user_id": 12,
+    "permissions": ["report_generation", "dashboard_access", "analytics_access"],
+    "activities": [
+      {
+        "id": 6,
+        "action": "Generated report",
+        "timestamp": "2024-04-15T10:30:22",
+        "target_type": "report",
+        "target_id": null,
+        "details": "Consultant performance metrics"
+      },
+      {
+        "id": 7,
+        "action": "Exported data",
+        "timestamp": "2024-04-15T16:45:03",
+        "target_type": "data",
+        "target_id": null,
+        "details": "Exported job placement statistics for Q1 2024"
+      },
+      {
+        "id": 8,
+        "action": "Created dashboard",
+        "timestamp": "2024-04-16T09:12:35",
+        "target_type": "dashboard",
+        "target_id": 5,
+        "details": "Created new Executive KPI dashboard"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "user_id": 13,
+    "permissions": ["user_management", "billing_access", "financial_reporting"],
+    "activities": [
+      {
+        "id": 9,
+        "action": "Generated invoice",
+        "timestamp": "2024-04-12T11:25:40",
+        "target_type": "billing",
+        "target_id": 125,
+        "details": "Generated invoice for Tech Innovations Inc."
+      },
+      {
+        "id": 10,
+        "action": "Updated payment information",
+        "timestamp": "2024-04-13T13:40:12",
+        "target_type": "client",
+        "target_id": 3,
+        "details": "Updated payment method for DataViz Solutions"
+      },
+      {
+        "id": 11,
+        "action": "Generated report",
+        "timestamp": "2024-04-14T09:30:18",
+        "target_type": "report",
+        "target_id": null,
+        "details": "Monthly revenue report"
+      }
+    ]
+  }
+]

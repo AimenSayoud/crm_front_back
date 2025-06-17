@@ -1,0 +1,21 @@
+JOHN DOE
+Senior Software Developer
+john.doe@example.com | +33612345678 | Paris, France
+
+SKILLS
+Python, JavaScript, React, Node.js, SQL, Docker, Kubernetes, AWS, CI/CD
+
+WORK EXPERIENCE
+Senior Developer | Tech Solutions | Mar 2020 - Present
+- Led development of enterprise web applications using React and Node.js
+- Implemented microservices architecture using Docker and Kubernetes
+- Reduced system response time by 40% through optimization
+
+Web Developer | Digital Agency | Jul 2017 - Feb 2020
+- Developed responsive front-end interfaces using React
+- Collaborated with UX designers to implement user-friendly interfaces
+- Maintained and improved existing client websites
+
+EDUCATION
+Master's in Computer Science | Université Paris-Saclay | 2015-2017
+Bachelor's in Computer Science | Université de Lyon | 2012-2015

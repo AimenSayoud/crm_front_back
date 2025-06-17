@@ -1,0 +1,216 @@
+
+> recrutementplus-crm@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, using available port 3002 instead.
+   ▲ Next.js 15.3.2
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.1.66:3002
+
+ ✓ Starting...
+ ✓ Ready in 4.8s
+ ○ Compiling /messaging/test ...
+ ⨯ ./src/app/messaging/test/page.tsx
+Error:   [31mx[0m Unknown regular expression flags.
+    ,-[[36;1;4m/Users/aymen/Documents/dev/RecrutementPlus_CRM_FullStack/rec_front/src/app/messaging/test/page.tsx[0m:32:1]
+ [2m29[0m | };
+ [2m30[0m | 
+ [2m31[0m | export default TestMessagingPage;
+ [2m32[0m | EOF < /dev/null
+    : [35;1m      ^^^^^^^^^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/messaging/test/page.tsx
+ ⨯ ./src/app/messaging/test/page.tsx
+Error:   [31mx[0m Unknown regular expression flags.
+    ,-[[36;1;4m/Users/aymen/Documents/dev/RecrutementPlus_CRM_FullStack/rec_front/src/app/messaging/test/page.tsx[0m:32:1]
+ [2m29[0m | };
+ [2m30[0m | 
+ [2m31[0m | export default TestMessagingPage;
+ [2m32[0m | EOF < /dev/null
+    : [35;1m      ^^^^^^^^^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/messaging/test/page.tsx
+ ⨯ ./src/app/messaging/test/page.tsx
+Error:   [31mx[0m Unknown regular expression flags.
+    ,-[[36;1;4m/Users/aymen/Documents/dev/RecrutementPlus_CRM_FullStack/rec_front/src/app/messaging/test/page.tsx[0m:32:1]
+ [2m29[0m | };
+ [2m30[0m | 
+ [2m31[0m | export default TestMessagingPage;
+ [2m32[0m | EOF < /dev/null
+    : [35;1m      ^^^^^^^^^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/messaging/test/page.tsx
+ GET /messaging/test 500 in 45589ms
+ ✓ Compiled /_error in 6.7s (1098 modules)
+ ○ Compiling /messaging/test ...
+ ⨯ ./src/app/messaging/test/page.tsx
+Error:   [31mx[0m Unknown regular expression flags.
+    ,-[[36;1;4m/Users/aymen/Documents/dev/RecrutementPlus_CRM_FullStack/rec_front/src/app/messaging/test/page.tsx[0m:32:1]
+ [2m29[0m | };
+ [2m30[0m | 
+ [2m31[0m | export default TestMessagingPage;
+ [2m32[0m | EOT < /dev/null
+    : [35;1m      ^^^^^^^^^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/messaging/test/page.tsx
+ ⨯ ./src/app/messaging/test/page.tsx
+Error:   [31mx[0m Unknown regular expression flags.
+    ,-[[36;1;4m/Users/aymen/Documents/dev/RecrutementPlus_CRM_FullStack/rec_front/src/app/messaging/test/page.tsx[0m:32:1]
+ [2m29[0m | };
+ [2m30[0m | 
+ [2m31[0m | export default TestMessagingPage;
+ [2m32[0m | EOT < /dev/null
+    : [35;1m      ^^^^^^^^^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/messaging/test/page.tsx
+ ⨯ ./src/app/messaging/test/page.tsx
+Error:   [31mx[0m Unknown regular expression flags.
+    ,-[[36;1;4m/Users/aymen/Documents/dev/RecrutementPlus_CRM_FullStack/rec_front/src/app/messaging/test/page.tsx[0m:32:1]
+ [2m29[0m | };
+ [2m30[0m | 
+ [2m31[0m | export default TestMessagingPage;
+ [2m32[0m | EOT < /dev/null
+    : [35;1m      ^^^^^^^^^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/messaging/test/page.tsx
+ GET /messaging/test 500 in 3377ms
+ ✓ Compiled /_error in 6.3s (1044 modules)
+ ✓ Compiled in 1505ms (1044 modules)
+ ✓ Compiled in 1817ms (1044 modules)
+ ✓ Compiled in 1325ms (1044 modules)
+ ✓ Compiled in 1157ms (1044 modules)
+ ✓ Compiled in 992ms (1044 modules)
+ ✓ Compiled in 898ms (1044 modules)
+ ✓ Compiled in 2.2s (1044 modules)
+ ✓ Compiled in 1808ms (1044 modules)
+ ✓ Compiled in 967ms (1044 modules)
+ ✓ Compiled in 1605ms (1044 modules)
+ ✓ Compiled in 1170ms (1044 modules)
+ ✓ Compiled in 832ms (1044 modules)
+ ✓ Compiled in 1143ms (1044 modules)
+ ✓ Compiled in 6.9s (1098 modules)
+ ✓ Compiled in 2.6s (1044 modules)
+ ✓ Compiled in 3.2s (1044 modules)
+ ✓ Compiled in 3.1s (1044 modules)
+ ✓ Compiled in 2.4s (1044 modules)
+ ✓ Compiled in 2.3s (1044 modules)
+ ✓ Compiled in 1756ms (1044 modules)
+ ✓ Compiled in 4s (1044 modules)
+ ✓ Compiled in 4.8s (1044 modules)
+ ✓ Compiled in 2.8s (1044 modules)
+ ✓ Compiled in 4.1s (1044 modules)
+ ✓ Compiled in 1849ms (1044 modules)
+ ✓ Compiled in 2.2s (1044 modules)
+ ✓ Compiled in 2.8s (1044 modules)
+ ✓ Compiled in 4.6s (1044 modules)
+ ✓ Compiled in 2.5s (1044 modules)
+ ✓ Compiled in 1578ms (1044 modules)
+ ✓ Compiled in 1813ms (1044 modules)
+ ✓ Compiled in 4.3s (1044 modules)
+ ✓ Compiled in 1512ms (1044 modules)
+ ✓ Compiled in 1653ms (1044 modules)
+ ✓ Compiled in 1763ms (1044 modules)
+ ✓ Compiled in 2.9s (1044 modules)
+ ✓ Compiled in 1520ms (1044 modules)
+ ✓ Compiled in 3.2s (1044 modules)
+ ✓ Compiled in 1192ms (1044 modules)
+ ✓ Compiled in 1802ms (1044 modules)
+ ✓ Compiled in 1540ms (1044 modules)
+ ✓ Compiled in 1959ms (1044 modules)
+ ✓ Compiled in 2.1s (1044 modules)
+ ✓ Compiled in 8.1s (1084 modules)
+ ✓ Compiled in 5.3s (1044 modules)
+ ✓ Compiled in 2.7s (1043 modules)
+ ✓ Compiled in 6.3s (1043 modules)
+ ✓ Compiled in 2.9s (1043 modules)
+ ✓ Compiled in 3.4s (1043 modules)
+ ✓ Compiled in 4.1s (1044 modules)
+ ✓ Compiled in 3.3s (977 modules)
+ ✓ Compiled in 3.5s (1044 modules)
+ ✓ Compiled in 5s (1043 modules)
+ ✓ Compiled in 2.9s (1043 modules)
+ ✓ Compiled in 3.7s (1043 modules)
+ ✓ Compiled in 7.4s (1043 modules)
+ ✓ Compiled in 8.5s (975 modules)
+ ✓ Compiled in 12.7s (975 modules)
+ ✓ Compiled in 6.2s (975 modules)
+ ✓ Compiled in 3.3s (975 modules)
+ ✓ Compiled in 3.1s (975 modules)
+ ✓ Compiled in 3.6s (975 modules)
+ ✓ Compiled in 3.6s (975 modules)
+ ✓ Compiled in 2.4s (975 modules)
+ ✓ Compiled in 3.6s (975 modules)
+ ✓ Compiled in 3.4s (975 modules)
+ ✓ Compiled in 3.4s (975 modules)
+ ✓ Compiled in 3s (975 modules)
+ ✓ Compiled in 2.6s (975 modules)
+ ✓ Compiled in 3.1s (975 modules)
+ ✓ Compiled in 2s (975 modules)
+ ✓ Compiled in 2.6s (975 modules)
+ ✓ Compiled in 3.2s (975 modules)
+ ✓ Compiled in 2.2s (975 modules)
+ ✓ Compiled in 1477ms (975 modules)
+ ✓ Compiled in 1604ms (975 modules)
+ ✓ Compiled in 1479ms (975 modules)
+ ✓ Compiled in 4.3s (975 modules)
+ ✓ Compiled in 4.1s (975 modules)
+ ✓ Compiled in 2.1s (975 modules)
+ ✓ Compiled in 2.2s (975 modules)
+ ✓ Compiled in 5.6s (975 modules)
+ ✓ Compiled in 10s (975 modules)
+ ✓ Compiled in 3.8s (975 modules)
+ ✓ Compiled in 2.8s (975 modules)
+ ✓ Compiled in 2.1s (975 modules)
+ ✓ Compiled in 2.3s (975 modules)
+ ✓ Compiled in 3.2s (975 modules)
+ ✓ Compiled in 1761ms (975 modules)
+ ✓ Compiled in 3.4s (975 modules)
+ ✓ Compiled in 6.1s (975 modules)
+ ✓ Compiled in 5s (975 modules)
+ ✓ Compiled in 3.6s (975 modules)
+ ✓ Compiled in 2.5s (975 modules)
+ ✓ Compiled in 3s (975 modules)
+ ✓ Compiled in 6s (975 modules)
+ ✓ Compiled in 3.2s (975 modules)
+ ✓ Compiled in 1427ms (975 modules)
+ ✓ Compiled in 6.8s (975 modules)
+ ✓ Compiled in 3.1s (975 modules)
+ ✓ Compiled in 2.2s (975 modules)
+ ✓ Compiled in 1669ms (975 modules)
+ ✓ Compiled in 5.8s (975 modules)
+ ✓ Compiled in 3s (975 modules)
+ ✓ Compiled in 2.8s (975 modules)
+ ✓ Compiled in 2.8s (975 modules)
+ ✓ Compiled in 4.8s (975 modules)
+ ✓ Compiled in 79s (975 modules)
+ ✓ Compiled in 6.4s (975 modules)

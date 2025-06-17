@@ -1,0 +1,21 @@
+JANE SMITH
+Digital Marketing Specialist
+jane.smith@example.com | +33687654321 | Lyon, France
+
+SKILLS
+Digital Marketing, SEO, SEM, Content Strategy, Social Media Management, Google Analytics, Facebook Ads, Email Marketing, Content Creation
+
+WORK EXPERIENCE
+Digital Marketing Manager | Marketing Pro | Jan 2019 - Present
+- Developed and executed comprehensive digital marketing strategies
+- Increased organic traffic by 65% through targeted SEO campaigns
+- Managed €50,000 monthly ad budget across Google and Facebook
+
+Marketing Specialist | BrandBoost | Mar 2017 - Dec 2018
+- Created content for social media channels and blog
+- Assisted in email marketing campaigns with 25% open rate
+- Supported SEO initiatives resulting in first page rankings
+
+EDUCATION
+Master's in Marketing | EM Lyon | 2015-2017
+Bachelor's in Business Administration | ESSEC | 2012-2015

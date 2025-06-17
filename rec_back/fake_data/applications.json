@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "candidate_id": 1,
+    "job_id": 1,
+    "application_date": "2024-04-05",
+    "cover_letter": "I am excited to apply for the Full Stack Developer position at Tech Innovations Inc...",
+    "status": "Under Review by RecrutementPlus",
+    "status_history": [
+      {
+        "status": "Submitted",
+        "date": "2024-04-05",
+        "comment": "Application received"
+      },
+      {
+        "status": "Under Review by RecrutementPlus",
+        "date": "2024-04-07",
+        "comment": "Initial screening in progress"
+      }
+    ],
+    "notes": [
+      {
+        "consultant_id": 1,
+        "date": "2024-04-07",
+        "text": "Strong candidate with relevant skills and experience"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "candidate_id": 1,
+    "job_id": 2,
+    "application_date": "2024-04-12",
+    "cover_letter": "I am writing to express my interest in the Data Scientist position...",
+    "status": "Submitted",
+    "status_history": [
+      {
+        "status": "Submitted",
+        "date": "2024-04-12",
+        "comment": "Application received"
+      }
+    ],
+    "notes": []
+  },
+  {
+    "id": 3,
+    "candidate_id": 2,
+    "job_id": 3,
+    "application_date": "2024-04-16",
+    "cover_letter": "I am applying for the Digital Marketing Specialist position...",
+    "status": "Interview Scheduled",
+    "status_history": [
+      {
+        "status": "Submitted",
+        "date": "2024-04-16",
+        "comment": "Application received"
+      },
+      {
+        "status": "Under Review by RecrutementPlus",
+        "date": "2024-04-17",
+        "comment": "Initial screening in progress"
+      },
+      {
+        "status": "Presented to Employer",
+        "date": "2024-04-20",
+        "comment": "Profile sent to employer"
+      },
+      {
+        "status": "Interview Scheduled",
+        "date": "2024-04-25",
+        "comment": "Interview scheduled for 2024-05-02"
+      }
+    ],
+    "notes": [
+      {
+        "consultant_id": 2,
+        "date": "2024-04-17",
+        "text": "Excellent candidate with perfect match to job requirements"
+      },
+      {
+        "consultant_id": 2,
+        "date": "2024-04-25",
+        "text": "Interview scheduled, candidate very interested in the role"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "candidate_id": 2,
+    "job_id": 4,
+    "application_date": "2024-04-18",
+    "cover_letter": "I am interested in applying my digital marketing skills to frontend development...",
+    "status": "Rejected",
+    "status_history": [
+      {
+        "status": "Submitted",
+        "date": "2024-04-18",
+        "comment": "Application received"
+      },
+      {
+        "status": "Under Review by RecrutementPlus",
+        "date": "2024-04-19",
+        "comment": "Initial screening in progress"
+      },
+      {
+        "status": "Rejected",
+        "date": "2024-04-21",
+        "comment": "Skills not matching job requirements"
+      }
+    ],
+    "notes": [
+      {
+        "consultant_id": 2,
+        "date": "2024-04-19",
+        "text": "Candidate has strong marketing background but limited technical skills for frontend development"
+      }
+    ]
+  }
+]

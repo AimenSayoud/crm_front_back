@@ -1,0 +1,36 @@
+ALEX MARTIN
+Full Stack Developer
+alex.martin@example.com | +33678123456 | Bordeaux, France
+
+SKILLS
+JavaScript, TypeScript, React, Vue.js, Angular, Node.js, Express, MongoDB, PostgreSQL, AWS, Docker, Git, CI/CD
+
+WORK EXPERIENCE
+Senior Full Stack Developer | TechStart SAS | Jul 2021 - Present
+- Architected and developed scalable web applications for enterprise clients
+- Led a team of 5 developers in implementing microservices architecture
+- Reduced deployment time by 60% through CI/CD pipeline optimization
+- Mentored junior developers and conducted code reviews
+
+Full Stack Developer | Web Solutions | Apr 2018 - Jun 2021
+- Built responsive web applications using React and Node.js
+- Developed RESTful APIs for mobile applications
+- Implemented authentication and authorization systems
+- Collaborated with UX/UI designers to improve user experience
+
+Junior Developer | Digital Factory | Jan 2016 - Mar 2018
+- Developed frontend components using Angular
+- Assisted in backend development with Express and MongoDB
+- Participated in daily stand-ups and sprint planning
+
+EDUCATION
+Master's in Computer Science | Université de Bordeaux | 2014-2016
+Bachelor's in Software Engineering | INSA Lyon | 2010-2014
+
+PROJECTS
+- E-commerce Platform: Built a full-stack e-commerce solution with React, Node.js, and MongoDB
+- Task Management App: Developed a collaborative task management tool with real-time updates
+- Portfolio Website Generator: Created a tool that generates portfolio websites from JSON data
+
+LANGUAGES
+French (Native), English (Fluent), Spanish (Intermediate)

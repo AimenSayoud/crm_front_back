@@ -1,0 +1,1322 @@
+[
+  {
+    "id": 1,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Hello John, I'm reaching out regarding your application for the Senior Developer position at Tech Innovations. Are you available for an interview next week?",
+    "created_at": "2024-04-01T10:00:00",
+    "updated_at": "2024-04-01T10:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 2,
+        "name": "Senior Developer"
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 2,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Hello, thank you for reaching out! Yes, I am available for an interview next week. What days and times work best for you?",
+    "created_at": "2024-04-01T14:30:00",
+    "updated_at": "2024-04-01T14:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 3,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Great! How about Tuesday at 10:00 AM or Thursday at 2:00 PM? The interview will be conducted over video call and will last approximately 1 hour.",
+    "created_at": "2024-04-02T09:15:00",
+    "updated_at": "2024-04-02T09:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 4,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Thursday at 2:00 PM works perfectly for me. Should I prepare anything specific for the interview?",
+    "created_at": "2024-04-02T11:45:00",
+    "updated_at": "2024-04-02T11:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 5,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Thursday at 2:00 PM is confirmed. Please be prepared to discuss your previous projects and experience with React and Node.js. I'm attaching a document with some technical questions that might come up during the interview.",
+    "created_at": "2024-04-02T13:20:00",
+    "updated_at": "2024-04-02T13:20:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 1,
+        "file_name": "technical_interview_prep.pdf",
+        "file_size": 245000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/technical_interview_prep.pdf",
+        "uploaded_at": "2024-04-02T13:20:00"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Thank you for the information and the document. I will review it and be prepared for the discussion. I look forward to speaking with you on Thursday!",
+    "created_at": "2024-04-02T15:10:00",
+    "updated_at": "2024-04-02T15:10:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 7,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "The interview team was very impressed with your technical skills and experience. We would like to schedule a second interview with our CTO. Are you available next Monday or Tuesday?",
+    "created_at": "2024-04-05T10:30:00",
+    "updated_at": "2024-04-05T10:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 8,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "That's great news! I'm available on Tuesday all day. Monday I have another commitment in the morning, but I'm free after 1:00 PM.",
+    "created_at": "2024-04-05T11:45:00",
+    "updated_at": "2024-04-05T11:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 9,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Let's schedule for Tuesday at 11:00 AM then. This will be a more in-depth technical discussion about your experience and approach to software development.",
+    "created_at": "2024-04-05T13:30:00",
+    "updated_at": "2024-04-05T13:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 10,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Sounds good, I'll be prepared for Tuesday at 11:00 AM. Thank you for the opportunity!",
+    "created_at": "2024-04-05T14:15:00",
+    "updated_at": "2024-04-05T14:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 11,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Congratulations! We would like to offer you the Senior Developer position at Tech Innovations. I'm attaching the formal offer letter with all the details. Please review it and let me know if you have any questions.",
+    "created_at": "2024-04-15T09:00:00",
+    "updated_at": "2024-04-15T09:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 2,
+        "name": "Senior Developer"
+      },
+      {
+        "type": "company",
+        "id": 1,
+        "name": "Tech Innovations Inc."
+      }
+    ],
+    "attachments": [
+      {
+        "id": 2,
+        "file_name": "offer_letter_john_doe.pdf",
+        "file_size": 320000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/offer_letter_john_doe.pdf",
+        "uploaded_at": "2024-04-15T09:00:00"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Thank you so much for the offer! I'm very excited about joining Tech Innovations. I'll review the details and get back to you by tomorrow.",
+    "created_at": "2024-04-15T10:30:00",
+    "updated_at": "2024-04-15T10:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 13,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "I've reviewed the offer and I'm happy to accept! I've signed the document and attached it here. I'm excited to start on May 15th as mentioned in the offer.",
+    "created_at": "2024-04-16T09:45:00",
+    "updated_at": "2024-04-16T09:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 3,
+        "file_name": "signed_offer_john_doe.pdf",
+        "file_size": 350000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/signed_offer_john_doe.pdf",
+        "uploaded_at": "2024-04-16T09:45:00"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Excellent! We're thrilled to have you join our team. I'll be sending you some onboarding information next week. Is there anything specific you'd like to know before your start date?",
+    "created_at": "2024-04-16T11:30:00",
+    "updated_at": "2024-04-16T11:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 15,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Thank you! I'd like to know more about the current projects I'll be working on and the tech stack details. Also, what's the dress code and typical work hours?",
+    "created_at": "2024-04-16T14:00:00",
+    "updated_at": "2024-04-16T14:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 16,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Here's the onboarding information as promised. It includes details about your project assignments, tech stack (React, Node.js, MongoDB), and company policies. We have a casual dress code and flexible hours, typically 9-6 but with flexibility for earlier or later schedules as needed.",
+    "created_at": "2024-04-23T10:15:00",
+    "updated_at": "2024-04-23T10:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 4,
+        "file_name": "onboarding_information.pdf",
+        "file_size": 500000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/onboarding_information.pdf",
+        "uploaded_at": "2024-04-23T10:15:00"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Thank you for the detailed information. This is very helpful. I'm looking forward to my first day!",
+    "created_at": "2024-04-23T14:30:00",
+    "updated_at": "2024-04-23T14:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 18,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Just checking in before your start date. Is there anything else you need to know or any questions you have before your first day on May 15th?",
+    "created_at": "2024-05-10T11:00:00",
+    "updated_at": "2024-05-10T11:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 19,
+    "conversation_id": 1,
+    "sender_id": 1,
+    "content": "Everything seems clear to me. Is there any specific time I should arrive on the first day, and who should I ask for at the reception?",
+    "created_at": "2024-05-10T15:45:00",
+    "updated_at": "2024-05-10T15:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 20,
+    "conversation_id": 1,
+    "sender_id": 7,
+    "content": "Please arrive around 9:00 AM. Ask for Marie at the reception, and she'll help you get set up. Looking forward to having you on the team!",
+    "created_at": "2024-05-12T14:30:00",
+    "updated_at": "2024-05-12T14:30:00",
+    "status": "delivered",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 21,
+    "conversation_id": 2,
+    "sender_id": 7,
+    "content": "Hello everyone! I'd like to introduce Jane Smith who will be interviewing for the Data Analyst position at Tech Innovations. We've scheduled the interview for next Thursday.",
+    "created_at": "2024-04-05T11:30:00",
+    "updated_at": "2024-04-05T11:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 3,
+        "name": "Data Analyst"
+      },
+      {
+        "type": "company",
+        "id": 1,
+        "name": "Tech Innovations Inc."
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 22,
+    "conversation_id": 2,
+    "sender_id": 3,
+    "content": "Thank you for the introduction. Jane's profile looks impressive. I'm looking forward to the interview.",
+    "created_at": "2024-04-05T13:45:00",
+    "updated_at": "2024-04-05T13:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 23,
+    "conversation_id": 2,
+    "sender_id": 2,
+    "content": "Hello! I'm excited about the opportunity to interview with Tech Innovations. Could you please share more details about the interview format?",
+    "created_at": "2024-04-05T15:30:00",
+    "updated_at": "2024-04-05T15:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 24,
+    "conversation_id": 2,
+    "sender_id": 7,
+    "content": "Of course, Jane. The interview will consist of a 30-minute discussion about your experience, followed by a 30-minute technical assessment focusing on data visualization and SQL queries. I've attached a document with more details.",
+    "created_at": "2024-04-06T09:15:00",
+    "updated_at": "2024-04-06T09:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 5,
+        "file_name": "data_analyst_interview_format.pdf",
+        "file_size": 275000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/data_analyst_interview_format.pdf",
+        "uploaded_at": "2024-04-06T09:15:00"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "conversation_id": 2,
+    "sender_id": 3,
+    "content": "I'll prepare some specific questions about our current data infrastructure and how Jane's experience might align with our needs.",
+    "created_at": "2024-04-06T10:30:00",
+    "updated_at": "2024-04-06T10:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 26,
+    "conversation_id": 2,
+    "sender_id": 2,
+    "content": "Thank you for the detailed information. I'll review the document and prepare accordingly. I'm particularly interested in learning more about the data infrastructure mentioned.",
+    "created_at": "2024-04-06T14:20:00",
+    "updated_at": "2024-04-06T14:20:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 27,
+    "conversation_id": 2,
+    "sender_id": 7,
+    "content": "The interview with Jane went very well. I believe she has the skills we're looking for. What do you think, Marie?",
+    "created_at": "2024-04-13T15:45:00",
+    "updated_at": "2024-04-13T15:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 28,
+    "conversation_id": 2,
+    "sender_id": 3,
+    "content": "I agree. Jane demonstrated strong analytical skills and has experience with the exact tools we use. I'd like to move forward with an offer.",
+    "created_at": "2024-04-13T16:30:00",
+    "updated_at": "2024-04-13T16:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 29,
+    "conversation_id": 2,
+    "sender_id": 7,
+    "content": "That's great! Jane, we're pleased to offer you the Data Analyst position at Tech Innovations. I'll prepare a formal offer letter and send it to you separately.",
+    "created_at": "2024-04-14T09:30:00",
+    "updated_at": "2024-04-14T09:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 3,
+        "name": "Data Analyst"
+      },
+      {
+        "type": "company",
+        "id": 1,
+        "name": "Tech Innovations Inc."
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 30,
+    "conversation_id": 2,
+    "sender_id": 2,
+    "content": "Thank you so much! I'm thrilled to receive this offer and look forward to joining the team at Tech Innovations.",
+    "created_at": "2024-04-14T11:20:00",
+    "updated_at": "2024-04-14T11:20:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 31,
+    "conversation_id": 2,
+    "sender_id": 7,
+    "content": "Jane has accepted the offer and will be joining us on June 1st. I've scheduled an onboarding meeting for May 25th to discuss preparation details.",
+    "created_at": "2024-05-10T09:15:00",
+    "updated_at": "2024-05-10T09:15:00",
+    "status": "delivered",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 32,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "Hello Pierre, I'd like to discuss your company's upcoming marketing campaign needs and how we might help with recruiting the right talents.",
+    "created_at": "2024-04-10T09:00:00",
+    "updated_at": "2024-04-10T09:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "company",
+        "id": 2,
+        "name": "Marketing Solutions Group"
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 33,
+    "conversation_id": 3,
+    "sender_id": 4,
+    "content": "Hello Alex, thank you for reaching out. We are indeed planning a major digital campaign launch in Q3 and need to build out our team with several key roles.",
+    "created_at": "2024-04-10T10:30:00",
+    "updated_at": "2024-04-10T10:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 34,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "That sounds exciting! Could you share more details about the specific roles you're looking to fill? I can help create a targeted recruitment strategy.",
+    "created_at": "2024-04-10T11:15:00",
+    "updated_at": "2024-04-10T11:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 35,
+    "conversation_id": 3,
+    "sender_id": 4,
+    "content": "We need a Senior Social Media Manager, two Digital Marketing Specialists (one for SEO, one for paid advertising), and a Marketing Data Analyst. I've attached a document with detailed job descriptions.",
+    "created_at": "2024-04-10T13:45:00",
+    "updated_at": "2024-04-10T13:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 6,
+        "file_name": "msg_job_descriptions.pdf",
+        "file_size": 425000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/msg_job_descriptions.pdf",
+        "uploaded_at": "2024-04-10T13:45:00"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "Thank you for the detailed job descriptions. Based on your needs, I recommend a phased recruitment approach focusing on the Senior role first, followed by the specialists. I've prepared a recruitment proposal.",
+    "created_at": "2024-04-12T10:00:00",
+    "updated_at": "2024-04-12T10:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 7,
+        "file_name": "msg_recruitment_proposal.pdf",
+        "file_size": 380000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/msg_recruitment_proposal.pdf",
+        "uploaded_at": "2024-04-12T10:00:00"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "conversation_id": 3,
+    "sender_id": 4,
+    "content": "I've reviewed your proposal and it looks excellent. The timeline aligns perfectly with our plans. Let's move forward with this approach.",
+    "created_at": "2024-04-13T09:30:00",
+    "updated_at": "2024-04-13T09:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 38,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "Great! I'll start working on the job postings and begin the search for your Senior Social Media Manager right away. I'll send you an update next week with initial candidates.",
+    "created_at": "2024-04-13T11:15:00",
+    "updated_at": "2024-04-13T11:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 39,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "I've identified three strong candidates for the Senior Social Media Manager position. Their profiles and resumes are attached. Would you like to schedule interviews for next week?",
+    "created_at": "2024-04-20T14:30:00",
+    "updated_at": "2024-04-20T14:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 8,
+        "file_name": "social_media_candidates.pdf",
+        "file_size": 520000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/social_media_candidates.pdf",
+        "uploaded_at": "2024-04-20T14:30:00"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "conversation_id": 3,
+    "sender_id": 4,
+    "content": "These candidates look promising! Let's schedule interviews for Wednesday and Thursday next week. I'd like our Creative Director to join as well.",
+    "created_at": "2024-04-22T09:45:00",
+    "updated_at": "2024-04-22T09:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 41,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "I've scheduled the interviews for Wednesday and Thursday as requested. Here's a confirmation email you can forward to your Creative Director with all the details.",
+    "created_at": "2024-04-22T11:30:00",
+    "updated_at": "2024-04-22T11:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 9,
+        "file_name": "interview_schedule.pdf",
+        "file_size": 210000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/interview_schedule.pdf",
+        "uploaded_at": "2024-04-22T11:30:00"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "conversation_id": 3,
+    "sender_id": 4,
+    "content": "Thank you for coordinating. The interviews went well, and we'd like to proceed with offering the position to Sophie Laurent. Could you help with the offer process?",
+    "created_at": "2024-05-01T10:15:00",
+    "updated_at": "2024-05-01T10:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 43,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "Absolutely! I'll prepare the offer letter based on the compensation details we discussed. In the meantime, I've started the search for your Digital Marketing Specialists.",
+    "created_at": "2024-05-01T11:45:00",
+    "updated_at": "2024-05-01T11:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 44,
+    "conversation_id": 3,
+    "sender_id": 7,
+    "content": "Good news! Sophie has accepted the offer and will start on June 1st. I've also identified several promising candidates for the Digital Marketing Specialist positions. Would you like to review them?",
+    "created_at": "2024-05-11T16:20:00",
+    "updated_at": "2024-05-11T16:20:00",
+    "status": "delivered",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 45,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Hello Sophie, I noticed you applied for the Data Scientist position at DataViz Solutions. Your experience with machine learning models is impressive.",
+    "created_at": "2024-04-15T14:00:00",
+    "updated_at": "2024-04-15T14:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 4,
+        "name": "Data Scientist"
+      },
+      {
+        "type": "company",
+        "id": 3,
+        "name": "DataViz Solutions"
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 46,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "Thank you for reaching out! Yes, I'm very interested in this position. I've been working on implementing advanced ML algorithms for predictive analytics in my current role.",
+    "created_at": "2024-04-15T16:30:00",
+    "updated_at": "2024-04-15T16:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 47,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "That sounds perfect for this role. DataViz is looking for someone with exactly that kind of experience. Would you be available for an initial interview next week?",
+    "created_at": "2024-04-16T09:45:00",
+    "updated_at": "2024-04-16T09:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 48,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "Yes, I'm available next week. Wednesday or Thursday afternoon would work best for me. Could you share more details about the interview process?",
+    "created_at": "2024-04-16T11:20:00",
+    "updated_at": "2024-04-16T11:20:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 49,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Let's schedule for Thursday at 2:00 PM. The interview will last about 1 hour and will include technical questions and a case study discussion. No coding test in this first round.",
+    "created_at": "2024-04-16T13:30:00",
+    "updated_at": "2024-04-16T13:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 50,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "Thursday at 2:00 PM works perfectly. Thank you for the information about the interview format. I'll prepare accordingly.",
+    "created_at": "2024-04-16T15:45:00",
+    "updated_at": "2024-04-16T15:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 51,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Your interview went very well! The team was particularly impressed with your knowledge of time series forecasting models. They'd like to move forward with a second interview.",
+    "created_at": "2024-04-19T10:30:00",
+    "updated_at": "2024-04-19T10:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 52,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "That's great to hear! I'm definitely interested in proceeding to the next stage. What would the second interview involve?",
+    "created_at": "2024-04-19T11:45:00",
+    "updated_at": "2024-04-19T11:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 53,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "The second interview will include a technical assessment where you'll analyze a dataset and present insights. It will be with the Chief Data Officer and two senior data scientists. Are you available next Tuesday at 10:00 AM?",
+    "created_at": "2024-04-19T14:00:00",
+    "updated_at": "2024-04-19T14:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 54,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "Tuesday at 10:00 AM works for me. Should I prepare the analysis beforehand or will this be done during the interview?",
+    "created_at": "2024-04-19T15:30:00",
+    "updated_at": "2024-04-19T15:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 55,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "You'll receive the dataset tomorrow, and you'll have the weekend to prepare your analysis. The interview will focus on your approach and findings. I'll send the details via email shortly.",
+    "created_at": "2024-04-19T16:45:00",
+    "updated_at": "2024-04-19T16:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 56,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "I've received the dataset and will prepare my analysis for Tuesday. Thank you for organizing this.",
+    "created_at": "2024-04-20T11:00:00",
+    "updated_at": "2024-04-20T11:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 57,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Congratulations! DataViz Solutions would like to offer you the Data Scientist position. I'm attaching the formal offer letter with all the details. Please review it and let me know if you have any questions.",
+    "created_at": "2024-04-26T14:15:00",
+    "updated_at": "2024-04-26T14:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 4,
+        "name": "Data Scientist"
+      },
+      {
+        "type": "company",
+        "id": 3,
+        "name": "DataViz Solutions"
+      }
+    ],
+    "attachments": [
+      {
+        "id": 10,
+        "file_name": "dataviz_offer_letter.pdf",
+        "file_size": 310000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/dataviz_offer_letter.pdf",
+        "uploaded_at": "2024-04-26T14:15:00"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "Thank you for the great news! I'll review the offer letter carefully and get back to you within the next few days.",
+    "created_at": "2024-04-26T16:30:00",
+    "updated_at": "2024-04-26T16:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 59,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "After reviewing the offer, I'm happy to accept! I've signed the document and it's attached here. The start date of June 15th works well for me.",
+    "created_at": "2024-04-29T10:45:00",
+    "updated_at": "2024-04-29T10:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 11,
+        "file_name": "signed_dataviz_offer.pdf",
+        "file_size": 325000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/signed_dataviz_offer.pdf",
+        "uploaded_at": "2024-04-29T10:45:00"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Excellent! We're very excited to have you join the team. I'll be your main point of contact for the onboarding process. Let's schedule a call next week to go over the details.",
+    "created_at": "2024-04-29T13:30:00",
+    "updated_at": "2024-04-29T13:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 61,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "A call next week sounds good. I'm available most afternoons. Just let me know what time works best for you.",
+    "created_at": "2024-04-29T15:00:00",
+    "updated_at": "2024-04-29T15:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 62,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Let's schedule for Tuesday at 2:00 PM. I'll send a calendar invite with the call details. We'll discuss the onboarding process, documentation needed, and answer any questions you might have.",
+    "created_at": "2024-04-30T09:15:00",
+    "updated_at": "2024-04-30T09:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 63,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "I've received the calendar invite. I'll be prepared for our call on Tuesday at 2:00 PM. Thank you!",
+    "created_at": "2024-04-30T10:45:00",
+    "updated_at": "2024-04-30T10:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 64,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "Just following up on our onboarding call. I've sent you an email with the new hire paperwork and instructions. Please complete these by May 20th so we can prepare for your first day.",
+    "created_at": "2024-05-08T14:45:00",
+    "updated_at": "2024-05-08T14:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 65,
+    "conversation_id": 4,
+    "sender_id": 5,
+    "content": "I've received the email and will complete the paperwork by the deadline. Is there any specific equipment I should expect to receive before my start date?",
+    "created_at": "2024-05-08T16:30:00",
+    "updated_at": "2024-05-08T16:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 66,
+    "conversation_id": 4,
+    "sender_id": 7,
+    "content": "You'll receive a company laptop about a week before your start date. IT will contact you to arrange delivery and help with the initial setup. They'll also provide access to the systems you'll need.",
+    "created_at": "2024-05-13T10:30:00",
+    "updated_at": "2024-05-13T10:30:00",
+    "status": "delivered",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 67,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "Hello everyone, I'd like to discuss the UX Designer applications for FinSmart Solutions. We have received several strong candidates that match the requirements.",
+    "created_at": "2024-04-20T11:15:00",
+    "updated_at": "2024-04-20T11:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 7,
+        "name": "UX Designer"
+      },
+      {
+        "type": "company",
+        "id": 5,
+        "name": "FinSmart Solutions"
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 68,
+    "conversation_id": 5,
+    "sender_id": 3,
+    "content": "Thank you for the update. We're particularly interested in candidates with experience in financial services UX design. Have any of the applicants worked in this sector?",
+    "created_at": "2024-04-20T13:30:00",
+    "updated_at": "2024-04-20T13:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 69,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "Hello! I have extensive experience in financial services UX, having designed interfaces for banking apps and investment platforms in my previous role.",
+    "created_at": "2024-04-20T14:45:00",
+    "updated_at": "2024-04-20T14:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 70,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "Yes, we have three candidates with financial UX experience. I've attached their profiles for review. Sophie has particularly relevant experience as she mentioned.",
+    "created_at": "2024-04-20T15:30:00",
+    "updated_at": "2024-04-20T15:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 12,
+        "file_name": "ux_designer_candidates.pdf",
+        "file_size": 450000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/ux_designer_candidates.pdf",
+        "uploaded_at": "2024-04-20T15:30:00"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "conversation_id": 5,
+    "sender_id": 3,
+    "content": "These profiles look promising. I'd like to schedule interviews with all three, but I'm particularly interested in Sophie's experience with investment platforms. Let's prioritize her interview.",
+    "created_at": "2024-04-21T09:45:00",
+    "updated_at": "2024-04-21T09:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 72,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "I'll arrange the interviews. Sophie, would you be available for an interview with FinSmart Solutions next Thursday at 10:00 AM? The interview will include a portfolio review.",
+    "created_at": "2024-04-21T11:30:00",
+    "updated_at": "2024-04-21T11:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 73,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "I'm available on Thursday at 10:00 AM. I'll prepare my portfolio with emphasis on my financial UX projects. Should I bring anything specific for the interview?",
+    "created_at": "2024-04-21T14:00:00",
+    "updated_at": "2024-04-21T14:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 74,
+    "conversation_id": 5,
+    "sender_id": 3,
+    "content": "It would be helpful if you could prepare a brief presentation of your design process for one of your financial projects. We're particularly interested in how you approach user research and testing.",
+    "created_at": "2024-04-21T15:30:00",
+    "updated_at": "2024-04-21T15:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 75,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "I'll prepare a presentation on my design process for the investment platform project, including our user research methodology and testing results. It was a comprehensive redesign project that significantly improved user engagement.",
+    "created_at": "2024-04-21T16:45:00",
+    "updated_at": "2024-04-21T16:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 76,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "All interviews have been completed. Sophie's presentation was very well received by the team at FinSmart. They were impressed with your research-driven approach and the results of your redesign project.",
+    "created_at": "2024-05-01T11:30:00",
+    "updated_at": "2024-05-01T11:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 77,
+    "conversation_id": 5,
+    "sender_id": 3,
+    "content": "We'd like to invite Sophie for a second interview with our product team. This would focus more on collaboration and how she would approach our specific UX challenges. Is next Tuesday possible?",
+    "created_at": "2024-05-01T14:15:00",
+    "updated_at": "2024-05-01T14:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 78,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "I'm very pleased to hear the feedback! Yes, I'm available next Tuesday for the second interview. What time would work best?",
+    "created_at": "2024-05-01T15:45:00",
+    "updated_at": "2024-05-01T15:45:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 79,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "How about Tuesday at 2:00 PM? The product team would like to discuss their current projects and get your input on approaching some UX challenges they're facing.",
+    "created_at": "2024-05-01T16:30:00",
+    "updated_at": "2024-05-01T16:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 80,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "Tuesday at 2:00 PM works perfectly for me. I look forward to meeting the product team and discussing their UX challenges.",
+    "created_at": "2024-05-01T17:15:00",
+    "updated_at": "2024-05-01T17:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 81,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "Great news, Sophie! FinSmart Solutions would like to offer you the UX Designer position. I'm attaching the formal offer letter with all the details for your review.",
+    "created_at": "2024-05-10T14:30:00",
+    "updated_at": "2024-05-10T14:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [
+      {
+        "type": "job",
+        "id": 7,
+        "name": "UX Designer"
+      },
+      {
+        "type": "company",
+        "id": 5,
+        "name": "FinSmart Solutions"
+      }
+    ],
+    "attachments": [
+      {
+        "id": 13,
+        "file_name": "finsmart_offer_letter.pdf",
+        "file_size": 330000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/finsmart_offer_letter.pdf",
+        "uploaded_at": "2024-05-10T14:30:00"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "Thank you for the offer! I'm thrilled about the opportunity to join FinSmart Solutions. I'll review the details carefully and respond by Friday.",
+    "created_at": "2024-05-10T16:00:00",
+    "updated_at": "2024-05-10T16:00:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 83,
+    "conversation_id": 5,
+    "sender_id": 3,
+    "content": "We're excited about the possibility of having you join our team, Sophie. If you have any questions about the offer or role, please don't hesitate to ask.",
+    "created_at": "2024-05-10T17:30:00",
+    "updated_at": "2024-05-10T17:30:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  },
+  {
+    "id": 84,
+    "conversation_id": 5,
+    "sender_id": 6,
+    "content": "After reviewing the offer, I'm happy to accept! I've signed the document and attached it here. I'm very excited to join the FinSmart team on July 1st.",
+    "created_at": "2024-05-12T09:15:00",
+    "updated_at": "2024-05-12T09:15:00",
+    "status": "read",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": [
+      {
+        "id": 14,
+        "file_name": "signed_finsmart_offer.pdf",
+        "file_size": 340000,
+        "file_type": "application/pdf",
+        "storage_path": "attachments/signed_finsmart_offer.pdf",
+        "uploaded_at": "2024-05-12T09:15:00"
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "conversation_id": 5,
+    "sender_id": 7,
+    "content": "Wonderful news! Sophie, I'll coordinate with you on the onboarding process over the coming weeks. Marie, I'll update you and the team about Sophie's acceptance and start date.",
+    "created_at": "2024-05-12T09:45:00",
+    "updated_at": "2024-05-12T09:45:00",
+    "status": "delivered",
+    "type": "text",
+    "template_id": null,
+    "entity_references": [],
+    "attachments": []
+  }
+]

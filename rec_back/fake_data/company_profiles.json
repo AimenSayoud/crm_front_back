@@ -1,0 +1,335 @@
+[
+  {
+    "id": 1,
+    "user_id": 3,
+    "company_name": "Tech Innovations Inc.",
+    "industry": "Technology",
+    "size": "50-200",
+    "location": "Paris, France",
+    "description": "Innovative tech company specializing in AI and machine learning solutions",
+    "website": "https://techinnovations.example",
+    "logo_url": "https://storage.example.com/logos/techinnovations.png",
+    "contact_details": {
+      "name": "Marie Dupont",
+      "title": "HR Director",
+      "email": "marie.dupont@techinnovations.example",
+      "phone": "+33123456789"
+    },
+    "job_ids": [1, 2],
+    "recruitment_history": [
+      {
+        "id": 1,
+        "job_title": "Senior DevOps Engineer",
+        "date_filled": "2024-01-15",
+        "time_to_fill": 28,
+        "consultant_id": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "user_id": 4,
+    "company_name": "Marketing Solutions Group",
+    "industry": "Marketing & Advertising",
+    "size": "10-50",
+    "location": "Lyon, France",
+    "description": "Creative marketing agency working with top brands across Europe",
+    "website": "https://msggroup.example",
+    "logo_url": "https://storage.example.com/logos/msggroup.png",
+    "contact_details": {
+      "name": "Pierre Martin",
+      "title": "CEO",
+      "email": "pierre.martin@msggroup.example",
+      "phone": "+33678901234"
+    },
+    "job_ids": [3],
+    "recruitment_history": []
+  },
+  {
+    "id": 3,
+    "user_id": 3,
+    "company_name": "DataViz Solutions",
+    "industry": "Technology",
+    "size": "100-500",
+    "location": "Marseille, France",
+    "description": "Leading provider of data visualization and business intelligence solutions",
+    "website": "https://dataviz.example",
+    "logo_url": "https://storage.example.com/logos/dataviz.png",
+    "contact_details": {
+      "name": "Julien Petit",
+      "title": "Talent Acquisition",
+      "email": "julien.petit@dataviz.example",
+      "phone": "+33612345678"
+    },
+    "job_ids": [4, 5],
+    "recruitment_history": [
+      {
+        "id": 2,
+        "job_title": "Data Scientist",
+        "date_filled": "2024-02-20",
+        "time_to_fill": 35,
+        "consultant_id": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "user_id": 4,
+    "company_name": "HealthTech Innovations",
+    "industry": "Healthcare",
+    "size": "200-1000",
+    "location": "Paris, France",
+    "description": "Developing cutting-edge medical technology solutions",
+    "website": "https://healthtech.example",
+    "logo_url": "https://storage.example.com/logos/healthtech.png",
+    "contact_details": {
+      "name": "Sophie Blanc",
+      "title": "HR Manager",
+      "email": "sophie.blanc@healthtech.example",
+      "phone": "+33712345678"
+    },
+    "job_ids": [6],
+    "recruitment_history": []
+  },
+  {
+    "id": 5,
+    "user_id": 3,
+    "company_name": "FinSmart Solutions",
+    "industry": "Finance",
+    "size": "50-200",
+    "location": "Nice, France",
+    "description": "Financial technology company providing innovative solutions for banking and investment",
+    "website": "https://finsmart.example",
+    "logo_url": "https://storage.example.com/logos/finsmart.png",
+    "contact_details": {
+      "name": "Michel Roux",
+      "title": "Recruitment Specialist",
+      "email": "michel.roux@finsmart.example",
+      "phone": "+33623456789"
+    },
+    "job_ids": [7, 8],
+    "recruitment_history": []
+  },
+  {
+    "id": 6,
+    "user_id": 4,
+    "company_name": "EduTech Connect",
+    "industry": "Education",
+    "size": "10-50",
+    "location": "Bordeaux, France",
+    "description": "Educational technology platform transforming digital learning",
+    "website": "https://edutech.example",
+    "logo_url": "https://storage.example.com/logos/edutech.png",
+    "contact_details": {
+      "name": "Claire Martin",
+      "title": "Founder & CEO",
+      "email": "claire.martin@edutech.example",
+      "phone": "+33634567890"
+    },
+    "job_ids": [9],
+    "recruitment_history": []
+  },
+  {
+    "id": 7,
+    "user_id": 3,
+    "company_name": "GreenEnergy Solutions",
+    "industry": "Energy & Sustainability",
+    "size": "100-500",
+    "location": "Nantes, France",
+    "description": "Pioneering sustainable energy solutions and green technology",
+    "website": "https://greenenergy.example",
+    "logo_url": "https://storage.example.com/logos/greenenergy.png",
+    "contact_details": {
+      "name": "Antoine Dubois",
+      "title": "HR Director",
+      "email": "antoine.dubois@greenenergy.example",
+      "phone": "+33645678901"
+    },
+    "job_ids": [10, 11],
+    "recruitment_history": [
+      {
+        "id": 3,
+        "job_title": "Energy Systems Engineer",
+        "date_filled": "2024-03-10",
+        "time_to_fill": 42,
+        "consultant_id": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "user_id": 4,
+    "company_name": "ShopSmart Retail",
+    "industry": "Retail",
+    "size": "1000+",
+    "location": "Lyon, France",
+    "description": "Modern retail chain with innovative digital shopping experiences",
+    "website": "https://shopsmart.example",
+    "logo_url": "https://storage.example.com/logos/shopsmart.png",
+    "contact_details": {
+      "name": "Philippe Laurent",
+      "title": "Talent Acquisition Manager",
+      "email": "philippe.laurent@shopsmart.example",
+      "phone": "+33656789012"
+    },
+    "job_ids": [12],
+    "recruitment_history": []
+  },
+  {
+    "id": 9,
+    "user_id": 3,
+    "company_name": "IoT Innovate",
+    "industry": "Technology",
+    "size": "50-200",
+    "location": "Toulouse, France",
+    "description": "Creating cutting-edge Internet of Things solutions for industry and home",
+    "website": "https://iotinnovate.example",
+    "logo_url": "https://storage.example.com/logos/iotinnovate.png",
+    "contact_details": {
+      "name": "Emilie Benoit",
+      "title": "Head of HR",
+      "email": "emilie.benoit@iotinnovate.example",
+      "phone": "+33667890123"
+    },
+    "job_ids": [13, 14],
+    "recruitment_history": []
+  },
+  {
+    "id": 10,
+    "user_id": 4,
+    "company_name": "TravelTech Solutions",
+    "industry": "Travel & Hospitality",
+    "size": "10-50",
+    "location": "Paris, France",
+    "description": "Next-generation travel planning and booking platform",
+    "website": "https://traveltech.example",
+    "logo_url": "https://storage.example.com/logos/traveltech.png",
+    "contact_details": {
+      "name": "Lucas Moreau",
+      "title": "Recruitment Lead",
+      "email": "lucas.moreau@traveltech.example",
+      "phone": "+33678901234"
+    },
+    "job_ids": [15],
+    "recruitment_history": [
+      {
+        "id": 4,
+        "job_title": "UX Designer",
+        "date_filled": "2024-01-25",
+        "time_to_fill": 30,
+        "consultant_id": 2
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "user_id": 3,
+    "company_name": "AgriTech Innovations",
+    "industry": "Agriculture",
+    "size": "50-200",
+    "location": "Montpellier, France",
+    "description": "Agricultural technology company developing sustainable farming solutions",
+    "website": "https://agritech.example",
+    "logo_url": "https://storage.example.com/logos/agritech.png",
+    "contact_details": {
+      "name": "Thomas Richard",
+      "title": "HR Specialist",
+      "email": "thomas.richard@agritech.example",
+      "phone": "+33689012345"
+    },
+    "job_ids": [16, 17],
+    "recruitment_history": []
+  },
+  {
+    "id": 12,
+    "user_id": 4,
+    "company_name": "MediaStream Networks",
+    "industry": "Media & Entertainment",
+    "size": "200-1000",
+    "location": "Paris, France",
+    "description": "Digital media streaming platform with original content production",
+    "website": "https://mediastream.example",
+    "logo_url": "https://storage.example.com/logos/mediastream.png",
+    "contact_details": {
+      "name": "Nathalie Petit",
+      "title": "Talent Manager",
+      "email": "nathalie.petit@mediastream.example",
+      "phone": "+33690123456"
+    },
+    "job_ids": [18],
+    "recruitment_history": [
+      {
+        "id": 5,
+        "job_title": "Content Producer",
+        "date_filled": "2024-02-28",
+        "time_to_fill": 45,
+        "consultant_id": 1
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "user_id": 3,
+    "company_name": "CloudNative Services",
+    "industry": "Technology",
+    "size": "100-500",
+    "location": "Lille, France",
+    "description": "Cloud infrastructure and DevOps solutions provider",
+    "website": "https://cloudnative.example",
+    "logo_url": "https://storage.example.com/logos/cloudnative.png",
+    "contact_details": {
+      "name": "David Fontaine",
+      "title": "Technical Recruiter",
+      "email": "david.fontaine@cloudnative.example",
+      "phone": "+33701234567"
+    },
+    "job_ids": [19, 20],
+    "recruitment_history": []
+  },
+  {
+    "id": 14,
+    "user_id": 4,
+    "company_name": "LegalTech Solutions",
+    "industry": "Legal",
+    "size": "10-50",
+    "location": "Strasbourg, France",
+    "description": "Legal technology startup streamlining processes for law firms",
+    "website": "https://legaltech.example",
+    "logo_url": "https://storage.example.com/logos/legaltech.png",
+    "contact_details": {
+      "name": "Marie-Claire Simon",
+      "title": "HR & Operations",
+      "email": "marieclaire.simon@legaltech.example",
+      "phone": "+33712345678"
+    },
+    "job_ids": [21],
+    "recruitment_history": []
+  },
+  {
+    "id": 15,
+    "user_id": 3,
+    "company_name": "Cybersecurity Experts",
+    "industry": "Technology",
+    "size": "50-200",
+    "location": "Rennes, France",
+    "description": "Advanced cybersecurity solutions and consulting services",
+    "website": "https://cybersecexperts.example",
+    "logo_url": "https://storage.example.com/logos/cybersecexperts.png",
+    "contact_details": {
+      "name": "Olivier Lambert",
+      "title": "Head of Talent",
+      "email": "olivier.lambert@cybersecexperts.example",
+      "phone": "+33723456789"
+    },
+    "job_ids": [22, 23],
+    "recruitment_history": [
+      {
+        "id": 6,
+        "job_title": "Security Analyst",
+        "date_filled": "2024-03-15",
+        "time_to_fill": 38,
+        "consultant_id": 2
+      }
+    ]
+  }
+]

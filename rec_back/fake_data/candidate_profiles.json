@@ -1,0 +1,420 @@
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "phone": "+33612345678",
+    "location": "Paris, France",
+    "cv_urls": [
+      "https://storage.example.com/cv/johndoe-fr.pdf",
+      "https://storage.example.com/cv/johndoe-en.pdf"
+    ],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["IT", "Software Development"],
+      "desired_locations": ["Paris", "Lyon", "Remote"],
+      "contract_types": ["Permanent", "Contract"],
+      "salary_expectation": 65000,
+      "willing_to_relocate": true
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [1, 2, 3, 4, 10, 27],
+    "education": [
+      {
+        "id": 1,
+        "institution": "Université Paris-Saclay",
+        "degree": "Master's degree",
+        "field_of_study": "Computer Science",
+        "start_date": "2015-09-01",
+        "end_date": "2017-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 1,
+        "company": "Tech Solutions",
+        "title": "Senior Developer",
+        "description": "Full stack development for enterprise web applications",
+        "start_date": "2020-03-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 2,
+        "company": "Digital Agency",
+        "title": "Web Developer",
+        "description": "Front-end development using React",
+        "start_date": "2017-07-01",
+        "end_date": "2020-02-28",
+        "current": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "phone": "+33687654321",
+    "location": "Lyon, France",
+    "cv_urls": ["https://storage.example.com/cv/janesmith.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["Marketing", "Digital"],
+      "desired_locations": ["Lyon", "Remote"],
+      "contract_types": ["Permanent"],
+      "salary_expectation": 55000,
+      "willing_to_relocate": false
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [5, 6, 7, 8],
+    "education": [
+      {
+        "id": 2,
+        "institution": "EM Lyon",
+        "degree": "Master's degree",
+        "field_of_study": "Marketing",
+        "start_date": "2016-09-01",
+        "end_date": "2018-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 3,
+        "company": "Marketing Pro",
+        "title": "Digital Marketing Manager",
+        "description": "Developing and executing digital marketing strategies",
+        "start_date": "2019-01-01",
+        "end_date": null,
+        "current": true
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "user_id": 5,
+    "phone": "+33678901234",
+    "location": "Paris, France",
+    "cv_urls": ["https://storage.example.com/cv/alex_data_scientist.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["AI", "Data Science", "Research"],
+      "desired_locations": ["Paris", "Remote"],
+      "contract_types": ["Permanent"],
+      "salary_expectation": 70000,
+      "willing_to_relocate": true
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [1, 12, 13, 14, 52, 56, 57, 66],
+    "education": [
+      {
+        "id": 3,
+        "institution": "École Polytechnique",
+        "degree": "PhD",
+        "field_of_study": "Machine Learning",
+        "start_date": "2016-09-01",
+        "end_date": "2020-06-30"
+      },
+      {
+        "id": 4,
+        "institution": "École Normale Supérieure",
+        "degree": "Master's degree",
+        "field_of_study": "Computer Science",
+        "start_date": "2014-09-01",
+        "end_date": "2016-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 4,
+        "company": "AI Solutions Lab",
+        "title": "Senior Data Scientist",
+        "description": "Leading machine learning projects for enterprise clients",
+        "start_date": "2021-02-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 5,
+        "company": "DataTech",
+        "title": "Data Scientist",
+        "description": "Developing predictive models and analytics solutions",
+        "start_date": "2020-07-01",
+        "end_date": "2021-01-31",
+        "current": false
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "user_id": 6,
+    "phone": "+33623456789",
+    "location": "Marseille, France",
+    "cv_urls": ["https://storage.example.com/cv/sophie_ux_designer.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["Design", "Technology", "E-commerce"],
+      "desired_locations": ["Marseille", "Paris", "Remote"],
+      "contract_types": ["Permanent", "Freelance"],
+      "salary_expectation": 55000,
+      "willing_to_relocate": true
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [45, 46, 47, 48, 15, 3, 70],
+    "education": [
+      {
+        "id": 5,
+        "institution": "École de Design Nantes Atlantique",
+        "degree": "Master's degree",
+        "field_of_study": "Interactive Design",
+        "start_date": "2017-09-01",
+        "end_date": "2019-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 6,
+        "company": "Creative Agency",
+        "title": "Senior UI/UX Designer",
+        "description": "Leading design projects for web and mobile applications",
+        "start_date": "2021-03-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 7,
+        "company": "Tech Startup",
+        "title": "UI Designer",
+        "description": "Designing user interfaces for mobile applications",
+        "start_date": "2019-07-01",
+        "end_date": "2021-02-28",
+        "current": false
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "user_id": 7,
+    "phone": "+33634567890",
+    "location": "Lyon, France",
+    "cv_urls": ["https://storage.example.com/cv/thomas_devops.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["Cloud", "DevOps", "Infrastructure"],
+      "desired_locations": ["Lyon", "Paris", "Remote"],
+      "contract_types": ["Permanent"],
+      "salary_expectation": 65000,
+      "willing_to_relocate": false
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [9, 16, 17, 35, 37, 38, 39, 40, 41],
+    "education": [
+      {
+        "id": 6,
+        "institution": "INSA Lyon",
+        "degree": "Master's degree",
+        "field_of_study": "Computer Science",
+        "start_date": "2014-09-01",
+        "end_date": "2016-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 8,
+        "company": "Cloud Services Provider",
+        "title": "DevOps Engineer",
+        "description": "Implementing CI/CD pipelines and managing cloud infrastructure",
+        "start_date": "2019-01-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 9,
+        "company": "Enterprise Solutions",
+        "title": "Systems Administrator",
+        "description": "Managing Linux servers and automation tools",
+        "start_date": "2016-07-01",
+        "end_date": "2018-12-31",
+        "current": false
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "user_id": 8,
+    "phone": "+33645678901",
+    "location": "Toulouse, France",
+    "cv_urls": ["https://storage.example.com/cv/paul_mobile_dev.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["Mobile Development", "Technology"],
+      "desired_locations": ["Toulouse", "Remote"],
+      "contract_types": ["Permanent", "Contract"],
+      "salary_expectation": 60000,
+      "willing_to_relocate": true
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [31, 32, 33, 34, 2, 27, 41, 42],
+    "education": [
+      {
+        "id": 7,
+        "institution": "Université Paul Sabatier",
+        "degree": "Master's degree",
+        "field_of_study": "Software Engineering",
+        "start_date": "2015-09-01",
+        "end_date": "2017-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 10,
+        "company": "Mobile Apps Inc",
+        "title": "Senior Mobile Developer",
+        "description": "Developing cross-platform mobile applications using Flutter",
+        "start_date": "2020-05-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 11,
+        "company": "Tech Startup",
+        "title": "iOS Developer",
+        "description": "Building native iOS applications using Swift",
+        "start_date": "2017-08-01",
+        "end_date": "2020-04-30",
+        "current": false
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "user_id": 9,
+    "phone": "+33656789012",
+    "location": "Paris, France",
+    "cv_urls": ["https://storage.example.com/cv/marie_backend.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["Software Development", "Fintech", "E-commerce"],
+      "desired_locations": ["Paris", "Remote"],
+      "contract_types": ["Permanent"],
+      "salary_expectation": 60000,
+      "willing_to_relocate": false
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [18, 4, 25, 26, 41, 42, 43],
+    "education": [
+      {
+        "id": 8,
+        "institution": "Télécom Paris",
+        "degree": "Master's degree",
+        "field_of_study": "Computer Science",
+        "start_date": "2016-09-01",
+        "end_date": "2018-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 12,
+        "company": "Finance Technology",
+        "title": "Senior Backend Developer",
+        "description": "Developing secure and scalable backend services for financial applications",
+        "start_date": "2021-01-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 13,
+        "company": "E-commerce Platform",
+        "title": "Java Developer",
+        "description": "Building backend services and database solutions",
+        "start_date": "2018-07-01",
+        "end_date": "2020-12-31",
+        "current": false
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "user_id": 10,
+    "phone": "+33667890123",
+    "location": "Lille, France",
+    "cv_urls": ["https://storage.example.com/cv/lucas_product.pdf"],
+    "profile_completed": true,
+    "preferences": {
+      "desired_sectors": ["Product Management", "Technology", "SaaS"],
+      "desired_locations": ["Lille", "Paris", "Remote"],
+      "contract_types": ["Permanent"],
+      "salary_expectation": 70000,
+      "willing_to_relocate": true
+    },
+    "notification_settings": {
+      "email_alerts": true,
+      "job_matches": true,
+      "application_updates": true
+    },
+    "skill_ids": [63, 64, 65, 42, 43, 44, 69, 70],
+    "education": [
+      {
+        "id": 9,
+        "institution": "HEC Paris",
+        "degree": "MBA",
+        "field_of_study": "Business Administration",
+        "start_date": "2015-09-01",
+        "end_date": "2017-06-30"
+      },
+      {
+        "id": 10,
+        "institution": "ESSEC Business School",
+        "degree": "Bachelor's degree",
+        "field_of_study": "Business",
+        "start_date": "2011-09-01",
+        "end_date": "2015-06-30"
+      }
+    ],
+    "experience": [
+      {
+        "id": 14,
+        "company": "SaaS Platform",
+        "title": "Senior Product Manager",
+        "description": "Leading product development for B2B SaaS solutions",
+        "start_date": "2020-03-01",
+        "end_date": null,
+        "current": true
+      },
+      {
+        "id": 15,
+        "company": "Tech Startup",
+        "title": "Product Manager",
+        "description": "Managing product roadmap and feature development",
+        "start_date": "2017-07-01",
+        "end_date": "2020-02-29",
+        "current": false
+      }
+    ]
+  }
+]

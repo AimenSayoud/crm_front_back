@@ -1,0 +1,392 @@
+[
+  {
+    "id": 1,
+    "employer_id": 1,
+    "title": "Full Stack Developer",
+    "description": "We are looking for an experienced Full Stack Developer who is comfortable with both front-end and back-end development.",
+    "responsibilities": [
+      "Design and develop high-quality web applications",
+      "Work with product team to understand requirements",
+      "Optimize applications for maximum speed and scalability"
+    ],
+    "requirements": [
+      "3+ years of experience with JavaScript, React, and Node.js",
+      "Strong understanding of database design",
+      "Experience with RESTful APIs"
+    ],
+    "location": "Paris, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 55000,
+      "max": 75000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-01",
+    "status": "Open",
+    "skills": [2, 3, 10, 11]
+  },
+  {
+    "id": 2,
+    "employer_id": 1,
+    "title": "Data Scientist",
+    "description": "Join our AI team to develop cutting-edge machine learning solutions for our clients.",
+    "responsibilities": [
+      "Design and implement ML models",
+      "Work with large datasets",
+      "Present findings to technical and non-technical stakeholders"
+    ],
+    "requirements": [
+      "Advanced degree in Computer Science, Statistics, or related field",
+      "Experience with Python, TensorFlow, and PyTorch",
+      "Strong knowledge of data visualization tools"
+    ],
+    "location": "Paris, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 65000,
+      "max": 85000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-10",
+    "status": "Open",
+    "skills": [1, 12, 13, 14, 52, 56]
+  },
+  {
+    "id": 3,
+    "employer_id": 2,
+    "title": "Digital Marketing Specialist",
+    "description": "We are seeking a Digital Marketing Specialist to join our growing team in Lyon.",
+    "responsibilities": [
+      "Develop and execute digital marketing campaigns",
+      "Manage social media presence",
+      "Analyze campaign performance and optimize strategies"
+    ],
+    "requirements": [
+      "2+ years of experience in digital marketing",
+      "Proficiency in SEO, SEM, and social media marketing",
+      "Excellent analytical skills"
+    ],
+    "location": "Lyon, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 45000,
+      "max": 60000
+    },
+    "remote_option": false,
+    "posting_date": "2024-04-15",
+    "status": "Open",
+    "skills": [5, 6, 7, 8]
+  },
+  {
+    "id": 4,
+    "employer_id": 2,
+    "title": "Frontend Developer",
+    "description": "Join our team building next-generation digital marketing solutions.",
+    "responsibilities": [
+      "Develop responsive user interfaces",
+      "Collaborate with UX designers",
+      "Optimize application for maximum speed and scalability"
+    ],
+    "requirements": [
+      "3+ years of experience with React",
+      "Strong HTML, CSS, and JavaScript skills",
+      "Experience with modern frontend tools and libraries"
+    ],
+    "location": "Lyon, France",
+    "contract_type": "Contract",
+    "salary_range": {
+      "min": 50000,
+      "max": 65000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-05",
+    "status": "Open",
+    "skills": [2, 3, 15, 27]
+  },
+  {
+    "id": 5,
+    "employer_id": 1,
+    "title": "DevOps Engineer",
+    "description": "Join our infrastructure team to build and maintain robust CI/CD pipelines and cloud infrastructure.",
+    "responsibilities": [
+      "Design and implement CI/CD pipelines",
+      "Manage cloud infrastructure on AWS",
+      "Implement security best practices"
+    ],
+    "requirements": [
+      "Experience with Docker, Kubernetes, and Jenkins",
+      "Strong Linux administration skills",
+      "Knowledge of infrastructure as code tools like Terraform"
+    ],
+    "location": "Paris, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 60000,
+      "max": 80000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-18",
+    "status": "Open",
+    "skills": [9, 11, 16, 17, 37, 38, 40]
+  },
+  {
+    "id": 6,
+    "employer_id": 3,
+    "title": "UI/UX Designer",
+    "description": "We're looking for a talented UI/UX Designer to create compelling user experiences for our products.",
+    "responsibilities": [
+      "Design user-friendly interfaces for web and mobile applications",
+      "Create wireframes, prototypes, and mockups",
+      "Collaborate with developers to implement designs"
+    ],
+    "requirements": [
+      "3+ years of experience in UI/UX design",
+      "Proficiency with Figma, Adobe XD, or similar tools",
+      "Portfolio demonstrating strong design skills"
+    ],
+    "location": "Marseille, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 45000,
+      "max": 65000
+    },
+    "remote_option": true,
+    "posting_date": "2024-03-25",
+    "status": "Open",
+    "skills": [45, 46, 47, 48, 70]
+  },
+  {
+    "id": 7,
+    "employer_id": 4,
+    "title": "Mobile Application Developer",
+    "description": "Develop innovative mobile applications for iOS and Android using cross-platform technologies.",
+    "responsibilities": [
+      "Develop and maintain mobile applications using Flutter",
+      "Implement responsive and appealing user interfaces",
+      "Integrate with backend services and APIs"
+    ],
+    "requirements": [
+      "2+ years of experience with Flutter and Dart",
+      "Understanding of mobile development lifecycle",
+      "Experience with state management solutions"
+    ],
+    "location": "Paris, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 50000,
+      "max": 70000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-03",
+    "status": "Open",
+    "skills": [33, 31, 32, 34, 2]
+  },
+  {
+    "id": 8,
+    "employer_id": 5,
+    "title": "Backend Engineer",
+    "description": "Join our team to build robust and scalable backend systems for our financial services platform.",
+    "responsibilities": [
+      "Design and implement server-side logic and APIs",
+      "Optimize database queries for performance",
+      "Ensure security and compliance of our systems"
+    ],
+    "requirements": [
+      "4+ years of experience in backend development",
+      "Strong knowledge of Java or similar languages",
+      "Experience with relational databases and ORM frameworks"
+    ],
+    "location": "Nice, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 55000,
+      "max": 75000
+    },
+    "remote_option": false,
+    "posting_date": "2024-03-20",
+    "status": "Open",
+    "skills": [18, 4, 26, 41, 42]
+  },
+  {
+    "id": 9,
+    "employer_id": 6,
+    "title": "QA Engineer",
+    "description": "We're seeking a detail-oriented QA Engineer to ensure the quality of our educational platform.",
+    "responsibilities": [
+      "Develop and execute test plans and cases",
+      "Perform manual and automated testing",
+      "Report and track bugs to resolution"
+    ],
+    "requirements": [
+      "2+ years of experience in software testing",
+      "Knowledge of testing methodologies and best practices",
+      "Experience with test automation frameworks"
+    ],
+    "location": "Bordeaux, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 45000,
+      "max": 60000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-12",
+    "status": "Open",
+    "skills": [41, 42, 43, 44]
+  },
+  {
+    "id": 10,
+    "employer_id": 7,
+    "title": "Data Engineer",
+    "description": "Help us build and maintain the data infrastructure powering our renewable energy analytics platform.",
+    "responsibilities": [
+      "Design and implement data pipelines",
+      "Work with big data technologies",
+      "Ensure data quality and availability"
+    ],
+    "requirements": [
+      "3+ years of experience with data engineering",
+      "Proficiency with Python and SQL",
+      "Experience with Hadoop, Spark, or similar technologies"
+    ],
+    "location": "Nantes, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 60000,
+      "max": 80000
+    },
+    "remote_option": true,
+    "posting_date": "2024-03-15",
+    "status": "Open",
+    "skills": [1, 4, 14, 53, 54, 55]
+  },
+  {
+    "id": 11,
+    "employer_id": 8,
+    "title": "Product Manager",
+    "description": "Lead the development and success of our retail technology products.",
+    "responsibilities": [
+      "Define product vision, strategy, and roadmap",
+      "Work closely with engineering, design, and marketing teams",
+      "Analyze market trends and user feedback to drive product improvements"
+    ],
+    "requirements": [
+      "4+ years of experience in product management",
+      "Strong understanding of Agile methodologies",
+      "Excellent communication and leadership skills"
+    ],
+    "location": "Lyon, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 65000,
+      "max": 85000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-05",
+    "status": "Open",
+    "skills": [64, 42, 43, 69, 70]
+  },
+  {
+    "id": 12,
+    "employer_id": 9,
+    "title": "IoT Developer",
+    "description": "Develop innovative Internet of Things solutions for industrial applications.",
+    "responsibilities": [
+      "Design and develop embedded software for IoT devices",
+      "Implement communication protocols and data processing",
+      "Collaborate with hardware engineers to integrate solutions"
+    ],
+    "requirements": [
+      "3+ years of experience in IoT development",
+      "Knowledge of embedded systems programming",
+      "Experience with wireless communication protocols"
+    ],
+    "location": "Toulouse, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 55000,
+      "max": 70000
+    },
+    "remote_option": false,
+    "posting_date": "2024-03-10",
+    "status": "Open",
+    "skills": [1, 61, 62, 37]
+  },
+  {
+    "id": 13,
+    "employer_id": 10,
+    "title": "Cloud Solutions Architect",
+    "description": "Design and implement robust cloud architecture solutions for our travel technology platform.",
+    "responsibilities": [
+      "Design scalable and secure cloud infrastructure",
+      "Provide technical guidance to development teams",
+      "Optimize cloud resources for cost and performance"
+    ],
+    "requirements": [
+      "5+ years of experience in cloud architecture",
+      "AWS, Azure, or GCP certifications",
+      "Experience with infrastructure as code"
+    ],
+    "location": "Paris, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 70000,
+      "max": 90000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-20",
+    "status": "Open",
+    "skills": [17, 35, 36, 37, 38, 9]
+  },
+  {
+    "id": 14,
+    "employer_id": 11,
+    "title": "Machine Learning Engineer",
+    "description": "Develop machine learning solutions for agricultural technology applications.",
+    "responsibilities": [
+      "Design and implement machine learning models",
+      "Process and analyze large datasets",
+      "Deploy models to production environments"
+    ],
+    "requirements": [
+      "4+ years of experience in machine learning",
+      "Strong Python skills and knowledge of ML frameworks",
+      "Experience with computer vision or NLP is a plus"
+    ],
+    "location": "Montpellier, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 65000,
+      "max": 85000
+    },
+    "remote_option": true,
+    "posting_date": "2024-03-28",
+    "status": "Open",
+    "skills": [1, 12, 13, 56, 57, 58]
+  },
+  {
+    "id": 15,
+    "employer_id": 12,
+    "title": "Fullstack .NET Developer",
+    "description": "Join our media technology team to develop robust and scalable web applications.",
+    "responsibilities": [
+      "Develop both frontend and backend components",
+      "Design and implement database schemas",
+      "Ensure application performance and security"
+    ],
+    "requirements": [
+      "3+ years of experience with .NET Core",
+      "Proficiency with C# and SQL Server",
+      "Knowledge of modern JavaScript frameworks"
+    ],
+    "location": "Paris, France",
+    "contract_type": "Permanent",
+    "salary_range": {
+      "min": 55000,
+      "max": 75000
+    },
+    "remote_option": true,
+    "posting_date": "2024-04-08",
+    "status": "Open",
+    "skills": [19, 20, 2, 3, 4]
+  }
+]

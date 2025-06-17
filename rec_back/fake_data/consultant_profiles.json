@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "user_id": 5,
+    "phone": "+33612345678",
+    "role": "Senior Consultant",
+    "specializations": ["IT", "Software Development"],
+    "performance_metrics": {
+      "placements_ytd": 12,
+      "avg_time_to_fill": 32,
+      "client_satisfaction": 4.8
+    },
+    "managed_client_ids": [1, 2],
+    "managed_candidate_ids": [1, 2, 3, 5],
+    "managed_job_ids": [1, 2, 3]
+  },
+  {
+    "id": 2,
+    "user_id": 6,
+    "phone": "+33687654321",
+    "role": "International Recruitment Specialist",
+    "specializations": ["Marketing", "Retail", "International"],
+    "performance_metrics": {
+      "placements_ytd": 8,
+      "avg_time_to_fill": 38,
+      "client_satisfaction": 4.6
+    },
+    "managed_client_ids": [3],
+    "managed_candidate_ids": [4, 6, 7, 8],
+    "managed_job_ids": [4, 5]
+  }
+]

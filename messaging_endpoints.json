@@ -1,0 +1,470 @@
+{
+  "name": "💬 Messaging",
+  "item": [
+    {
+      "name": "📁 Conversations",
+      "item": [
+        {
+          "name": "List Conversations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations?page=1&page_size=20&conversation_type=direct&is_archived=false",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "page_size", "value": "20"},
+                {"key": "conversation_type", "value": "direct"},
+                {"key": "is_archived", "value": "false"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Conversation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.environment.set('conversation_id', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Project Discussion\",\n  \"conversation_type\": \"group\",\n  \"participant_ids\": [\"{{candidate_user_id}}\", \"{{employer_user_id}}\"],\n  \"initial_message\": \"Let's discuss the new project requirements\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations"]
+            }
+          }
+        },
+        {
+          "name": "Get Conversation Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Conversation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Project Discussion\",\n  \"description\": \"Updated description for the conversation\",\n  \"is_archived\": false,\n  \"is_pinned\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Archive Conversation",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}/archive",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}", "archive"]
+            }
+          }
+        },
+        {
+          "name": "Delete Conversation",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💌 Messages",
+      "item": [
+        {
+          "name": "Get Conversation Messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}/messages?page=1&page_size=50&message_type=text",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}", "messages"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "page_size", "value": "50"},
+                {"key": "message_type", "value": "text"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Message",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.environment.set('message_id', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Hello! How are you doing today? Looking forward to our interview discussion.\",\n  \"message_type\": \"text\",\n  \"reply_to_id\": null,\n  \"mentions\": [],\n  \"attachments\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}/messages",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}", "messages"]
+            }
+          }
+        },
+        {
+          "name": "Send Reply Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Thank you for reaching out! I'm excited about this opportunity.\",\n  \"message_type\": \"text\",\n  \"reply_to_id\": \"{{message_id}}\",\n  \"mentions\": [],\n  \"attachments\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversations/{{conversation_id}}/messages",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversations", "{{conversation_id}}", "messages"]
+            }
+          }
+        },
+        {
+          "name": "Update Message",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated message content - edited for clarity\",\n  \"is_pinned\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/messages/{{message_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "messages", "{{message_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Mark Message as Read",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/messages/{{message_id}}/read",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "messages", "{{message_id}}", "read"]
+            }
+          }
+        },
+        {
+          "name": "Add Message Reaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reaction_type\": \"👍\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/messages/{{message_id}}/react",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "messages", "{{message_id}}", "react"]
+            }
+          }
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/messages/{{message_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "messages", "{{message_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📎 Attachments",
+      "item": [
+        {
+          "name": "Upload Message Attachment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/messages/{{message_id}}/attachments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "messages", "{{message_id}}", "attachments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📧 Email Templates",
+      "item": [
+        {
+          "name": "List Email Templates",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.items && response.items.length > 0) {",
+                  "        pm.environment.set('template_id', response.items[0].id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/templates?template_type=interview_invitation&is_active=true&page=1&page_size=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "templates"],
+              "query": [
+                {"key": "template_type", "value": "interview_invitation"},
+                {"key": "is_active", "value": "true"},
+                {"key": "page", "value": "1"},
+                {"key": "page_size", "value": "20"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Email Template",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.environment.set('new_template_id', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Interview Invitation\",\n  \"subject\": \"Interview Invitation - {{job_title}} at {{company_name}}\",\n  \"body\": \"Dear {{candidate_name}},\\n\\nWe would like to invite you for an interview for the {{job_title}} position at {{company_name}}.\\n\\nInterview Details:\\n- Date: {{interview_date}}\\n- Time: {{interview_time}}\\n- Type: {{interview_type}}\\n- Location: {{interview_location}}\\n\\nPlease confirm your availability.\\n\\nBest regards,\\n{{interviewer_name}}\",\n  \"template_type\": \"interview_invitation\",\n  \"category\": \"recruitment\",\n  \"variables\": [\"candidate_name\", \"job_title\", \"company_name\", \"interview_date\", \"interview_time\", \"interview_type\", \"interview_location\", \"interviewer_name\"],\n  \"required_variables\": [\"candidate_name\", \"job_title\", \"company_name\"],\n  \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/templates",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "templates"]
+            }
+          }
+        },
+        {
+          "name": "Update Email Template",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Interview Invitation\",\n  \"subject\": \"Updated: Interview Invitation - {{job_title}}\",\n  \"body\": \"Dear {{candidate_name}},\\n\\nThis is an updated invitation for the {{job_title}} position.\\n\\nBest regards,\\n{{interviewer_name}}\",\n  \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/templates/{{template_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "templates", "{{template_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Render Email Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"candidate_name\": \"John Doe\",\n  \"job_title\": \"Senior Python Developer\",\n  \"company_name\": \"TechCorp Solutions\",\n  \"interview_date\": \"February 15, 2024\",\n  \"interview_time\": \"2:00 PM PST\",\n  \"interview_type\": \"Video Call\",\n  \"interview_location\": \"Zoom Meeting\",\n  \"interviewer_name\": \"Sarah Johnson\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/render-template/{{template_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "render-template", "{{template_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Template Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/templates/analytics?template_id={{template_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "templates", "analytics"],
+              "query": [
+                {"key": "template_id", "value": "{{template_id}}"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Email Template",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/templates/{{template_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "templates", "{{template_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Messaging Utilities",
+      "item": [
+        {
+          "name": "Send Bulk Message",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bulk-message?recipient_ids={{candidate_user_id}},{{employer_user_id}}&subject=Important Update&content=This is an important system update for all users&template_id={{template_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "bulk-message"],
+              "query": [
+                {"key": "recipient_ids", "value": "{{candidate_user_id}},{{employer_user_id}}"},
+                {"key": "subject", "value": "Important Update"},
+                {"key": "content", "value": "This is an important system update for all users"},
+                {"key": "template_id", "value": "{{template_id}}"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Unread Message Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/unread-count",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "unread-count"]
+            }
+          }
+        },
+        {
+          "name": "Search Messages",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/search?query=interview&conversation_id={{conversation_id}}&limit=50",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "search"],
+              "query": [
+                {"key": "query", "value": "interview"},
+                {"key": "conversation_id", "value": "{{conversation_id}}"},
+                {"key": "limit", "value": "50"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Conversation Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/conversation-summary?days=7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "conversation-summary"],
+              "query": [
+                {"key": "days", "value": "7"}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

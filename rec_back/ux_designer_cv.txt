@@ -1,0 +1,115 @@
+SOPHIE LAMBERT
+Senior UI/UX Designer
+sophie.lambert@example.com | +33623456789 | Marseille, France
+Portfolio: sophielambert.design | LinkedIn: linkedin.com/in/sophielambert
+
+PROFESSIONAL SUMMARY
+Creative and user-focused UI/UX Designer with 5+ years of experience creating engaging digital experiences for web and mobile applications. Strong background in user research, interaction design, and visual aesthetics. Passionate about creating intuitive interfaces that balance business goals with user needs and ensuring seamless user experiences across platforms.
+
+SKILLS
+Design:
+- UI/UX Design & Strategy
+- Wireframing & Prototyping
+- Interaction Design
+- Visual Design
+- User Research & Testing
+- Design Systems
+- Responsive Design
+- Information Architecture
+- Accessibility (WCAG)
+
+Tools:
+- Figma, Adobe XD, Sketch
+- Adobe Creative Suite (Photoshop, Illustrator)
+- InVision, Principle, Framer
+- Zeplin, Avocode
+- Miro, Whimsical
+- HTML/CSS (working knowledge)
+- React (basic understanding)
+
+Soft Skills:
+- Design thinking
+- Problem-solving
+- Stakeholder management
+- Cross-functional collaboration
+- Project management
+- Client communication
+- Presentation skills
+
+PROFESSIONAL EXPERIENCE
+
+Senior UI/UX Designer
+Creative Agency, Marseille, France
+March 2021 - Present
+- Lead design for major clients across fintech, e-commerce, and healthcare sectors
+- Created comprehensive design systems that improved design consistency and reduced development time by 40%
+- Conducted user research and usability testing to inform design decisions
+- Designed responsive web applications and mobile apps from concept to implementation
+- Collaborated closely with developers to ensure quality implementation
+- Managed client relationships and presented design concepts to stakeholders
+- Mentored junior designers and established design processes
+
+UI Designer
+Tech Startup, Lyon, France
+July 2019 - February 2021
+- Designed user interfaces for iOS and Android mobile applications
+- Created wireframes, prototypes, and visual designs
+- Collaborated with product managers and developers
+- Participated in user research and incorporated feedback into designs
+- Helped establish the company's visual design language
+- Contributed to improving the user experience across products
+
+Junior UX/UI Designer
+Digital Agency, Paris, France
+January 2017 - June 2019
+- Assisted senior designers with wireframing and prototyping
+- Created visual elements and design assets
+- Participated in user testing sessions
+- Designed interface components and landing pages
+- Contributed to responsive website designs
+
+EDUCATION
+
+Master's Degree in Interactive Design
+École de Design Nantes Atlantique, France
+September 2017 - June 2019
+- Specialization in User Experience Design
+- Thesis: "Emotional Design in Digital Interfaces"
+
+Bachelor's Degree in Graphic Design
+LISAA Paris, France
+September 2014 - June 2017
+
+CERTIFICATIONS
+- Nielsen Norman Group UX Certification
+- Google UX Design Professional Certificate
+- Interaction Design Foundation UX Design
+
+SELECTED PROJECTS
+
+FinTech Mobile App (2022)
+- Led the redesign of a financial management application
+- Conducted user research with 50+ participants
+- Created a new information architecture and user flows
+- Designed a component-based design system
+- Resulted in 35% improvement in user satisfaction and 20% increase in daily active users
+
+E-commerce Website Redesign (2021)
+- Redesigned the user experience for an e-commerce platform
+- Simplified checkout process and improved product discovery
+- Created responsive designs for all device sizes
+- Improved conversion rate by 25%
+
+Healthcare Patient Portal (2020)
+- Designed an intuitive patient portal for a healthcare provider
+- Focused on accessibility and ease of use for all age groups
+- Created simple navigation for appointment scheduling and medical records
+- Received recognition for exceptional usability for seniors
+
+LANGUAGES
+- French (Native)
+- English (Fluent)
+- Italian (Conversational)
+
+INTERESTS
+Typography, photography, architecture, design thinking, hiking
