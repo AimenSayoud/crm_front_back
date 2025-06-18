@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore, selectLogin, selectIsLoading } from '@/store/useAuthStore';
 import { useTheme } from '@/app/context/ThemeContext';
 import { AuthenticationError } from '@/services/api/auth-service';
+import { BackgroundCells } from '@/components/ui/background-ripple-effect';
+import Image from 'next/image';
+import { USE_MOCK_DATA } from '@/store/mockHelpers';
 
 export default function LoginPage() {
   // Create state for form values
@@ -17,6 +20,7 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [errorType, setErrorType] = useState<'validation' | 'auth' | 'server' | ''>('');
+  const [showAlert, setShowAlert] = useState(false);
   
   // Force re-render counter
   const [renderKey, setRenderKey] = useState(0);
@@ -25,9 +29,22 @@ export default function LoginPage() {
   const login = useAuthStore(selectLogin);
   const isLoading = useAuthStore(selectIsLoading);
   
-  // Theme and router
-  const { colors } = useTheme();
+  // Router and theme
   const router = useRouter();
+  const { theme } = useTheme();
+  
+  // Use light theme colors specifically for login
+  const lightColors = {
+    primary: '#0F766E', // teal-700 for focused/active
+    secondary: '#031F28', // custom dark primary as secondary in light
+    background: '#F9FAFB', // gray-50
+    text: '#1F2937', // gray-800
+    sidebar: '#E6F1F4', // light blueish sidebar
+    card: '#FFFFFF', // white
+    border: '#E5E7EB', // gray-200
+    inputBg: '#F9FAFB', // same as background
+    shadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+  };
   
   // Prevent any default form submissions
   useEffect(() => {
@@ -42,6 +59,17 @@ export default function LoginPage() {
       document.removeEventListener('submit', preventDefault, true);
     };
   }, []);
+
+  // Auto-hide alert after 5 seconds
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
   
   // Handle login click
   const handleLogin = async () => {
@@ -50,6 +78,7 @@ export default function LoginPage() {
     setEmailError('');
     setPasswordError('');
     setErrorType('');
+    setShowAlert(false);
     
     // Input validation
     if (!email.trim()) {
@@ -79,12 +108,14 @@ export default function LoginPage() {
         if (code === 'invalid_credentials') {
           setLocalError('The email or password you entered is incorrect. Please try again.');
           setErrorType('auth');
+          setShowAlert(true);
         } else if (code === 'user_not_found') {
           setEmailError('This email is not registered in our system');
           setErrorType('validation');
         } else if (code === 'account_disabled') {
           setLocalError('Your account has been deactivated. Please contact support.');
           setErrorType('auth');
+          setShowAlert(true);
         } else if (code === 'validation_error' && details) {
           if (details.email) {
             setEmailError(Array.isArray(details.email) ? details.email[0] : details.email);
@@ -99,6 +130,7 @@ export default function LoginPage() {
         } else {
           setLocalError(message || 'An unexpected error occurred');
           setErrorType('auth');
+          setShowAlert(true);
         }
       } else if (error instanceof Error) {
         if (error.name === 'NetworkConnectionError' || 
@@ -109,10 +141,12 @@ export default function LoginPage() {
         } else {
           setLocalError(error.message || 'Authentication failed');
           setErrorType('auth');
+          setShowAlert(true);
         }
       } else {
         setLocalError('Authentication failed. Please check your credentials and try again.');
         setErrorType('auth');
+        setShowAlert(true);
       }
       
       // Force re-render after error
@@ -129,159 +163,238 @@ export default function LoginPage() {
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{ backgroundColor: colors.background }}
-      key={`login-container-${renderKey}`}
-    >
-      <div 
-        className="max-w-md w-full p-8 rounded-lg shadow-lg"
-        style={{ backgroundColor: colors.card, borderColor: colors.border }}
-      >
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold" style={{ color: colors.text }}>RecrutementPlus</h1>
-          <p className="text-sm mt-2 opacity-75" style={{ color: colors.text }}>Log in to your CRM account</p>
-        </div>
-        
-        {/* Error message container */}
-        {localError && (
+    <div key={`login-container-${renderKey}`}>
+      <BackgroundCells className="flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#031F28' }}>
+        <div className="pointer-events-auto z-50 w-full max-w-md relative">
+          
           <div 
-            className={`mb-4 p-3 rounded-md text-sm font-medium ${
-              errorType === 'server' 
-                ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
-                : 'bg-red-100 text-red-600 border border-red-300'
-            }`}
-          >
-            {localError}
-          </div>
-        )}
-        
-        {/* Login form (not using form element) */}
-        <div>
-          <div className="mb-4">
-            <label 
-              htmlFor="email" 
-              className={`block text-sm font-medium mb-1 ${emailError ? 'text-red-500' : ''}`}
-              style={{ color: emailError ? '#ef4444' : colors.text }}
-            >
-              Email
-            </label>
-            <div className="relative">
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (emailError) setEmailError('');
-                }}
-                onKeyDown={handleKeyDown}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                  emailError ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'
-                }`}
-                style={{ 
-                  backgroundColor: colors.background,
-                  color: colors.text,
-                  borderColor: emailError ? '#ef4444' : colors.border,
-                }}
-                aria-invalid={!!emailError}
-                aria-describedby={emailError ? "email-error" : undefined}
-                autoComplete="username"
-                name="email"
-              />
-              {emailError && (
-                <span className="absolute right-2 top-2 text-red-500">
-                  ⚠️
-                </span>
-              )}
-            </div>
-            {emailError ? (
-              <p id="email-error" className="mt-1 text-xs text-red-500">
-                {emailError}
-              </p>
-            ) : (
-              <p className="mt-1 text-xs opacity-75" style={{ color: colors.text }}>
-                Enter your registered email address
-              </p>
-            )}
-          </div>
-          
-          <div className="mb-6">
-            <label 
-              htmlFor="password" 
-              className={`block text-sm font-medium mb-1 ${passwordError ? 'text-red-500' : ''}`}
-              style={{ color: passwordError ? '#ef4444' : colors.text }}
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (passwordError) setPasswordError('');
-                }}
-                onKeyDown={handleKeyDown}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                  passwordError ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'
-                }`}
-                style={{ 
-                  backgroundColor: colors.background,
-                  color: colors.text,
-                  borderColor: passwordError ? '#ef4444' : colors.border,
-                }}
-                aria-invalid={!!passwordError}
-                aria-describedby={passwordError ? "password-error" : undefined}
-                autoComplete="current-password"
-                name="password"
-              />
-              {passwordError && (
-                <span className="absolute right-2 top-2 text-red-500">
-                  ⚠️
-                </span>
-              )}
-            </div>
-            {passwordError ? (
-              <p id="password-error" className="mt-1 text-xs text-red-500">
-                {passwordError}
-              </p>
-            ) : (
-              <p className="mt-1 text-xs opacity-75" style={{ color: colors.text }}>
-                Enter your account password
-              </p>
-            )}
-          </div>
-          
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault(); 
-              if (!isLoading) handleLogin();
-            }}
-            disabled={isLoading}
-            className={`w-full py-2 rounded-md font-medium transition-colors disabled:opacity-50 flex items-center justify-center ${
-              errorType ? 'hover:bg-blue-700' : 'hover:bg-blue-600'
-            }`}
+            className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 overflow-hidden"
             style={{ 
-              backgroundColor: errorType === 'server' ? '#f59e0b' : colors.primary,
-              color: 'white',
-              minHeight: '42px'
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
             }}
           >
-            {isLoading ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Logging in...
-              </>
-            ) : 'Log In'}
-          </button>
+            {/* Header Section */}
+            <div className="px-12 pt-8 pb-6 text-center">
+              <div className="mb-6">
+                <Image 
+                  src="/logo.png" 
+                  alt="RecrutementPlus Logo" 
+                  width={140} 
+                  height={140}
+                  className={`mx-auto object-contain transition-all duration-300 ${isLoading ? 'animate-pulse scale-110' : ''}`}
+                />
+              </div>
+              <h1 
+                className="text-3xl font-bold mb-2 tracking-tight" 
+                style={{ color: lightColors.secondary }}
+              >
+                Welcome Back
+              </h1>
+              <p 
+                className="text-sm opacity-70 font-medium" 
+                style={{ color: lightColors.secondary }}
+              >
+                Sign in to access your CRM dashboard
+              </p>
+            </div>
+
+            {/* Form Section */}
+            <div className={`px-8 pb-8 transition-opacity duration-300 ${isLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+              
+              {/* Alert Section - Inside Form */}
+              {showAlert && (
+                <div className="mb-6">
+                  <div className="bg-red-50 border-2 border-red-300 text-red-800 p-4 rounded-lg shadow-lg">
+                    <div className="flex items-center">
+                      <svg className="w-6 h-6 mr-3 text-red-600 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      <div>
+                        <h4 className="font-bold text-red-900 text-base">⚠️ Authentication Failed</h4>
+                        <p className="text-sm text-red-700 mt-1">Invalid email or password. Please check your credentials and try again.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* Global Error */}
+              {localError && (
+                <div 
+                  className={`mb-6 p-4 rounded-xl text-sm font-medium border ${
+                    errorType === 'server' 
+                      ? 'bg-amber-50 text-amber-800 border-amber-200'
+                      : 'bg-red-50 text-red-700 border-red-200'
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {localError}
+                  </div>
+                </div>
+              )}
+              
+              <div className="space-y-5">
+                {/* Email Field */}
+                <div>
+                  <label 
+                    htmlFor="email" 
+                    className="block text-sm font-semibold mb-2"
+                    style={{ color: lightColors.secondary }}
+                  >
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError('');
+                      }}
+                      onKeyDown={handleKeyDown}
+                      className={`w-full px-4 py-3.5 text-sm rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-teal-500/20 ${
+                        emailError 
+                          ? 'border-red-300 focus:border-red-500' 
+                          : 'border-gray-200 hover:border-gray-300 focus:border-teal-500'
+                      }`}
+                      style={{ 
+                        backgroundColor: '#fafafa',
+                        color: lightColors.secondary,
+                        fontSize: '14px'
+                      }}
+                      placeholder="Enter your email address"
+                      aria-invalid={emailError ? 'true' : 'false'}
+                      aria-describedby={emailError ? "email-error" : undefined}
+                      autoComplete="username"
+                      name="email"
+                    />
+                    {emailError && (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <svg className="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  {emailError && (
+                    <p className="mt-2 text-sm text-red-600 flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {emailError}
+                    </p>
+                  )}
+                </div>
+                
+                {/* Password Field */}
+                <div>
+                  <label 
+                    htmlFor="password" 
+                    className="block text-sm font-semibold mb-2"
+                    style={{ color: lightColors.secondary }}
+                  >
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        if (passwordError) setPasswordError('');
+                      }}
+                      onKeyDown={handleKeyDown}
+                      className={`w-full px-4 py-3.5 text-sm rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-teal-500/20 ${
+                        passwordError 
+                          ? 'border-red-300 focus:border-red-500' 
+                          : 'border-gray-200 hover:border-gray-300 focus:border-teal-500'
+                      }`}
+                      style={{ 
+                        backgroundColor: '#fafafa',
+                        color: lightColors.secondary,
+                        fontSize: '14px'
+                      }}
+                      placeholder="Enter your password"
+                      aria-invalid={passwordError ? 'true' : 'false'}
+                      aria-describedby={passwordError ? "password-error" : undefined}
+                      autoComplete="current-password"
+                      name="password"
+                    />
+                    {passwordError && (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <svg className="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  {passwordError && (
+                    <p className="mt-2 text-sm text-red-600 flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {passwordError}
+                    </p>
+                  )}
+                </div>
+                
+                {/* Sign In Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault(); 
+                    if (!isLoading) handleLogin();
+                  }}
+                  disabled={isLoading}
+                  className={`group w-full py-4 px-6 rounded-xl font-semibold text-white text-base transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center ${
+                    isLoading 
+                      ? 'transform scale-[0.98]' 
+                      : 'hover:transform hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]'
+                  }`}
+                  style={{ 
+                    backgroundColor: lightColors.secondary,
+                    boxShadow: isLoading ? 'none' : '0 10px 25px -5px rgba(3, 31, 40, 0.4), 0 4px 10px -2px rgba(3, 31, 40, 0.2)'
+                  }}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center space-x-3">
+                      <div className="relative">
+                        <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        <div className="absolute inset-0 w-6 h-6 border-3 border-transparent border-r-white/60 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '0.75s' }}></div>
+                      </div>
+                      <span className="font-medium">Signing In...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <span>Sign In</span>
+                      <svg className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+            
+            {/* Footer */}
+            <div 
+              className="px-8 py-4 text-center border-t border-gray-100"
+              style={{ backgroundColor: '#f8f9fa' }}
+            >
+              <p 
+                className="text-xs font-medium opacity-60" 
+                style={{ color: lightColors.secondary }}
+              >
+                RecrutementPlus CRM © 2024 • Secure Login
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </BackgroundCells>
     </div>
   );
 }

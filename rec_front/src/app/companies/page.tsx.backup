@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTheme } from '@/app/context/ThemeContext';
-
+import { useAuthStore, selectUser } from '@/store/useAuthStore';
 import { motion } from 'framer-motion';
 import { Company } from '@/types';
 import { mockData } from '@/store/mockData';
@@ -13,6 +13,7 @@ import CompanyDetailModal from '@/components/companies/CompanyDetailModal';
 
 const CompaniesPage = () => {
   const { colors, theme } = useTheme();
+  const user = useAuthStore(selectUser);
 
   // State for SearchFilterBar
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,21 +43,18 @@ const CompaniesPage = () => {
     // Simulate loading delay
     setTimeout(() => {
       try {
-        // Map mock companies to match the Company type from types/index.ts
+        // Map mock companies to Company type
         const mappedCompanies = mockData.companies.map(company => ({
-          id: company.id,
-          name: company.name,
-          industry: company.industry,
-          website: company.website,
+          ...company,
+          openPositions: company.active_jobs,
           contactPerson: `Contact Person ${company.id}`,
           contactEmail: company.email || `contact@${company.name.toLowerCase().replace(/\s+/g, '')}.com`,
-          contactPhone: company.phone,
-          address: company.address,
-          notes: company.description,
-          createdAt: new Date(company.created_at),
-          updatedAt: new Date(company.updated_at),
-          openPositions: company.active_jobs,
-          officeId: 'default-office',
+          contactPhone: company.phone || `+1-555-${company.id.padStart(3, '0')}-0000`,
+          createdAt: company.created_at,
+          updatedAt: company.updated_at,
+          employees: company.total_employees,
+          verified: company.is_verified,
+          premium: company.is_premium,
         })) as Company[];
         
         setCompanies(mappedCompanies);
@@ -94,7 +92,7 @@ const CompaniesPage = () => {
 
       // Employee count filter
       const matchesEmployees = filters.employees.length === 0 || filters.employees.some(range => {
-        const employees = 50; // Default employee count since Company type doesn't have total_employees
+        const employees = company.employees || 0;
         switch (range) {
           case '1-10': return employees >= 1 && employees <= 10;
           case '11-50': return employees >= 11 && employees <= 50;
@@ -318,11 +316,6 @@ const CompaniesPage = () => {
           company={selectedCompany}
           isOpen={showDetailModal}
           onClose={() => {
-            setShowDetailModal(false);
-            setSelectedCompany(null);
-          }}
-          onSave={(updatedCompany) => {
-            setCompanies(prev => prev.map(c => c.id === updatedCompany.id ? updatedCompany : c));
             setShowDetailModal(false);
             setSelectedCompany(null);
           }}

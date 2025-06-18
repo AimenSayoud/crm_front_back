@@ -8,6 +8,7 @@ import { useTheme } from '@/app/context/ThemeContext';
 import { useAuthStore, selectUser, selectCanAccess } from '@/store/useAuthStore';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useSidebar } from '@/app/context/SidebarContext';
 
 interface SidebarItem {
   name: string;
@@ -19,6 +20,7 @@ interface SidebarItem {
 const Sidebar = () => {
   const pathname = usePathname();
   const { theme, colors } = useTheme();
+  const { isCollapsed } = useSidebar();
   const user = useAuthStore(selectUser);
   const canAccess = useAuthStore(selectCanAccess);
   
@@ -119,7 +121,9 @@ const Sidebar = () => {
       initial="hidden"
       animate="visible"
       variants={sidebarVariants}
-      className="fixed h-full w-64 flex flex-col shadow-lg z-20 transition-colors duration-200"
+      className={`fixed h-full flex flex-col shadow-lg z-20 transition-all duration-300 ease-in-out ${
+        isCollapsed ? 'w-20' : 'w-64'
+      }`}
       style={{ 
         backgroundColor: colors.sidebar,
         borderRight: `1px solid ${colors.border}` 
@@ -135,32 +139,44 @@ const Sidebar = () => {
             delay: 0.2
           }}
         >
-          <Image 
-            src="/logo.png" 
-            alt="RecrutementPlus Logo"
-            width={220} 
-            height={70}
-            className="object-contain"
-            priority
-          />
+          {isCollapsed ? (
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center"
+                 style={{ backgroundColor: colors.primary }}>
+              <span className="text-white font-bold text-lg">R</span>
+            </div>
+          ) : (
+            <Image 
+              src="/logo.png" 
+              alt="RecrutementPlus Logo"
+              width={220} 
+              height={70}
+              className="object-contain transition-all duration-300"
+              style={{
+                filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none'
+              }}
+              priority
+            />
+          )}
         </motion.div>
       </div>
       
       <div className="overflow-y-auto flex-1 py-6">
-        <motion.div
-          className="px-3 mb-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.7 }}
-          transition={{ delay: 0.3, duration: 0.3 }}
-        >
-          <h3 className="text-xs font-semibold uppercase tracking-wider px-3 mb-2" 
-            style={{ color: theme === 'light' ? colors.secondary : '#A3A3A3' }}>
-            Main Navigation
-          </h3>
-        </motion.div>
+        {!isCollapsed && (
+          <motion.div
+            className="px-3 mb-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.7 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
+          >
+            <h3 className="text-xs font-semibold uppercase tracking-wider px-3 mb-2" 
+              style={{ color: theme === 'light' ? colors.secondary : '#A3A3A3' }}>
+              Main Navigation
+            </h3>
+          </motion.div>
+        )}
         
         <nav>
-          <ul className="space-y-1 px-3">
+          <ul className={`space-y-1 ${isCollapsed ? 'px-2' : 'px-3'}`}>
             {filteredItems.map((item, idx) => {
               const isActive = pathname === item.path || pathname.startsWith(`${item.path}/`);
               
@@ -173,8 +189,8 @@ const Sidebar = () => {
                   variants={childVariants}
                 >
                   <Link href={item.path}>
-                    <motion.div
-                      className={`flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                                        <motion.div
+                      className={`flex items-center ${isCollapsed ? 'px-2 py-3 justify-center' : 'px-3 py-2.5'} rounded-lg transition-all duration-200 group ${
                         isActive ? 'font-medium' : 'font-normal'
                       }`}
                       style={{
@@ -192,7 +208,7 @@ const Sidebar = () => {
                         backgroundColor: isActive 
                           ? theme === 'light' ? '#D1FAE5' : '#164E63'
                           : theme === 'light' ? 'rgba(229, 231, 235, 0.5)' : 'rgba(55, 65, 81, 0.5)',
-                        x: 3,
+                        x: isCollapsed ? 0 : 3,
                         transition: { 
                           duration: 0.2, 
                           ease: "easeOut" 
@@ -203,9 +219,10 @@ const Sidebar = () => {
                         backgroundColor: { duration: 0.15 },
                         boxShadow: { duration: 0.15 }
                       }}
+                      title={isCollapsed ? item.name : undefined}
                     >
-                      <motion.span 
-                        className="inline-flex items-center justify-center w-6 h-6 mr-3"
+                      <motion.span
+                        className={`inline-flex items-center justify-center w-6 h-6 ${isCollapsed ? '' : 'mr-3'}`}
                         style={{ 
                           color: isActive 
                             ? colors.primary
@@ -219,16 +236,18 @@ const Sidebar = () => {
                       >
                         {item.icon}
                       </motion.span>
-                      <span 
-                        className={`${isActive ? 'font-medium' : ''} text-sm`}
-                        style={{
-                          color: isActive 
-                            ? colors.primary
-                            : colors.text
-                        }}
-                      >
-                        {item.name}
-                      </span>
+                      {!isCollapsed && (
+                        <span 
+                          className={`${isActive ? 'font-medium' : ''} text-sm`}
+                          style={{
+                            color: isActive 
+                              ? colors.primary
+                              : colors.text
+                          }}
+                        >
+                          {item.name}
+                        </span>
+                      )}
                     </motion.div>
                   </Link>
                 </motion.li>
@@ -250,14 +269,16 @@ const Sidebar = () => {
           }}
           style={{ borderColor: colors.border }}
         >
-          <div className="flex items-center px-2">
+          <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-2'}`}>
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 dark:from-teal-700 dark:to-teal-900 flex items-center justify-center text-white font-medium shadow-sm">
               {user.name ? user.name.charAt(0).toUpperCase() : '?'}
             </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium" style={{ color: colors.text }}>{user.name || 'User'}</p>
-              <p className="text-xs opacity-75 capitalize" style={{ color: colors.text }}>{user.role ? user.role.replace('_', ' ') : ''}</p>
-            </div>
+            {!isCollapsed && (
+              <div className="ml-3">
+                <p className="text-sm font-medium" style={{ color: colors.text }}>{user.name || 'User'}</p>
+                <p className="text-xs opacity-75 capitalize" style={{ color: colors.text }}>{user.role ? user.role.replace('_', ' ') : ''}</p>
+              </div>
+            )}
           </div>
         </motion.div>
       )}

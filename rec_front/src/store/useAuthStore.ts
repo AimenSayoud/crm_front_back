@@ -6,6 +6,7 @@ import AuthService, {
   User as ApiUser, 
   AuthenticationError 
 } from '../services/api/auth-service';
+import { mockAuthService } from './mockHelpers';
 
 export type UserRole = 'super_admin' | 'admin' | 'employee' | 'candidate' | 'consultant' | 'employer';
 export type OfficeId = string;
@@ -58,7 +59,16 @@ export const useAuthStore = create<AuthStore>()(
         set({ isLoading: true, error: null });
         
         try {
-          const response = await AuthService.login({ email, password });
+          // Use mock authentication if mock data is enabled
+          const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
+          
+          let response;
+          if (USE_MOCK_DATA) {
+            response = await mockAuthService.login(email, password);
+          } else {
+            response = await AuthService.login({ email, password });
+          }
+          
           const { user, tokens } = response;
           
           // Store tokens in localStorage
@@ -103,7 +113,7 @@ export const useAuthStore = create<AuthStore>()(
             errorMessage = error.message;
             
             // Check for known error messages and convert them to appropriate error codes
-            if (errorMessage.includes('Incorrect email or password')) {
+            if (errorMessage.includes('Incorrect email or password') || errorMessage.includes('Invalid credentials')) {
               errorCode = 'invalid_credentials';
             } else if (errorMessage.toLowerCase().includes('network')) {
               errorCode = 'server_error';

@@ -24,46 +24,9 @@ const DashboardPage = () => {
   const { colors, theme } = useTheme();
   const user = useAuthStore(selectUser);
   
-  // More refined animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.08,
-        ease: "easeOut"
-      }
-    }
-  };
 
-  const itemVariants = {
-    hidden: { y: 15, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { 
-        type: "spring", 
-        stiffness: 80, 
-        damping: 12 
-      }
-    }
-  };
 
-  const chartVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.5, 
-        delay: 0.2,
-        ease: [0.25, 0.1, 0.25, 1.0]
-      }
-    }
-  };
-
-  // Stats from the screenshot
+  // Stats from the screenshot - Modern clean design
   const stats = [
     { 
       name: 'Open Positions', 
@@ -71,10 +34,7 @@ const DashboardPage = () => {
       change: '+5%', 
       isPositive: true,
       icon: 'briefcase',
-      bgColor: theme === 'light' 
-        ? 'from-blue-50/80 to-blue-100/90' 
-        : 'from-blue-900/20 to-blue-800/25',
-      iconColor: theme === 'light' ? '#3B82F6' : '#60A5FA'
+      description: 'Active job openings'
     },
     { 
       name: 'Placements', 
@@ -82,10 +42,7 @@ const DashboardPage = () => {
       change: '+18%',
       isPositive: true, 
       icon: 'users',
-      bgColor: theme === 'light' 
-        ? 'from-emerald-50/80 to-emerald-100/90' 
-        : 'from-emerald-900/20 to-emerald-800/25',
-      iconColor: theme === 'light' ? '#10B981' : '#34D399'
+      description: 'Successful hires this month'
     },
     { 
       name: 'Avg. Time to Hire', 
@@ -94,30 +51,15 @@ const DashboardPage = () => {
       specialText: 'Better',
       specialTextNote: 'Industry avg: 36 days',
       icon: 'clock',
-      bgColor: theme === 'light' 
-        ? 'from-amber-50/80 to-amber-100/90' 
-        : 'from-amber-900/20 to-amber-800/25',
-      iconColor: theme === 'light' ? '#F59E0B' : '#FBBF24'
+      description: 'Average hiring duration'
     },
     { 
       name: 'Active Recruitments', 
       value: '18', 
       subText: 'From last month',
       icon: 'user-check',
-      bgColor: theme === 'light' 
-        ? 'from-violet-50/80 to-violet-100/90' 
-        : 'from-violet-900/20 to-violet-800/25',
-      iconColor: theme === 'light' ? '#8B5CF6' : '#A78BFA'
+      description: 'Ongoing recruitment processes'
     },
-  ];
-
-  // Recruitment pipeline data
-  const pipelineStages = [
-    { stage: "Applied", count: 45, color: theme === 'light' ? "#3B82F6" : "#60A5FA" }, // Blue
-    { stage: "Screening", count: 28, color: theme === 'light' ? "#0EA5E9" : "#38BDF8" }, // Light blue
-    { stage: "Interview", count: 16, color: theme === 'light' ? "#10B981" : "#34D399" }, // Green
-    { stage: "Offer", count: 8, color: theme === 'light' ? "#8B5CF6" : "#A78BFA" }, // Purple
-    { stage: "Hired", count: 4, color: theme === 'light' ? "#22C55E" : "#4ADE80" }, // Success green
   ];
 
   // Upcoming activities
@@ -128,8 +70,7 @@ const DashboardPage = () => {
       position: "Senior Developer",
       company: "TechCorp",
       time: "10:00 AM, Today",
-      avatar: "E",
-      color: theme === 'light' ? '#10B981' : '#34D399' // Green
+      avatar: "E"
     },
     {
       type: "Follow-up",
@@ -137,8 +78,7 @@ const DashboardPage = () => {
       position: "Product Manager",
       company: "Innovate Inc.",
       time: "2:30 PM, Today",
-      avatar: "M",
-      color: theme === 'light' ? '#3B82F6' : '#60A5FA' // Blue
+      avatar: "M"
     },
     {
       type: "Screening",
@@ -146,8 +86,7 @@ const DashboardPage = () => {
       position: "UX Designer",
       company: "DesignHub",
       time: "9:15 AM, Tomorrow",
-      avatar: "S",
-      color: theme === 'light' ? '#8B5CF6' : '#A78BFA' // Purple
+      avatar: "S"
     }
   ];
 
@@ -206,9 +145,6 @@ const DashboardPage = () => {
     }
   };
 
-  // Calculate total candidates for pipeline percentage
-  const totalCandidates = pipelineStages.reduce((sum, stage) => sum + stage.count, 0);
-
   return (
     <div className="pb-6">
       {/* Page header with welcome message */}
@@ -233,604 +169,668 @@ const DashboardPage = () => {
         </motion.p>
       </div>
 
-      {/* Key metrics */}
+      {/* Key metrics - Modern clean design */}
       <motion.div 
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, staggerChildren: 0.1 }}
       >
-        {stats.map((stat) => (
+        {stats.map((stat, index) => (
           <motion.div
             key={stat.name}
-            variants={itemVariants}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{ 
-              y: -4, 
-              boxShadow: theme === 'light' 
-                ? '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)'
-                : '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.15)',
+              y: -2,
               transition: { duration: 0.2 } 
             }}
-            className="p-5 rounded-xl border overflow-hidden relative"
+            className="group relative bg-white dark:bg-gray-800/60 rounded-2xl p-5 border transition-all duration-300 hover:shadow-md"
             style={{ 
               backgroundColor: colors.card,
-              borderColor: theme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
+              borderColor: theme === 'light' ? '#E5E7EB' : '#4B5563',
               boxShadow: theme === 'light' 
-                ? '0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02)'
-                : '0 4px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.1)'
+                ? '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+                : '0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.24)'
             }}
           >
-            <div className="flex justify-between items-start">
-              <div className="relative z-10">
-                <p className="text-sm font-medium opacity-75" style={{ color: colors.text }}>
-                  {stat.name}
-                </p>
-                <div className="flex items-baseline mt-1">
-                  <p className="text-2xl font-bold" style={{ color: colors.text }}>
-                    {stat.value}
-                  </p>
-                  {stat.subValue && (
-                    <span className="ml-1 text-base opacity-75" style={{ color: colors.text }}>
-                      {stat.subValue}
-                    </span>
-                  )}
+            {/* Header with icon */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start space-x-3">
+                <div 
+                  className="p-2 rounded-xl transition-colors duration-200 flex-shrink-0"
+                  style={{ 
+                    backgroundColor: `${colors.primary}15`,
+                  }}
+                >
+                  {getIcon(stat.icon, colors.primary)}
                 </div>
-                {stat.change && (
-                  <div
-                    className={`mt-1 text-sm flex items-center font-medium ${
-                      stat.isPositive
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-rose-600 dark:text-rose-400'
-                    }`}
-                  >
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    {stat.change}
-                  </div>
-                )}
-                {stat.specialText && (
-                  <div
-                    className="mt-1 text-sm flex items-center font-medium text-emerald-600 dark:text-emerald-400"
-                  >
-                    → {stat.specialText}
-                  </div>
-                )}
-                {stat.specialTextNote && (
-                  <p className="text-xs mt-0.5 opacity-60" style={{ color: colors.text }}>
-                    {stat.specialTextNote}
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm font-semibold leading-tight" 
+                      style={{ color: colors.text }}>
+                    {stat.name}
+                  </h3>
+                  <p className="text-xs leading-relaxed mt-1" 
+                     style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                    {stat.description}
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Main value */}
+            <div className="mb-4">
+              <div className="flex items-baseline space-x-2">
+                <span className="text-3xl font-bold leading-none" style={{ color: colors.text }}>
+                  {stat.value}
+                </span>
+                {stat.subValue && (
+                  <span className="text-lg font-medium leading-none" 
+                        style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                    {stat.subValue}
+                  </span>
                 )}
+              </div>
+            </div>
+
+            {/* Bottom section with change indicator or special info */}
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                {stat.change && (
+                  <div className="flex items-center space-x-1">
+                    <div className={`flex items-center px-3 py-1.5 rounded-full text-sm font-semibold transition-colors ${
+                      stat.isPositive
+                        ? 'bg-gray-50 text-[#031F28] dark:bg-emerald-900/30 dark:text-emerald-800'
+                        : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                    }`}>
+                      <svg 
+                        className={`w-4 h-4 mr-1.5 ${stat.isPositive ? 'rotate-0' : 'rotate-180'}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                      </svg>
+                      {stat.change}
+                    </div>
+                  </div>
+                )}
+                
+                {stat.specialText && (
+                  <div className="flex items-center space-x-1">
+                    <div className="flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-800 transition-colors">
+                      <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {stat.specialText}
+                    </div>
+                  </div>
+                )}
+
                 {stat.subText && (
-                  <p className="text-xs mt-0.5 opacity-60" style={{ color: colors.text }}>
+                  <p className="text-sm font-medium mt-2 leading-relaxed" 
+                     style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
                     {stat.subText}
                   </p>
                 )}
               </div>
-              <div 
-                className="p-3 rounded-full bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm border border-white/60 dark:border-gray-700/30"
-                style={{ color: stat.iconColor }}
-              >
-                {getIcon(stat.icon, stat.iconColor)}
-              </div>
             </div>
+
+            {/* Special note */}
+            {stat.specialTextNote && (
+              <div className="mt-3 pt-3 border-t transition-colors" 
+                   style={{ borderColor: theme === 'light' ? '#E5E7EB' : '#374151' }}>
+                <p className="text-sm font-medium leading-relaxed" 
+                   style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                  {stat.specialTextNote}
+                </p>
+              </div>
+            )}
+
+            {/* Subtle hover effect indicator */}
+            <div 
+              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              style={{
+                background: theme === 'light' 
+                  ? 'linear-gradient(145deg, rgba(59, 130, 246, 0.02), rgba(59, 130, 246, 0.05))'
+                  : 'linear-gradient(145deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02))'
+              }}
+            />
           </motion.div>
         ))}
       </motion.div>
 
       {/* Two-column layout for pipeline and upcoming activities */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Recruitment Pipeline - Optimized Spacing */}
+        {/* Recruitment Pipeline Analytics - Enhanced */}
         <motion.div 
           className="lg:col-span-2"
-          initial="hidden"
-          animate="visible"
-          variants={chartVariants}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Card className="h-full">
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-lg font-semibold" style={{ color: colors.text }}>
-                Recruitment Pipeline
-              </h2>
-              <Link href="/pipeline" className="text-sm font-medium flex items-center" style={{ color: colors.primary }}>
-                View Details
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Pipeline progress bar - Improved height and spacing */}
-            <div className="mb-3 relative">
-              <div className="h-3 flex rounded-lg overflow-hidden">
-                {pipelineStages.map((stage, idx) => {
-                  const percentage = (stage.count / totalCandidates) * 100;
-                  return (
-                    <motion.div
-                      key={stage.stage}
-                      className="h-full relative group"
-                      style={{ 
-                        backgroundColor: stage.color,
-                        width: `${percentage}%` 
-                      }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${percentage}%` }}
-                      transition={{ 
-                        duration: 0.8, 
-                        delay: 0.5 + (idx * 0.1), 
-                        ease: [0.25, 0.1, 0.25, 1.0] 
-                      }}
-                      whileHover={{ opacity: 0.9 }}
-                    >
-                      {/* Compact tooltip on hover */}
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                        <div className="bg-white dark:bg-gray-800 text-xs font-medium px-2 py-1 rounded shadow-md whitespace-nowrap"
-                            style={{ 
-                              color: colors.text, 
-                              borderBottom: `2px solid ${stage.color}` 
-                            }}>
-                          {stage.stage}: {stage.count} ({Math.round(percentage)}%)
-                        </div>
-                      </div>
-                      {/* Divider between segments except the last one */}
-                      {idx < pipelineStages.length - 1 && (
-                        <div className="absolute right-0 top-0 w-px h-full bg-white dark:bg-gray-900 opacity-30"></div>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-            
-            {/* Pipeline stages - Compact and efficient layout */}
-            <div className="grid grid-cols-5 gap-1">
-              {pipelineStages.map((stage, idx) => (
-                <motion.div 
-                  key={stage.stage}
-                  className="text-center p-1.5 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + (idx * 0.1), duration: 0.4 }}
-                  whileHover={{ y: -1 }}
-                >
-                  <div className="flex items-center justify-center mb-1">
-                    <div 
-                      className="w-2 h-2 rounded-full mr-1.5" 
-                      style={{ backgroundColor: stage.color }}
-                    />
-                    <span className="text-xs font-medium" style={{ color: colors.text }}>{stage.stage}</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <p className="text-lg font-bold" style={{ color: colors.text }}>
-                      {stage.count}
+          <Card className="h-full relative overflow-hidden">
+            {/* Strategic Header */}
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <div className="flex items-center mb-2">
+                                  <div className="p-2 rounded-lg mr-3" 
+                     style={{ backgroundColor: `${colors.primary}15` }}>
+                  <svg className="w-5 h-5" fill="none" stroke={colors.primary} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                  <div>
+                    <h2 className="text-xl font-bold leading-tight" style={{ color: colors.text }}>
+                      Recruitment Analytics
+                    </h2>
+                    <p className="text-sm mt-1" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                      Real-time pipeline performance & insights
                     </p>
-                    <span className="text-xs opacity-70 ml-1" style={{ color: colors.text }}>
-                      ({Math.round((stage.count / totalCandidates) * 100)}%)
-                    </span>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-            
-            {/* Add timeline visualization */}
-            <div className="mt-3 pt-2 border-t border-b pb-2" style={{ borderColor: theme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)' }}>
-              <div className="flex justify-between items-center">
-                <span className="text-xs font-medium" style={{ color: `${colors.text}99` }}>
-                  <span className="inline-block mr-1">📊</span> 
-                  Total Candidates: {totalCandidates}
-                </span>
-                <span className="text-xs font-medium" style={{ color: `${colors.text}99` }}>
-                  Average time in pipeline: 18 days
-                  <span className="inline-block ml-1">⏱</span>
-                </span>
+                </div>
+                
+                {/* Key Performance Indicators */}
+                <div className="flex items-center space-x-6 mt-4">
+                  <div className="flex items-center">
+                    <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: colors.primary }}></div>
+                    <span className="text-sm font-medium" style={{ color: colors.text }}>
+                      18% Conversion Rate
+                    </span>
+                    <div className="ml-2 px-2 py-0.5 rounded-full text-xs font-semibold" 
+                         style={{ 
+                           backgroundColor: `${colors.primary}15`,
+                           color: colors.primary
+                         }}>
+                      +3.2%
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: colors.primary }}></div>
+                    <span className="text-sm font-medium" style={{ color: colors.text }}>
+                      23 Days Avg. Time
+                    </span>
+                    <div className="ml-2 px-2 py-0.5 rounded-full text-xs font-semibold" 
+                         style={{ 
+                           backgroundColor: `${colors.primary}15`,
+                           color: colors.primary
+                         }}>
+                      -5 days
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <div className="text-right">
+                  <p className="text-2xl font-bold" style={{ color: colors.text }}>101</p>
+                  <p className="text-xs" style={{ color: theme === 'light' ? '#9CA3AF' : '#6B7280' }}>
+                    Active Candidates
+                  </p>
+                </div>
+                <Link 
+                  href="/pipeline" 
+                  className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-105"
+                  style={{ 
+                    color: colors.primary,
+                    backgroundColor: `${colors.primary}10`
+                  }}
+                >
+                  Deep Dive
+                  <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
             </div>
-            
-            {/* Simple Recruitment Flow Chart */}
-            <div className="mt-4 mb-2">
-              <h3 className="text-xs font-semibold uppercase tracking-wider mb-3 opacity-70" style={{ color: colors.text }}>
-                Recruitment Flow
-              </h3>
-              
-              <div className="flex items-center justify-between relative">
-                {/* Flow steps with connecting lines */}
-                <div className="absolute top-1/2 left-0 right-0 h-0.5" style={{ backgroundColor: `${colors.text}15` }}></div>
-                
-                {/* Flow step nodes with animations */}
+
+            {/* Strategic Talent Overview */}
+            <div className="mb-6 relative">
+              {/* Header with Strategic Focus */}
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center space-x-4">
+                  <h3 className="text-lg font-semibold" style={{ color: colors.text }}>
+                    Talent Acquisition Overview
+                  </h3>
+                  <div className="flex items-center px-3 py-1 rounded-full" 
+                       style={{ backgroundColor: `${colors.primary}15` }}>
+                    <div className="w-2 h-2 rounded-full mr-2 animate-pulse" style={{ backgroundColor: colors.primary }}></div>
+                    <span className="text-xs font-medium" style={{ color: colors.primary }}>
+                      Strategic View
+                    </span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-medium" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                    Updated: {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+
+              {/* Strategic Department Performance Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 {[
-                  { name: 'Source', icon: 'search', color: theme === 'light' ? '#3B82F6' : '#60A5FA' },
-                  { name: 'Screen', icon: 'filter', color: theme === 'light' ? '#0EA5E9' : '#38BDF8' },
-                  { name: 'Interview', icon: 'users', color: theme === 'light' ? '#10B981' : '#34D399' },
-                  { name: 'Offer', icon: 'file', color: theme === 'light' ? '#8B5CF6' : '#A78BFA' },
-                  { name: 'Hire', icon: 'check', color: theme === 'light' ? '#22C55E' : '#4ADE80' }
-                ].map((step, idx) => (
-                  <motion.div 
-                    key={step.name}
-                    className="z-10 flex flex-col items-center"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ 
-                      delay: 1.5 + (idx * 0.15),
-                      duration: 0.5,
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                  >
-                    <motion.div 
-                      className="w-10 h-10 rounded-full flex items-center justify-center mb-2 relative"
-                      style={{ 
-                        backgroundColor: `${step.color}20`,
-                        border: `2px solid ${step.color}`
-                      }}
-                      whileHover={{ 
-                        scale: 1.1, 
-                        backgroundColor: `${step.color}30`,
-                        transition: { duration: 0.2 } 
-                      }}
-                    >
-                      {/* Step Icon */}
-                      {step.icon === 'search' && (
-                        <svg className="w-4 h-4" fill="none" stroke={step.color} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                      )}
-                      {step.icon === 'filter' && (
-                        <svg className="w-4 h-4" fill="none" stroke={step.color} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
-                      )}
-                      {step.icon === 'users' && (
-                        <svg className="w-4 h-4" fill="none" stroke={step.color} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      )}
-                      {step.icon === 'file' && (
-                        <svg className="w-4 h-4" fill="none" stroke={step.color} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                      )}
-                      {step.icon === 'check' && (
-                        <svg className="w-4 h-4" fill="none" stroke={step.color} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      )}
-                      
-                      {/* Animated pulse effect */}
-                      <motion.div
-                        className="absolute inset-0 rounded-full"
-                        style={{ border: `2px solid ${step.color}` }}
-                        animate={{
-                          scale: [1, 1.1, 1],
-                          opacity: [1, 0.7, 1]
-                        }}
-                        transition={{
-                          duration: 2,
-                          ease: "easeInOut",
-                          repeat: Infinity,
-                          repeatDelay: idx * 0.5
-                        }}
-                      />
-                    </motion.div>
-                    <span className="text-xs font-medium" style={{ color: colors.text }}>
-                      {step.name}
-                    </span>
-                    
-                    {/* Display step metrics */}
-                    <span 
-                      className="text-xs mt-1 px-1.5 py-0.5 rounded-full" 
-                      style={{ 
-                        color: step.color,
-                        backgroundColor: `${step.color}15`
-                      }}
-                    >
-                      {step.name === 'Source' ? '100%' :
-                       step.name === 'Screen' ? '62%' :
-                       step.name === 'Interview' ? '36%' :
-                       step.name === 'Offer' ? '18%' : '9%'}
-                    </span>
-                  </motion.div>
-                ))}
-                
-                {/* Connecting arrows animation */}
-                {[0, 1, 2, 3].map((idx) => (
+                  { 
+                    department: 'Engineering', 
+                    openRoles: 8, 
+                    fillRate: '92%', 
+                    avgTime: '28d',
+                    priority: 'high'
+                  },
+                  { 
+                    department: 'Sales', 
+                    openRoles: 5, 
+                    fillRate: '85%', 
+                    avgTime: '21d',
+                    priority: 'medium'
+                  },
+                  { 
+                    department: 'Marketing', 
+                    openRoles: 3, 
+                    fillRate: '78%', 
+                    avgTime: '19d',
+                    priority: 'low'
+                  },
+                  { 
+                    department: 'Operations', 
+                    openRoles: 6, 
+                    fillRate: '88%', 
+                    avgTime: '25d',
+                    priority: 'medium'
+                  }
+                ].map((dept, idx) => (
                   <motion.div
-                    key={`arrow-${idx}`}
-                    className="absolute top-1/2 transform -translate-y-1/2"
+                    key={dept.department}
+                    className="p-4 rounded-xl border transition-all duration-200 hover:shadow-sm cursor-pointer"
                     style={{ 
-                      left: `${19 + (idx * 20)}%`,
-                      color: theme === 'light' ? '#6B7280' : '#9CA3AF'  
+                      backgroundColor: colors.card,
+                      borderColor: theme === 'light' ? '#F3F4F6' : '#4B5563'
                     }}
-                    initial={{ opacity: 0, x: -5 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      delay: 2 + (idx * 0.15),
-                      duration: 0.3
-                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + (idx * 0.1), duration: 0.4 }}
+                    whileHover={{ y: -2 }}
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-semibold" style={{ color: colors.text }}>
+                        {dept.department}
+                      </h4>
+                      <div className={`w-2 h-2 rounded-full ${
+                        dept.priority === 'high' ? 'bg-red-400' :
+                        dept.priority === 'medium' ? 'bg-yellow-400' : 'bg-green-400'
+                      }`}></div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Open Roles
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: colors.text }}>
+                          {dept.openRoles}
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Fill Rate
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: colors.primary }}>
+                          {dept.fillRate}
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Avg. Time
+                        </span>
+                        <span className="text-sm font-medium" style={{ color: colors.text }}>
+                          {dept.avgTime}
+                        </span>
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </div>
-            </div>
 
-            {/* Candidate Flow Chart */}
-            <div className="mt-3">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-xs font-semibold uppercase tracking-wider opacity-70" style={{ color: colors.text }}>
-                  Monthly Candidate Flow
-                </h3>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 rounded-full mr-1" style={{ backgroundColor: theme === 'light' ? '#3B82F6' : '#60A5FA' }}></div>
-                    <span className="text-xs" style={{ color: colors.text }}>New</span>
+              {/* Strategic Insights Bar */}
+              <div className="p-4 rounded-xl" 
+                   style={{ backgroundColor: `${colors.primary}08` }}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <svg className="w-5 h-5" fill="none" stroke={colors.primary} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <div>
+                      <h4 className="text-sm font-semibold" style={{ color: colors.primary }}>
+                        Strategic Focus
+                      </h4>
+                      <p className="text-xs mt-0.5" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                        Engineering roles require immediate attention - 8 positions open
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 rounded-full mr-1" style={{ backgroundColor: theme === 'light' ? '#10B981' : '#34D399' }}></div>
-                    <span className="text-xs" style={{ color: colors.text }}>Hired</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-4 h-0.5 mr-1" style={{ backgroundColor: theme === 'light' ? '#EC4899' : '#F472B6' }}></div>
-                    <span className="text-xs" style={{ color: colors.text }}>Trend</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Bar Chart */}
-              <div className="relative h-32">
-                <div className="absolute inset-0 flex items-end justify-between px-0.5">
-                  {/* Calculate trend line points for smoother visualization */}
-                  {(() => {
-                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-                    const pointData = months.map((month, idx) => {
-                      // Generate random but consistent heights for the chart bars
-                      const newHeight = 30 + (idx * 5) + (idx % 2 === 0 ? 15 : -5) + (idx === 5 ? 10 : 0);
-                      return {
-                        month,
-                        x: (idx / (months.length - 1)) * 100, // convert to percentage
-                        y: 100 - newHeight, // convert to top position percentage
-                        height: newHeight
-                      };
-                    });
-                    
-                    // Create SVG path for trend line
-                    const pathData = pointData.map((point, idx) => 
-                      (idx === 0 ? 'M' : 'L') + `${point.x}% ${point.y}%`
-                    ).join(' ');
-
-                    return (
-                      <>
-                        {/* Trend Line SVG */}
-                        <svg className="absolute inset-0 z-10 pointer-events-none" preserveAspectRatio="none" width="100%" height="100%">
-                          <motion.path
-                            d={pathData}
-                            fill="none"
-                            stroke={theme === 'light' ? '#EC4899' : '#F472B6'}
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            initial={{ pathLength: 0, opacity: 0 }}
-                            animate={{ pathLength: 1, opacity: 1 }}
-                            transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
-                          />
-                          {/* Dots at each point */}
-                          {pointData.map((point, idx) => (
-                            <motion.circle
-                              key={`dot-${idx}`}
-                              cx={`${point.x}%`}
-                              cy={`${point.y}%`}
-                              r="3"
-                              fill={theme === 'light' ? '#FFFFFF' : '#1F2937'}
-                              stroke={theme === 'light' ? '#EC4899' : '#F472B6'}
-                              strokeWidth="1.5"
-                              initial={{ opacity: 0, scale: 0 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.3, delay: 2 + (idx * 0.1) }}
-                            />
-                          ))}
-                        </svg>
-
-                        {months.map((month, idx) => {
-                          const newHeight = pointData[idx].height;
-                          const hiredHeight = 10 + (idx * 3) + (idx % 2 === 0 ? 5 : 3) + (idx === 5 ? 5 : 0);
-                          const maxHeight = Math.max(newHeight, hiredHeight);
-                          
-                          return (
-                            <div key={month} className="flex-1 flex flex-col items-center">
-                              <div className="w-full relative" style={{ height: `${maxHeight}%` }}>
-                                {/* New Candidates Bar */}
-                                <motion.div 
-                                  className="absolute bottom-0 left-0 right-0 mx-1.5 rounded-t"
-                                  style={{ 
-                                    backgroundColor: theme === 'light' ? 'rgba(59, 130, 246, 0.7)' : 'rgba(96, 165, 250, 0.7)',
-                                    height: `${newHeight}%`
-                                  }}
-                                  initial={{ height: 0 }}
-                                  animate={{ height: `${newHeight}%` }}
-                                  transition={{ 
-                                    duration: 0.8, 
-                                    delay: 1.2 + (idx * 0.1),
-                                    ease: "easeOut" 
-                                  }}
-                                  whileHover={{ 
-                                    backgroundColor: theme === 'light' ? 'rgba(59, 130, 246, 0.9)' : 'rgba(96, 165, 250, 0.9)'
-                                  }}
-                                />
-                                
-                                {/* Hired Candidates Bar (narrower) */}
-                                <motion.div 
-                                  className="absolute bottom-0 left-1/4 right-1/4 mx-1.5 rounded-t"
-                                  style={{ 
-                                    backgroundColor: theme === 'light' ? 'rgba(16, 185, 129, 0.7)' : 'rgba(52, 211, 153, 0.7)',
-                                    height: `${hiredHeight}%`
-                                  }}
-                                  initial={{ height: 0 }}
-                                  animate={{ height: `${hiredHeight}%` }}
-                                  transition={{ 
-                                    duration: 0.8, 
-                                    delay: 1.4 + (idx * 0.1),
-                                    ease: "easeOut" 
-                                  }}
-                                  whileHover={{ 
-                                    backgroundColor: theme === 'light' ? 'rgba(16, 185, 129, 0.9)' : 'rgba(52, 211, 153, 0.9)'
-                                  }}
-                                />
-                              </div>
-                              <span 
-                                className="text-xs mt-1 font-medium" 
-                                style={{ color: `${colors.text}90` }}
-                              >
-                                {month}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </>
-                    );
-                  })()}
-                </div>
-                
-                {/* Horizontal grid lines */}
-                <div className="absolute inset-0 flex flex-col justify-between">
-                  {[0, 1, 2].map((line) => (
-                    <div 
-                      key={line} 
-                      className="w-full border-t border-dashed"
-                      style={{ borderColor: `${colors.text}15` }}
-                    />
-                  ))}
-                </div>
-              </div>
-              
-              {/* Hover tooltip - shows on bar hover */}
-              <div className="hidden absolute bg-white dark:bg-gray-800 p-2 rounded shadow-md text-xs z-20">
-                <div className="font-medium">April 2023</div>
-                <div className="flex justify-between gap-4">
-                  <span>New: 52</span>
-                  <span className="text-green-600 dark:text-green-400">+12%</span>
+                  <button 
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                    style={{ 
+                      backgroundColor: colors.primary,
+                      color: 'white'
+                    }}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
             </div>
             
-            {/* Quick stats below chart */}
-            <div className="flex justify-between items-center mt-2 pt-2 text-xs" style={{ color: `${colors.text}99` }}>
-              <span>+12% new candidates vs last month</span>
-              <span>Conversion rate: 9.8%</span>
-              <span className="text-pink-500 dark:text-pink-400 font-medium">↗ Upward trend</span>
+            {/* Talent Intelligence Dashboard */}
+            <div className="mt-6">
+              <div className="flex items-center justify-between mb-6">
+                <h4 className="text-lg font-semibold" style={{ color: colors.text }}>
+                  Market Intelligence
+                </h4>
+                <div className="flex items-center space-x-2">
+                  <div className="px-3 py-1 rounded-full text-xs font-medium" 
+                       style={{ 
+                         backgroundColor: `${colors.primary}15`,
+                         color: colors.primary
+                       }}>
+                    Live Data
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Market Trends */}
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl border" 
+                       style={{ 
+                         backgroundColor: colors.card,
+                         borderColor: theme === 'light' ? '#F3F4F6' : '#4B5563'
+                       }}>
+                    <div className="flex items-center justify-between mb-3">
+                      <h5 className="text-sm font-semibold" style={{ color: colors.text }}>
+                        Salary Benchmarks
+                      </h5>
+                      <svg className="w-4 h-4" fill="none" stroke={colors.primary} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                      </svg>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Sr. Engineer
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: colors.text }}>
+                          $125K
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Product Manager
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: colors.text }}>
+                          $110K
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Sales Director
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: colors.text }}>
+                          $95K
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Competition Analysis */}
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl border" 
+                       style={{ 
+                         backgroundColor: colors.card,
+                         borderColor: theme === 'light' ? '#F3F4F6' : '#4B5563'
+                       }}>
+                    <div className="flex items-center justify-between mb-3">
+                      <h5 className="text-sm font-semibold" style={{ color: colors.text }}>
+                        Market Activity
+                      </h5>
+                      <svg className="w-4 h-4" fill="none" stroke={colors.primary} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Tech Roles Demand
+                        </span>
+                        <span className="text-sm font-bold text-green-600">
+                          +18%
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Remote Preference
+                        </span>
+                        <span className="text-sm font-bold" style={{ color: colors.text }}>
+                          73%
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                          Competitor Activity
+                        </span>
+                        <span className="text-sm font-bold text-orange-500">
+                          High
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recommendations */}
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl border" 
+                       style={{ 
+                         backgroundColor: colors.card,
+                         borderColor: theme === 'light' ? '#F3F4F6' : '#4B5563'
+                       }}>
+                    <div className="flex items-center justify-between mb-3">
+                      <h5 className="text-sm font-semibold" style={{ color: colors.text }}>
+                        AI Recommendations
+                      </h5>
+                      <svg className="w-4 h-4" fill="none" stroke={colors.primary} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div className="space-y-3 text-xs" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                      <p>• Increase Engineering salary bands by 8%</p>
+                      <p>• Focus on remote-first job postings</p>
+                      <p>• Expedite screening for competitive roles</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            
+
           </Card>
         </motion.div>
 
-        {/* Upcoming Activities */}
+        {/* Upcoming Activities - Enhanced UI */}
         <motion.div 
           className="lg:col-span-1"
-          initial="hidden"
-          animate="visible"
-          variants={chartVariants}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Card className="h-full">
-            <div className="flex justify-between items-center mb-5">
-              <h2 className="text-lg font-semibold" style={{ color: colors.text }}>
-                Upcoming Activities
-              </h2>
-              <Link href="/calendar" className="text-sm font-medium flex items-center" style={{ color: colors.primary }}>
+            {/* Header */}
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-xl font-bold leading-tight" style={{ color: colors.text }}>
+                  Upcoming Activities
+                </h2>
+                <p className="text-sm mt-1" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                  Next scheduled events
+                </p>
+              </div>
+                              <Link 
+                  href="/calendar" 
+                  className="inline-flex items-center px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-105"
+                  style={{ 
+                    color: colors.primary,
+                    backgroundColor: `${colors.primary}10`
+                  }}
+                >
                 View Calendar
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
             
-            <div className="space-y-4">
+            {/* Activities List */}
+            <div className="space-y-3">
               {upcomingActivities.map((activity, idx) => (
                 <motion.div
                   key={idx}
-                  className="rounded-lg border p-3"
+                  className="group relative bg-white dark:bg-gray-800/30 rounded-xl p-4 border transition-all duration-300 hover:shadow-md cursor-pointer"
                   style={{ 
-                    borderColor: theme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
-                  }}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 + (idx * 0.1), duration: 0.4 }}
-                  whileHover={{ 
-                    y: -2, 
+                    backgroundColor: colors.card,
+                    borderColor: theme === 'light' ? '#F3F4F6' : '#4B5563',
                     boxShadow: theme === 'light' 
-                      ? '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.025)'
-                      : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                      ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+                      : '0 1px 2px 0 rgba(0, 0, 0, 0.2)'
+                  }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + (idx * 0.1), duration: 0.4 }}
+                  whileHover={{ 
+                    y: -1,
                     transition: { duration: 0.2 } 
                   }}
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
-                      style={{
-                        backgroundColor: `${activity.color}15`,
-                        color: activity.color,
-                        border: `1px solid ${activity.color}30`,
-                      }}
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: activity.color }}></div>
+                  {/* Activity header with badge and time */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
+                         style={{ 
+                           backgroundColor: `${colors.primary}15`,
+                           color: colors.primary
+                         }}>
+                      <div className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: colors.primary }}></div>
                       {activity.type}
+                      
+                      {/* Activity type icons */}
+                      {activity.type === "Interview" && (
+                        <svg className="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      )}
+                      {activity.type === "Follow-up" && (
+                        <svg className="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      )}
+                      {activity.type === "Screening" && (
+                        <svg className="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      )}
                     </div>
-                    <span className="text-xs font-medium px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800" 
-                      style={{ color: `${colors.text}99` }}>
+                    
+                    <div className="flex items-center px-3 py-1 rounded-lg text-xs font-medium" 
+                         style={{ 
+                           backgroundColor: theme === 'light' ? '#F9FAFB' : '#374151',
+                           color: theme === 'light' ? '#374151' : '#D1D5DB' 
+                         }}>
+                      <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                       {activity.time}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <div 
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-semibold mr-3 shadow-sm"
-                      style={{ 
-                        background: `linear-gradient(135deg, ${activity.color}, ${activity.color}cc)`
-                      }}
-                    >
-                      {activity.avatar}
-                    </div>
-                    <div className="overflow-hidden">
-                      <div className="flex items-center">
-                        <p className="font-medium truncate" style={{ color: colors.text }}>{activity.name}</p>
-                        
-                        {/* Activity type indicator icons */}
-                        {activity.type === "Interview" && (
-                          <svg className="w-3.5 h-3.5 ml-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        )}
-                        {activity.type === "Follow-up" && (
-                          <svg className="w-3.5 h-3.5 ml-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        )}
-                        {activity.type === "Screening" && (
-                          <svg className="w-3.5 h-3.5 ml-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2H5a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                          </svg>
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <p className="text-xs truncate max-w-[160px]" style={{ color: `${colors.text}99` }}>
-                          {activity.position} · {activity.company}
-                        </p>
-                        <div className="ml-2 flex-shrink-0">
-                          <button className="opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
-                            <svg className="w-3.5 h-3.5" fill="none" stroke={colors.primary} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
                     </div>
                   </div>
+
+                  {/* Main content */}
+                  <div className="flex items-start space-x-3">
+                    {/* Enhanced Avatar */}
+                    <div className="relative flex-shrink-0">
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-sm ring-2 ring-white dark:ring-gray-700 transition-transform group-hover:scale-105"
+                        style={{ 
+                          backgroundColor: colors.primary,
+                          background: `linear-gradient(135deg, ${colors.primary}, ${colors.primary}dd)`
+                        }}
+                      >
+                        {activity.avatar}
+                      </div>
+                      {/* Online status indicator */}
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800"
+                           style={{ backgroundColor: colors.primary }}></div>
+                    </div>
+
+                    {/* Person info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="text-base font-semibold leading-tight truncate" style={{ color: colors.text }}>
+                          {activity.name}
+                        </h3>
+                        <button 
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                          aria-label="View activity details"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke={colors.primary} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+                      
+                      <p className="text-sm font-medium leading-relaxed mb-1" 
+                         style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }}>
+                        {activity.position}
+                      </p>
+                      
+                      <div className="flex items-center text-xs" 
+                           style={{ color: theme === 'light' ? '#9CA3AF' : '#6B7280' }}>
+                        <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        {activity.company}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Hover effect overlay */}
+                  <div 
+                    className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: theme === 'light' 
+                        ? 'linear-gradient(145deg, rgba(59, 130, 246, 0.02), rgba(59, 130, 246, 0.04))'
+                        : 'linear-gradient(145deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02))'
+                    }}
+                  />
                 </motion.div>
               ))}
             </div>
             
-            <div className="mt-4 text-center">
-              <Link 
-                href="/activities"
-                className="text-sm font-medium px-0 py-1 w-full inline-block transition-colors rounded hover:bg-gray-50 dark:hover:bg-gray-800"
-                style={{ color: colors.primary }}
-              >
+            {/* Footer */}
+            <div className="mt-6 pt-4 border-t transition-colors" 
+                 style={{ borderColor: theme === 'light' ? '#F3F4F6' : '#374151' }}>
+                              <Link 
+                  href="/activities"
+                  className="flex items-center justify-center w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
+                  style={{ 
+                    color: colors.primary,
+                    backgroundColor: `${colors.primary}08`,
+                    border: `1px solid ${colors.primary}20`
+                  }}
+                >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
                 View All Activities
               </Link>
             </div>
@@ -856,9 +856,9 @@ const DashboardPage = () => {
               <div className="flex items-center justify-center flex-col py-6">
                 <div 
                   className="p-4 rounded-full mb-3"
-                  style={{ backgroundColor: theme === 'light' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(59, 130, 246, 0.15)' }}
+                  style={{ backgroundColor: `${colors.primary}15` }}
                 >
-                  {getIcon('folder-plus', theme === 'light' ? '#3B82F6' : '#60A5FA')}
+                  {getIcon('folder-plus', colors.primary)}
                 </div>
                 <h3 className="text-lg font-medium mb-1" style={{ color: colors.text }}>Create New Project</h3>
                 <p className="text-sm text-center" style={{ color: `${colors.text}99` }}>Define roles and requirements</p>
@@ -883,9 +883,9 @@ const DashboardPage = () => {
               <div className="flex items-center justify-center flex-col py-6">
                 <div 
                   className="p-4 rounded-full mb-3"
-                  style={{ backgroundColor: theme === 'light' ? 'rgba(139, 92, 246, 0.1)' : 'rgba(139, 92, 246, 0.15)' }}
+                  style={{ backgroundColor: `${colors.primary}15` }}
                 >
-                  {getIcon('folders', theme === 'light' ? '#8B5CF6' : '#A78BFA')}
+                  {getIcon('folders', colors.primary)}
                 </div>
                 <h3 className="text-lg font-medium mb-1" style={{ color: colors.text }}>View All Projects</h3>
                 <p className="text-sm text-center" style={{ color: `${colors.text}99` }}>Manage recruitment campaigns</p>
