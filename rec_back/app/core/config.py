@@ -7,11 +7,37 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings(BaseSettings):
-    # Database
+    # Database - SQL
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL", 
         "postgresql://postgres:123@localhost/recruitment_plus"
     )
+    
+    # Database - MongoDB
+    MONGODB_HOST: str = os.getenv("MONGODB_HOST", "localhost")
+    MONGODB_PORT: int = int(os.getenv("MONGODB_PORT", "27017"))
+    MONGODB_USER: Optional[str] = os.getenv("MONGODB_USER")
+    MONGODB_PASSWORD: Optional[str] = os.getenv("MONGODB_PASSWORD")
+    MONGODB_DATABASE: str = os.getenv("MONGODB_DATABASE", "recruitment_plus")
+    MONGODB_AUTH_SOURCE: str = os.getenv("MONGODB_AUTH_SOURCE", "admin")
+    
+    # Construct MongoDB URI based on authentication requirements
+    @property
+    def MONGODB_URI(self) -> str:
+        """Constructs MongoDB connection string based on config."""
+        if self.MONGODB_USER and self.MONGODB_PASSWORD:
+            return f"mongodb://{self.MONGODB_USER}:{self.MONGODB_PASSWORD}@{self.MONGODB_HOST}:{self.MONGODB_PORT}/{self.MONGODB_DATABASE}?authSource={self.MONGODB_AUTH_SOURCE}"
+        return f"mongodb://{self.MONGODB_HOST}:{self.MONGODB_PORT}/{self.MONGODB_DATABASE}"
+    
+    # MongoDB Connection Pooling
+    MONGODB_MAX_CONNECTIONS: int = int(os.getenv("MONGODB_MAX_CONNECTIONS", "100"))
+    MONGODB_MIN_CONNECTIONS: int = int(os.getenv("MONGODB_MIN_CONNECTIONS", "10"))
+    MONGODB_MAX_IDLE_TIME_MS: int = int(os.getenv("MONGODB_MAX_IDLE_TIME_MS", "30000"))
+    
+    # MongoDB Timeouts
+    MONGODB_SERVER_SELECTION_TIMEOUT: int = int(os.getenv("MONGODB_SERVER_SELECTION_TIMEOUT", "5000"))
+    MONGODB_CONNECT_TIMEOUT: int = int(os.getenv("MONGODB_CONNECT_TIMEOUT", "10000"))
+    MONGODB_SOCKET_TIMEOUT: int = int(os.getenv("MONGODB_SOCKET_TIMEOUT", "20000"))
     
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")
