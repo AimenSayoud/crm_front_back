@@ -28,6 +28,29 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     const { colors } = useTheme();
     const textAreaId = id || `textarea-${Math.random().toString(36).substring(2, 9)}`;
 
+    // If no label and no helper text, render just the textarea without wrapper
+    if (!label && !helperText && !error) {
+      return (
+        <textarea
+          id={textAreaId}
+          ref={ref}
+          rows={rows}
+          className={`
+            w-full rounded-md shadow-sm focus:outline-none focus:ring-2 px-3 py-2 text-sm transition-colors duration-200
+            ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}
+            ${className}
+          `}
+          style={{
+            backgroundColor: colors.background,
+            color: colors.text,
+            borderColor: error ? '#EF4444' : colors.border,
+          }}
+          data-max-rows={maxRows}
+          {...props}
+        />
+      );
+    }
+
     return (
       <div className={`${fullWidth ? 'w-full' : ''} mb-4`}>
         {label && (
