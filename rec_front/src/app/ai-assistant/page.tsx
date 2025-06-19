@@ -7,7 +7,7 @@ import { useAuthStore, selectUser } from '@/store/useAuthStore';
 import { useDataStore } from '@/store/useDataStore';
 // Import services from new services folder structure
 import { openai } from '@/services';
-
+import CharacterCounter from '@/components/ui/CharacterCounter';
 // Extracted Components
 import ApiKeySettingsModal from '@/components/ai-assistant/ApiKeySettingsModal';
 import ChatHeader from '@/components/ai-assistant/ChatHeader';
@@ -632,7 +632,7 @@ const AiAssistantPage = () => {
           >
             {/* Messages */}
             <ChatMessageList messages={messages} />
-            
+            <CharacterCounter value={input} />
             {/* Input Area */}
             <div className="p-4 border-t" style={{ borderColor: colors.border }}>
               <ChatInput
@@ -648,6 +648,7 @@ const AiAssistantPage = () => {
                 entityName={selectedEntity ? ('firstName' in selectedEntity ? `${selectedEntity.firstName} ${selectedEntity.lastName}` : selectedEntity.name) : null}
                 entityType={selectedEntity ? ('firstName' in selectedEntity ? 'candidate' : 'company') : null}
               />
+               
             </div>
           </div>
         </div>
