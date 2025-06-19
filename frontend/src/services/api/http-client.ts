@@ -31,10 +31,14 @@ export const fetcher = async <T>(
   try {
     const url = `${API_BASE_URL}${endpoint}`;
     
+    // Get auth token from localStorage
+    const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
+    
     // Add cache control headers to prevent caching of API responses
     const headers = {
       'Content-Type': 'application/json',
       ...CACHE_CONTROL_HEADERS,
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       ...options.headers,
     };
     

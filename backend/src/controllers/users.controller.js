@@ -1,5 +1,6 @@
 const BaseController = require('./base.controller');
-const { User, AdminProfile, SuperAdminProfile } = require('../models/sql');
+const User = require('../models/mongodb/user_model');
+const { AdminProfile, SuperAdminProfile } = require('../models/sql');
 
 /**
  * Users Controller - Handles user profile management
@@ -34,8 +35,8 @@ class UsersController extends BaseController {
       // Add search filter on name or email
       if (search) {
         query.$or = [
-          { first_name: { $regex: search, $options: 'i' } },
-          { last_name: { $regex: search, $options: 'i' } },
+          { firstName: { $regex: search, $options: 'i' } },
+          { lastName: { $regex: search, $options: 'i' } },
           { email: { $regex: search, $options: 'i' } }
         ];
       }
@@ -48,7 +49,7 @@ class UsersController extends BaseController {
       // Execute query with pagination
       const users = await User
         .find(query)
-        .select('-password_hash') // Exclude password
+        .select('-password') // Exclude password
         .sort('-created_at')
         .skip(skip)
         .limit(limitNum);
@@ -83,7 +84,7 @@ class UsersController extends BaseController {
       const { id } = req.params;
       
       // Find user
-      const user = await User.findById(id).select('-password_hash');
+      const user = await User.findById(id).select('-password');
       
       if (!user) {
         return res.status(404).json({
@@ -151,7 +152,7 @@ class UsersController extends BaseController {
         id,
         { is_active },
         { new: true, runValidators: true }
-      ).select('-password_hash');
+      ).select('-password');
       
       if (!user) {
         return res.status(404).json({
@@ -179,13 +180,13 @@ class UsersController extends BaseController {
   updateUserProfile = async (req, res) => {
     try {
       const { id } = req.params;
-      const { first_name, last_name, phone, email } = req.body;
+      const { firstName, lastName, phoneNumber, email } = req.body;
       
       // Update basic user info
       const updateData = {};
-      if (first_name) updateData.first_name = first_name;
-      if (last_name) updateData.last_name = last_name;
-      if (phone) updateData.phone = phone;
+      if (firstName) updateData.firstName = firstName;
+      if (lastName) updateData.lastName = lastName;
+      if (phoneNumber) updateData.phoneNumber = phoneNumber;
       if (email) updateData.email = email;
       
       // Check if email already exists (if being updated)
@@ -202,7 +203,7 @@ class UsersController extends BaseController {
         id,
         updateData,
         { new: true, runValidators: true }
-      ).select('-password_hash');
+      ).select('-password');
       
       if (!user) {
         return res.status(404).json({

@@ -285,12 +285,12 @@ EmployerProfileSchema.index({ user_id: 1 });
 EmployerProfileSchema.index({ company_id: 1 });
 EmployerProfileSchema.index({ user_id: 1, company_id: 1 }, { unique: true });
 
-// Create models
-const Company = mongoose.model('Company', CompanySchema);
-const CompanyContact = mongoose.model('CompanyContact', CompanyContactSchema);
-const CompanyHiringPreferences = mongoose.model('CompanyHiringPreferences', CompanyHiringPreferencesSchema);
-const RecruitmentHistory = mongoose.model('RecruitmentHistory', RecruitmentHistorySchema);
-const EmployerProfile = mongoose.model('EmployerProfile', EmployerProfileSchema);
+// Create models (reuse existing if already compiled)
+const Company = mongoose.models.Company || mongoose.model('Company', CompanySchema);
+const CompanyContact = mongoose.models.CompanyContact || mongoose.model('CompanyContact', CompanyContactSchema);
+const CompanyHiringPreferences = mongoose.models.CompanyHiringPreferences || mongoose.model('CompanyHiringPreferences', CompanyHiringPreferencesSchema);
+const RecruitmentHistory = mongoose.models.RecruitmentHistory || mongoose.model('RecruitmentHistory', RecruitmentHistorySchema);
+const EmployerProfile = mongoose.models.EmployerProfile || mongoose.model('EmployerProfile', EmployerProfileSchema);
 
 module.exports = {
   Company,

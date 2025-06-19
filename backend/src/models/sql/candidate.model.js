@@ -326,12 +326,12 @@ CandidateSkillSchema.index({ candidate_id: 1, skill_id: 1 }, { unique: true });
 CandidateEducationSchema.index({ candidate_id: 1 });
 CandidateExperienceSchema.index({ candidate_id: 1 });
 
-// Create models
-const CandidateProfile = mongoose.model('CandidateProfile', CandidateProfileSchema);
-const CandidateEducation = mongoose.model('CandidateEducation', CandidateEducationSchema);
-const CandidateExperience = mongoose.model('CandidateExperience', CandidateExperienceSchema);
-const CandidateSkill = mongoose.model('CandidateSkill', CandidateSkillSchema);
-const CandidatePreferences = mongoose.model('CandidatePreferences', CandidatePreferencesSchema);
+// Create models (reuse existing if already compiled)
+const CandidateProfile = mongoose.models.CandidateProfile || mongoose.model('CandidateProfile', CandidateProfileSchema);
+const CandidateEducation = mongoose.models.CandidateEducation || mongoose.model('CandidateEducation', CandidateEducationSchema);
+const CandidateExperience = mongoose.models.CandidateExperience || mongoose.model('CandidateExperience', CandidateExperienceSchema);
+const CandidateSkill = mongoose.models.CandidateSkill || mongoose.model('CandidateSkill', CandidateSkillSchema);
+const CandidatePreferences = mongoose.models.CandidatePreferences || mongoose.model('CandidatePreferences', CandidatePreferencesSchema);
 
 module.exports = {
   CandidateProfile,

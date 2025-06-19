@@ -8,7 +8,6 @@ import { useTheme } from '@/app/context/ThemeContext';
 import { AuthenticationError } from '@/services/api/auth-service';
 import { BackgroundCells } from '@/components/ui/background-ripple-effect';
 import Image from 'next/image';
-import { USE_MOCK_DATA } from '@/store/mockHelpers';
 
 export default function LoginPage() {
   // Create state for form values
@@ -266,7 +265,7 @@ export default function LoginPage() {
                         fontSize: '14px'
                       }}
                       placeholder="Enter your email address"
-                      aria-invalid={emailError ? 'true' : 'false'}
+                      aria-invalid={emailError ? "true" : "false"}
                       aria-describedby={emailError ? "email-error" : undefined}
                       autoComplete="username"
                       name="email"
@@ -319,7 +318,7 @@ export default function LoginPage() {
                         fontSize: '14px'
                       }}
                       placeholder="Enter your password"
-                      aria-invalid={passwordError ? 'true' : 'false'}
+                      aria-invalid={passwordError ? "true" : "false"}
                       aria-describedby={passwordError ? "password-error" : undefined}
                       autoComplete="current-password"
                       name="password"

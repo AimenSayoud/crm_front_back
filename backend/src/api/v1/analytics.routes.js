@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const analyticsController = require('../../controllers/analytics.controller');
-const { authenticateToken, requireRole } = require('../../middleware/auth.middleware');
+const { authMiddleware, roleMiddleware } = require('../../middleware/auth.middleware');
 
 // ============== DASHBOARD OVERVIEW ==============
 
@@ -11,8 +11,8 @@ const { authenticateToken, requireRole } = require('../../middleware/auth.middle
  * @access Admin, SuperAdmin
  */
 router.get('/dashboard',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.getDashboardOverview
 );
 
@@ -24,8 +24,8 @@ router.get('/dashboard',
  * @access Admin, SuperAdmin, Employer (own company), Consultant (own data)
  */
 router.get('/applications',
-    authenticateToken,
-    requireRole(['admin', 'superadmin', 'employer', 'consultant']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin', 'employer', 'consultant'),
     analyticsController.getApplicationAnalytics
 );
 
@@ -37,8 +37,8 @@ router.get('/applications',
  * @access Admin, SuperAdmin, Employer (own company), Consultant
  */
 router.get('/jobs',
-    authenticateToken,
-    requireRole(['admin', 'superadmin', 'employer', 'consultant']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin', 'employer', 'consultant'),
     analyticsController.getJobAnalytics
 );
 
@@ -50,8 +50,8 @@ router.get('/jobs',
  * @access Admin, SuperAdmin, Consultant (own candidates)
  */
 router.get('/candidates',
-    authenticateToken,
-    requireRole(['admin', 'superadmin', 'consultant']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin', 'consultant'),
     analyticsController.getCandidateAnalytics
 );
 
@@ -63,8 +63,8 @@ router.get('/candidates',
  * @access Admin, SuperAdmin, Consultant (own data)
  */
 router.get('/consultants',
-    authenticateToken,
-    requireRole(['admin', 'superadmin', 'consultant']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin', 'consultant'),
     analyticsController.getConsultantAnalytics
 );
 
@@ -76,8 +76,8 @@ router.get('/consultants',
  * @access Admin, SuperAdmin, Employer (own company)
  */
 router.get('/companies',
-    authenticateToken,
-    requireRole(['admin', 'superadmin', 'employer']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin', 'employer'),
     analyticsController.getCompanyAnalytics
 );
 
@@ -89,8 +89,8 @@ router.get('/companies',
  * @access Admin, SuperAdmin
  */
 router.get('/trends',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.getTrendAnalysis
 );
 
@@ -102,8 +102,8 @@ router.get('/trends',
  * @access Admin, SuperAdmin
  */
 router.get('/kpis',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.getKeyPerformanceIndicators
 );
 
@@ -115,8 +115,8 @@ router.get('/kpis',
  * @access Admin, SuperAdmin
  */
 router.post('/custom-report',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.generateCustomReport
 );
 
@@ -126,8 +126,8 @@ router.post('/custom-report',
  * @access Admin, SuperAdmin
  */
 router.get('/reports/:report_id',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.getGeneratedReport
 );
 
@@ -139,8 +139,8 @@ router.get('/reports/:report_id',
  * @access Admin, SuperAdmin
  */
 router.post('/export',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.exportAnalyticsData
 );
 
@@ -150,8 +150,8 @@ router.post('/export',
  * @access Admin, SuperAdmin
  */
 router.get('/exports/:export_id/download',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.downloadExport
 );
 
@@ -163,8 +163,8 @@ router.get('/exports/:export_id/download',
  * @access Admin, SuperAdmin
  */
 router.get('/benchmarks',
-    authenticateToken,
-    requireRole(['admin', 'superadmin']),
+    authMiddleware,
+    roleMiddleware('admin', 'superadmin'),
     analyticsController.getIndustryBenchmarks
 );
 

@@ -218,9 +218,9 @@ JobSchema.index({ deadline_date: 1 });
 
 JobSkillRequirementSchema.index({ job_id: 1, skill_id: 1 }, { unique: true });
 
-// Create models
-const Job = mongoose.model('Job', JobSchema);
-const JobSkillRequirement = mongoose.model('JobSkillRequirement', JobSkillRequirementSchema);
+// Create models (reuse existing if already compiled)
+const Job = mongoose.models.Job || mongoose.model('Job', JobSchema);
+const JobSkillRequirement = mongoose.models.JobSkillRequirement || mongoose.model('JobSkillRequirement', JobSkillRequirementSchema);
 
 module.exports = {
   Job,

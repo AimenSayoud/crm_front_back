@@ -4,7 +4,7 @@ import { API_BASE_URL, DEFAULT_TIMEOUT } from './config';
 
 // Create axios instance with default config
 const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL + '/api/v1',
   timeout: DEFAULT_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ apiClient.interceptors.response.use(
         
         if (refreshToken) {
           const response = await axios.post(
-            `${API_BASE_URL}/auth/refresh`,
+            `${API_BASE_URL}/api/v1/auth/refresh`,
             { refresh_token: refreshToken },
             { baseURL: API_BASE_URL }
           );

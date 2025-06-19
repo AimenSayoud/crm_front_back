@@ -12,7 +12,7 @@ import Table from '@/components/ui/Table';
 import Badge from '@/components/ui/Badge';
 import { apiService } from '@/lib';
 import { useApiQuery } from '@/hooks/useApiQuery';
-import { User, Office } from '@/types';
+import { User } from '@/types';
 
 // Form validation utility
 const validateEmail = (email: string): boolean => {
@@ -43,21 +43,21 @@ const TeamPage = () => {
     email: '',
   });
 
-  // Fetch users and offices based on current user's access
+  // Check if user has admin access for edit/add functionality
+  const hasAdminAccess = canAccess('admin');
+
+  // Allow all authenticated users to view team members
   const { data: users, loading, error, refetch } = useApiQuery<User[]>(
-    () => apiService.users
-      .getAll(currentUser?.role === 'super_admin' ? undefined : currentUser?.officeId)
-      .then(res => res.items),
-    [currentUser?.role, currentUser?.officeId]
-  );
-  
-  const { data: offices } = useApiQuery<Office[]>(
-    () => apiService.offices.getAll(),
+    () => apiService.users.getAll().then(res => res.items),
     []
   );
 
-  // Check if user has admin access
-  const hasAdminAccess = canAccess('admin');
+  // Mock offices data since the API doesn't exist yet
+  const offices = [
+    { id: '1', name: 'Main Office', location: 'New York' },
+    { id: '2', name: 'West Coast Office', location: 'San Francisco' },
+    { id: '3', name: 'European Office', location: 'London' }
+  ];
 
   // Filter users based on search term
   const filteredUsers = users
@@ -141,7 +141,7 @@ const TeamPage = () => {
       name: user.name,
       email: user.email,
       role: user.role,
-      officeId: user.officeId,
+      officeId: user.officeId || '1',
     });
     setShowEditModal(true);
   };
@@ -176,12 +176,14 @@ const TeamPage = () => {
       title: 'Role',
       render: (value: unknown) => {
         const roleMap: Record<string, { label: string, variant: 'primary' | 'secondary' | 'success' }> = {
-          'super_admin': { label: 'Super Admin', variant: 'primary' },
+          'superadmin': { label: 'Super Admin', variant: 'primary' },
           'admin': { label: 'Admin', variant: 'secondary' },
           'employee': { label: 'Employee', variant: 'success' },
+          'employer': { label: 'Employer', variant: 'success' },
+          'candidate': { label: 'Candidate', variant: 'success' },
         };
         
-        const role = roleMap[String(value)] || { label: String(value), variant: 'default' };
+        const role = roleMap[String(value)] || { label: String(value), variant: 'secondary' };
         
         return (
           <Badge variant={role.variant}>
@@ -195,7 +197,7 @@ const TeamPage = () => {
       title: 'Office',
       render: (value: unknown) => {
         const office = offices?.find(o => o.id === String(value));
-        return <span>{office ? office.name : `Office ${value}`}</span>;
+        return <span>{office ? office.name : `Office ${value || '1'}`}</span>;
       },
     },
     {
@@ -297,7 +299,7 @@ const TeamPage = () => {
             />
           </div>
           
-          {currentUser?.role === 'super_admin' && (
+          {currentUser?.role === 'superadmin' && (
             <div className="flex items-center space-x-2">
               <Select
                 options={[
@@ -312,7 +314,7 @@ const TeamPage = () => {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <Card>
           <div className="flex items-center">
             <div
@@ -320,11 +322,11 @@ const TeamPage = () => {
               style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
               </svg>
             </div>
             <div>
-              <p className="text-sm" style={{ color: `${colors.text}99` }}>Total Team Members</p>
+              <p className="text-sm" style={{ color: `${colors.text}99` }}>Total Users</p>
               <p className="text-2xl font-bold" style={{ color: colors.text }}>
                 {loading ? '...' : users?.length || 0}
               </p>
@@ -339,15 +341,34 @@ const TeamPage = () => {
               style={{ backgroundColor: `${colors.secondary}20`, color: colors.secondary }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm" style={{ color: `${colors.text}99` }}>Active Users</p>
+              <p className="text-2xl font-bold" style={{ color: colors.text }}>
+                {loading ? '...' : users?.length || 0}
+              </p>
+            </div>
+          </div>
+        </Card>
+        
+        <Card>
+          <div className="flex items-center">
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center mr-4"
+              style={{ backgroundColor: `${colors.success}20`, color: colors.success }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
             <div>
-              <p className="text-sm" style={{ color: `${colors.text}99` }}>Admins</p>
+              <p className="text-sm" style={{ color: `${colors.text}99` }}>Staff</p>
               <p className="text-2xl font-bold" style={{ color: colors.text }}>
                 {loading
                   ? '...'
-                  : users?.filter(u => u.role === 'admin' || u.role === 'super_admin').length || 0}
+                  : users?.filter(u => u.role === 'admin' || u.role === 'superadmin' || u.role === 'employee').length || 0}
               </p>
             </div>
           </div>
@@ -397,6 +418,7 @@ const TeamPage = () => {
               <button 
                 onClick={() => setShowAddModal(false)}
                 className="text-gray-500 hover:text-gray-700"
+                aria-label="Close modal"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -430,9 +452,11 @@ const TeamPage = () => {
                 value={formData.role}
                 onChange={handleInputChange}
                 options={[
+                  { value: 'candidate', label: 'Candidate' },
+                  { value: 'employer', label: 'Employer' },
                   { value: 'employee', label: 'Employee' },
                   { value: 'admin', label: 'Admin' },
-                  ...(currentUser?.role === 'super_admin' ? [{ value: 'super_admin', label: 'Super Admin' }] : []),
+                  ...(currentUser?.role === 'superadmin' ? [{ value: 'superadmin', label: 'Super Admin' }] : []),
                 ]}
                 fullWidth
               />
@@ -476,6 +500,7 @@ const TeamPage = () => {
               <button 
                 onClick={() => setShowEditModal(false)}
                 className="text-gray-500 hover:text-gray-700"
+                aria-label="Close modal"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -509,9 +534,11 @@ const TeamPage = () => {
                 value={formData.role}
                 onChange={handleInputChange}
                 options={[
+                  { value: 'candidate', label: 'Candidate' },
+                  { value: 'employer', label: 'Employer' },
                   { value: 'employee', label: 'Employee' },
                   { value: 'admin', label: 'Admin' },
-                  ...(currentUser?.role === 'super_admin' ? [{ value: 'super_admin', label: 'Super Admin' }] : []),
+                  ...(currentUser?.role === 'superadmin' ? [{ value: 'superadmin', label: 'Super Admin' }] : []),
                 ]}
                 fullWidth
               />

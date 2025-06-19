@@ -24,49 +24,42 @@ export interface LoginCredentials {
 export interface RegisterData {
   email: string;
   password: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   role?: string;
 }
 
-export interface TokenResponse {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-  expires_in: number;
-}
-
 export interface User {
-  id: string;
+  _id: string;
   email: string;
-  first_name: string;
-  last_name: string;
-  role: string;
+  firstName: string;
+  lastName: string;
+  username?: string;
+  role: 'candidate' | 'employer' | 'admin' | 'superadmin';
   is_active: boolean;
-  office_id?: string;
+  is_verified: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface LoginResponse {
+  message: string;
   user: User;
-  tokens: TokenResponse;
+  access_token: string;
+  refresh_token: string;
 }
 
 export interface RefreshTokenData {
   refresh_token: string;
 }
 
+export interface RefreshTokenResponse {
+  access_token: string;
+}
+
 export interface AuthStatusResponse {
   is_authenticated: boolean;
   user?: User;
-}
-
-export interface PasswordResetRequest {
-  email: string;
-}
-
-export interface PasswordResetConfirmRequest {
-  token: string;
-  new_password: string;
 }
 
 // Service
@@ -81,15 +74,10 @@ export const AuthService = {
         throw new AuthenticationError('Password is required', 'missing_password');
       }
       
-      // Convert to FormData for OAuth2 compatibility
-      const formData = new FormData();
-      formData.append('username', credentials.email);
-      formData.append('password', credentials.password);
-
-      const response = await apiClient.post<LoginResponse>('/auth/login', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      // Send JSON data to our backend
+      const response = await apiClient.post<LoginResponse>('/auth/login', {
+        email: credentials.email,
+        password: credentials.password
       });
       
       return response;
@@ -100,9 +88,9 @@ export const AuthService = {
         const responseData = error.response?.data;
         
         if (status === 401) {
-          console.log('401 error detected, throwing AuthenticationError');
+          const message = responseData?.message || responseData?.detail || 'Invalid email or password';
           throw new AuthenticationError(
-            'The email or password you entered is incorrect', 
+            message, 
             'invalid_credentials'
           );
         } else if (status === 403) {
@@ -110,38 +98,13 @@ export const AuthService = {
             'Your account has been disabled', 
             'account_disabled'
           );
-        } else if (status === 404) {
+        } else if (status === 400) {
+          // Bad Request - validation errors
+          const message = responseData?.message || responseData?.detail || 'Invalid request';
           throw new AuthenticationError(
-            'The email you entered is not registered in our system', 
-            'user_not_found'
+            message, 
+            'validation_error'
           );
-        } else if (status === 422) {
-          // Validation errors from backend
-          if (responseData?.detail) {
-            if (Array.isArray(responseData.detail)) {
-              const errors = responseData.detail;
-              const fieldsWithErrors: Record<string, string[]> = {};
-              
-              errors.forEach((err: any) => {
-                const field = err.loc[err.loc.length - 1];
-                if (!fieldsWithErrors[field]) {
-                  fieldsWithErrors[field] = [];
-                }
-                fieldsWithErrors[field].push(err.msg);
-              });
-              
-              throw new AuthenticationError(
-                'Please check your login information', 
-                'validation_error',
-                fieldsWithErrors
-              );
-            } else {
-              throw new AuthenticationError(
-                responseData.detail, 
-                'validation_error'
-              );
-            }
-          }
         } else if (status === 429) {
           throw new AuthenticationError(
             'Too many login attempts. Please try again later.', 
@@ -164,18 +127,13 @@ export const AuthService = {
     return response;
   },
 
-  async refreshToken(refreshData: RefreshTokenData): Promise<TokenResponse> {
-    const response = await apiClient.post<TokenResponse>('/auth/refresh', refreshData);
+  async refreshToken(refreshData: RefreshTokenData): Promise<RefreshTokenResponse> {
+    const response = await apiClient.post<RefreshTokenResponse>('/auth/refresh', refreshData);
     return response;
   },
 
   async getCurrentUser(): Promise<User> {
-    const response = await apiClient.get<User>('/auth/me');
-    return response;
-  },
-
-  async checkAuthStatus(): Promise<AuthStatusResponse> {
-    const response = await apiClient.get<AuthStatusResponse>('/auth/status');
+    const response = await apiClient.get<User>('/auth/profile');
     return response;
   },
 
@@ -183,29 +141,11 @@ export const AuthService = {
     await apiClient.post('/auth/logout');
   },
 
-  async forgotPassword(email: string): Promise<{ message: string }> {
-    const response = await apiClient.post<{ message: string }>('/auth/forgot-password', { email });
-    return response;
-  },
-
-  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
-    const response = await apiClient.post<{ message: string }>('/auth/reset-password', {
-      token,
-      new_password: newPassword
-    });
-    return response;
-  },
-
   async changePassword(currentPassword: string, newPassword: string): Promise<{ message: string }> {
     const response = await apiClient.post<{ message: string }>('/auth/change-password', {
-      current_password: currentPassword,
-      new_password: newPassword
+      currentPassword,
+      newPassword
     });
-    return response;
-  },
-
-  async verifyEmail(token: string): Promise<{ message: string }> {
-    const response = await apiClient.post<{ message: string }>(`/auth/verify-email/${token}`);
     return response;
   }
 };

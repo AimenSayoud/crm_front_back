@@ -8,7 +8,7 @@ import { Candidate, Job, Skill } from '../types';
 import { AuthenticationError } from '../services/api/auth-service';
 
 // Environment flag to enable/disable mock data
-export const USE_MOCK_DATA = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
+export const USE_MOCK_DATA = false; // Disabled - using only real MongoDB data from backend API
 
 // Mock data
 export const mockCandidates: Candidate[] = [

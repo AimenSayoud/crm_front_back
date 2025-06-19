@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models/sql');
+const jwt = require('jsonwebtoken');
+const createError = require('http-errors');
+const { User } = require('../models/mongodb');
 
 /**
  * Auth Controller - Handles user authentication
@@ -10,28 +12,22 @@ class AuthController {
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  register = async (req, res) => {
+  register = async (req, res, next) => {
     try {
-      const { email, password, first_name, last_name, role = 'candidate' } = req.body;
+      const { email, password, firstName, lastName, role = 'candidate' } = req.body;
 
       // Check if user with email already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-        return res.status(409).json({
-          message: 'User with this email already exists'
-        });
+        throw createError.Conflict('User with this email already exists');
       }
 
-      // Hash password
-      const salt = await bcrypt.genSalt(10);
-      const password_hash = await bcrypt.hash(password, salt);
-
-      // Create new user
+      // Create new user (password will be hashed by pre-save hook)
       const newUser = new User({
         email,
-        password_hash,
-        first_name,
-        last_name,
+        password,
+        firstName,
+        lastName,
         role,
         is_verified: false, // New users start unverified
         is_active: true
@@ -39,18 +35,30 @@ class AuthController {
 
       const savedUser = await newUser.save();
 
-      // Don't send password hash back to client
-      const userResponse = savedUser.toJSON();
+      // Generate tokens
+      const accessToken = this.generateAccessToken(savedUser);
+      const refreshToken = this.generateRefreshToken(savedUser);
+
+      // Save refresh token
+      savedUser.refreshToken = refreshToken;
+      savedUser.refreshTokenExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+      await savedUser.save();
+
+      // Remove sensitive data
+      const userResponse = savedUser.toObject();
+      delete userResponse.password;
+      delete userResponse.pin1;
+      delete userResponse.pin2;
+      delete userResponse.refreshToken;
 
       return res.status(201).json({
         message: 'User registered successfully',
-        data: userResponse
+        user: userResponse,
+        access_token: accessToken,
+        refresh_token: refreshToken
       });
     } catch (error) {
-      return res.status(500).json({
-        message: error.message || 'Error registering user',
-        error: process.env.NODE_ENV === 'development' ? error : undefined
-      });
+      next(error);
     }
   };
 
@@ -59,50 +67,104 @@ class AuthController {
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  login = async (req, res) => {
+  login = async (req, res, next) => {
     try {
       const { email, password } = req.body;
+
+      // Validate input
+      if (!email || !password) {
+        throw createError.BadRequest('Email and password are required');
+      }
 
       // Find user by email
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(401).json({
-          message: 'Invalid email or password'
-        });
+        throw createError.Unauthorized('Invalid email or password');
       }
 
       // Check if user is active
       if (!user.is_active) {
-        return res.status(401).json({
-          message: 'Your account is inactive. Please contact support.'
-        });
+        throw createError.Unauthorized('Your account is inactive. Please contact support.');
       }
 
       // Verify password
-      const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+      const isPasswordValid = await user.isValidPassword(password);
       if (!isPasswordValid) {
-        return res.status(401).json({
-          message: 'Invalid email or password'
-        });
+        throw createError.Unauthorized('Invalid email or password');
       }
 
       // Update last login time
       user.last_login = new Date();
+
+      // Generate tokens
+      const accessToken = this.generateAccessToken(user);
+      const refreshToken = this.generateRefreshToken(user);
+
+      // Save refresh token
+      user.refreshToken = refreshToken;
+      user.refreshTokenExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
       await user.save();
 
-      // For a simple session-based auth without tokens, we can just return the user
-      // In a real app, this would set session cookies, etc.
-      const userResponse = user.toJSON();
+      // Remove sensitive data
+      const userResponse = user.toObject();
+      delete userResponse.password;
+      delete userResponse.pin1;
+      delete userResponse.pin2;
+      delete userResponse.refreshToken;
 
       return res.status(200).json({
         message: 'Login successful',
-        data: userResponse
+        user: userResponse,
+        access_token: accessToken,
+        refresh_token: refreshToken
       });
     } catch (error) {
-      return res.status(500).json({
-        message: error.message || 'Error during login',
-        error: process.env.NODE_ENV === 'development' ? error : undefined
+      next(error);
+    }
+  };
+
+  /**
+   * Refresh access token
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  refreshToken = async (req, res, next) => {
+    try {
+      const { refresh_token } = req.body;
+
+      if (!refresh_token) {
+        throw createError.BadRequest('Refresh token is required');
+      }
+
+      // Verify refresh token
+      const decoded = jwt.verify(
+        refresh_token, 
+        process.env.REFRESH_TOKEN_SECRET || process.env.JWT_SECRET || 'your-refresh-secret'
+      );
+
+      // Find user and check refresh token
+      const user = await User.findById(decoded.userId);
+      if (!user || user.refreshToken !== refresh_token) {
+        throw createError.Unauthorized('Invalid refresh token');
+      }
+
+      // Check if refresh token is expired
+      if (user.refreshTokenExpiresAt && new Date() > user.refreshTokenExpiresAt) {
+        throw createError.Unauthorized('Refresh token expired');
+      }
+
+      // Generate new access token
+      const accessToken = this.generateAccessToken(user);
+
+      return res.status(200).json({
+        access_token: accessToken
       });
+    } catch (error) {
+      if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+        next(createError.Unauthorized('Invalid refresh token'));
+      } else {
+        next(error);
+      }
     }
   };
 
@@ -111,17 +173,23 @@ class AuthController {
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  logout = async (req, res) => {
+  logout = async (req, res, next) => {
     try {
-      // For a simple session-based auth, we'd clear cookies/session here
+      // Clear refresh token
+      if (req.user) {
+        const user = await User.findById(req.user._id);
+        if (user) {
+          user.refreshToken = null;
+          user.refreshTokenExpiresAt = null;
+          await user.save();
+        }
+      }
+
       return res.status(200).json({
         message: 'Logged out successfully'
       });
     } catch (error) {
-      return res.status(500).json({
-        message: error.message || 'Error during logout',
-        error: process.env.NODE_ENV === 'development' ? error : undefined
-      });
+      next(error);
     }
   };
 
@@ -130,59 +198,19 @@ class AuthController {
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  getProfile = async (req, res) => {
+  getProfile = async (req, res, next) => {
     try {
-      // In a real app, this would get the user from session/token
-      // For this simple version, we'll use the user ID from the request
-      const { userId } = req.params;
-
-      const user = await User.findById(userId);
+      const user = await User.findById(req.user._id).select('-password -pin1 -pin2 -refreshToken');
+      
       if (!user) {
-        return res.status(404).json({
-          message: 'User not found'
-        });
+        throw createError.NotFound('User not found');
       }
 
       return res.status(200).json({
-        data: user
+        user
       });
     } catch (error) {
-      return res.status(500).json({
-        message: error.message || 'Error retrieving profile',
-        error: process.env.NODE_ENV === 'development' ? error : undefined
-      });
-    }
-  };
-
-  /**
-   * Request password reset
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  requestPasswordReset = async (req, res) => {
-    try {
-      const { email } = req.body;
-
-      // Find user by email
-      const user = await User.findOne({ email });
-      if (!user) {
-        // For security, don't reveal that the email doesn't exist
-        return res.status(200).json({
-          message: 'If the email exists, a password reset link has been sent'
-        });
-      }
-
-      // In a real app, this would generate a reset token and send an email
-      // For this simple version, we'll just acknowledge the request
-
-      return res.status(200).json({
-        message: 'If the email exists, a password reset link has been sent'
-      });
-    } catch (error) {
-      return res.status(500).json({
-        message: error.message || 'Error requesting password reset',
-        error: process.env.NODE_ENV === 'development' ? error : undefined
-      });
+      next(error);
     }
   };
 
@@ -191,44 +219,66 @@ class AuthController {
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  changePassword = async (req, res) => {
+  changePassword = async (req, res, next) => {
     try {
-      const { userId } = req.params;
       const { currentPassword, newPassword } = req.body;
 
       // Find user
-      const user = await User.findById(userId);
+      const user = await User.findById(req.user._id);
       if (!user) {
-        return res.status(404).json({
-          message: 'User not found'
-        });
+        throw createError.NotFound('User not found');
       }
 
       // Verify current password
-      const isPasswordValid = await bcrypt.compare(currentPassword, user.password_hash);
+      const isPasswordValid = await user.isValidPassword(currentPassword);
       if (!isPasswordValid) {
-        return res.status(401).json({
-          message: 'Current password is incorrect'
-        });
+        throw createError.Unauthorized('Current password is incorrect');
       }
 
-      // Hash and update new password
-      const salt = await bcrypt.genSalt(10);
-      const password_hash = await bcrypt.hash(newPassword, salt);
-
-      user.password_hash = password_hash;
+      // Update password (will be hashed by pre-save hook)
+      user.password = newPassword;
       await user.save();
 
       return res.status(200).json({
         message: 'Password updated successfully'
       });
     } catch (error) {
-      return res.status(500).json({
-        message: error.message || 'Error changing password',
-        error: process.env.NODE_ENV === 'development' ? error : undefined
-      });
+      next(error);
     }
   };
+
+  /**
+   * Generate access token
+   * @private
+   */
+  generateAccessToken(user) {
+    return jwt.sign(
+      { 
+        userId: user._id,
+        email: user.email,
+        role: user.role,
+        firstName: user.firstName,
+        lastName: user.lastName
+      },
+      process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '15m' }
+    );
+  }
+
+  /**
+   * Generate refresh token
+   * @private
+   */
+  generateRefreshToken(user) {
+    return jwt.sign(
+      { 
+        userId: user._id,
+        tokenVersion: user.tokenVersion || 0
+      },
+      process.env.REFRESH_TOKEN_SECRET || process.env.JWT_SECRET || 'your-refresh-secret',
+      { expiresIn: '7d' }
+    );
+  }
 }
 
 module.exports = new AuthController();

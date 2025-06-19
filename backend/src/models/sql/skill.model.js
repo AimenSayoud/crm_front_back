@@ -90,9 +90,9 @@ SkillSchema.index({ name: 'text', description: 'text' });
 SkillCategorySchema.index({ name: 1 }, { unique: true });
 SkillCategorySchema.index({ display_order: 1 });
 
-// Create models
-const Skill = mongoose.model('Skill', SkillSchema);
-const SkillCategory = mongoose.model('SkillCategory', SkillCategorySchema);
+// Create models (reuse existing if already compiled)
+const Skill = mongoose.models.Skill || mongoose.model('Skill', SkillSchema);
+const SkillCategory = mongoose.models.SkillCategory || mongoose.model('SkillCategory', SkillCategorySchema);
 
 module.exports = {
   Skill,

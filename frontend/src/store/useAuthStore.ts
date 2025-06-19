@@ -6,9 +6,8 @@ import AuthService, {
   User as ApiUser, 
   AuthenticationError 
 } from '../services/api/auth-service';
-import { mockAuthService } from './mockHelpers';
 
-export type UserRole = 'super_admin' | 'admin' | 'employee' | 'candidate' | 'consultant' | 'employer';
+export type UserRole = 'superadmin' | 'admin' | 'employee' | 'employer' | 'candidate';
 export type OfficeId = string;
 
 interface User {
@@ -59,34 +58,29 @@ export const useAuthStore = create<AuthStore>()(
         set({ isLoading: true, error: null });
         
         try {
-          // Use mock authentication if mock data is enabled
-          const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
+          // Use real API authentication
+          const response = await AuthService.login({ email, password });
           
-          let response;
-          if (USE_MOCK_DATA) {
-            response = await mockAuthService.login(email, password);
-          } else {
-            response = await AuthService.login({ email, password });
-          }
-          
-          const { user, tokens } = response;
+          // Real API response format
+          const userData = response.user;
+          const accessToken = response.access_token;
+          const refreshToken = response.refresh_token;
           
           // Store tokens in localStorage
-          localStorage.setItem('access_token', tokens.access_token);
-          localStorage.setItem('refresh_token', tokens.refresh_token);
+          localStorage.setItem('access_token', accessToken);
+          localStorage.setItem('refresh_token', refreshToken);
           
-          // Store token expiry time for better handling
-          const expiresInMs = tokens.expires_in * 1000;
-          const expiryTime = Date.now() + expiresInMs;
+          // Store token expiry time for better handling (15 minutes for access token)
+          const expiryTime = Date.now() + (15 * 60 * 1000);
           localStorage.setItem('token_expiry', expiryTime.toString());
           
           set({ 
             user: {
-              id: user.id,
-              name: `${user.first_name} ${user.last_name}`,
-              email: user.email,
-              role: user.role as UserRole,
-              officeId: user.office_id,
+              id: userData._id,
+              name: `${userData.firstName} ${userData.lastName}`,
+              email: userData.email,
+              role: userData.role as UserRole,
+              officeId: userData.office_id,
             }, 
             isAuthenticated: true, 
             isLoading: false 
@@ -181,8 +175,8 @@ export const useAuthStore = create<AuthStore>()(
         const { user } = get();
         if (!user) return false;
         
-        // Super admin can access all offices
-        if (user.role === 'super_admin') return true;
+        // Superadmin can access all offices
+        if (user.role === 'superadmin') return true;
         
         // Other roles can only access their assigned office
         return user.officeId === officeId;
@@ -194,12 +188,11 @@ export const useAuthStore = create<AuthStore>()(
         
         // Access levels hierarchy
         const roleHierarchy: Record<UserRole, number> = {
-          'super_admin': 5,
+          'superadmin': 5,
           'admin': 4,
-          'consultant': 3,
+          'employee': 3,
           'employer': 2,
-          'employee': 1,
-          'candidate': 0
+          'candidate': 1
         };
         
         // If the user's role is not in the hierarchy, deny access
@@ -234,11 +227,9 @@ export const useAuthStore = create<AuthStore>()(
                   
                   // Update tokens in localStorage
                   localStorage.setItem('access_token', refreshResponse.access_token);
-                  localStorage.setItem('refresh_token', refreshResponse.refresh_token);
                   
-                  // Update expiry time
-                  const expiresInMs = refreshResponse.expires_in * 1000;
-                  const newExpiryTime = Date.now() + expiresInMs;
+                  // Update expiry time (15 minutes for access token)
+                  const newExpiryTime = Date.now() + (15 * 60 * 1000);
                   localStorage.setItem('token_expiry', newExpiryTime.toString());
                 } catch (refreshError) {
                   // If refresh fails, clear auth and return
@@ -263,11 +254,11 @@ export const useAuthStore = create<AuthStore>()(
           
           set({ 
             user: {
-              id: userData.id,
-              name: `${userData.first_name} ${userData.last_name}`,
+              id: userData._id,
+              name: `${userData.firstName} ${userData.lastName}`,
               email: userData.email,
               role: userData.role as UserRole,
-              officeId: userData.office_id,
+              officeId: undefined, // Not implemented in backend yet
             }, 
             isAuthenticated: true, 
             isLoading: false 

@@ -61,8 +61,8 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'super_admin' | 'admin' | 'employee';
-  officeId: string;
+  role: 'superadmin' | 'admin' | 'employee' | 'employer' | 'candidate';
+  officeId?: string;
   createdAt: Date;
   updatedAt: Date;
   lastLogin?: Date;

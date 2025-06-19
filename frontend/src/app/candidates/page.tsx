@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@/app/context/ThemeContext';
 import SearchFilterBar, { ViewMode, FilterState } from './components/SearchFilterBar';
 import CandidatesCard, { Candidate } from './components/CandidatesCard';
+import axios from 'axios';
+import { API_BASE_URL } from '@/services/api/config';
 
 const CandidatesPage = () => {
   const { colors } = useTheme();
@@ -12,6 +14,8 @@ const CandidatesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('cards');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   // Filter state
   const [filters, setFilters] = useState<FilterState>({
@@ -23,93 +27,52 @@ const CandidatesPage = () => {
   // Calculate filter count
   const filterCount = filters.status.length + filters.experience.length + filters.skills.length;
 
-  // Sample candidate data
-  const [candidates, setCandidates] = useState<Candidate[]>([
-    {
-      id: '1',
-      name: 'Sarah Johnson',
-      email: 'sarah.johnson@email.com',
-      phone: '+1 (555) 123-4567',
-      location: 'New York, NY',
-      position: 'Senior Frontend Developer',
-      experience: '5+ years',
-      skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'GraphQL'],
-      status: 'Interview',
-      appliedDate: '2 days ago',
-      salary: '$95,000',
-      rating: 4,
-    },
-    {
-      id: '2',
-      name: 'Michael Chen',
-      email: 'michael.chen@email.com',
-      phone: '+1 (555) 987-6543',
-      location: 'San Francisco, CA',
-      position: 'Full Stack Engineer',
-      experience: '3+ years',
-      skills: ['Node.js', 'Python', 'React', 'PostgreSQL', 'Docker'],
-      status: 'Applied',
-      appliedDate: '1 day ago',
-      salary: '$85,000',
-      rating: 5,
-    },
-    {
-      id: '3',
-      name: 'Emily Rodriguez',
-      email: 'emily.rodriguez@email.com',
-      phone: '+1 (555) 456-7890',
-      location: 'Austin, TX',
-      position: 'UX/UI Designer',
-      experience: '4+ years',
-      skills: ['Figma', 'Adobe Creative Suite', 'Prototyping', 'User Research'],
-      status: 'Offer',
-      appliedDate: '5 days ago',
-      salary: '$75,000',
-      rating: 4,
-    },
-    {
-      id: '4',
-      name: 'David Kim',
-      email: 'david.kim@email.com',
-      phone: '+1 (555) 321-0987',
-      location: 'Seattle, WA',
-      position: 'Backend Developer',
-      experience: '6+ years',
-      skills: ['Java', 'Spring Boot', 'AWS', 'Kubernetes', 'MongoDB'],
-      status: 'Screening',
-      appliedDate: '3 days ago',
-      salary: '$100,000',
-      rating: 5,
-    },
-    {
-      id: '5',
-      name: 'Lisa Thompson',
-      email: 'lisa.thompson@email.com',
-      phone: '+1 (555) 654-3210',
-      location: 'Chicago, IL',
-      position: 'Product Manager',
-      experience: '7+ years',
-      skills: ['Product Strategy', 'Agile', 'Analytics', 'User Stories'],
-      status: 'Hired',
-      appliedDate: '1 week ago',
-      salary: '$110,000',
-      rating: 5,
-    },
-    {
-      id: '6',
-      name: 'James Wilson',
-      email: 'james.wilson@email.com',
-      phone: '+1 (555) 789-0123',
-      location: 'Boston, MA',
-      position: 'DevOps Engineer',
-      experience: '4+ years',
-      skills: ['Docker', 'Kubernetes', 'Jenkins', 'Terraform', 'AWS'],
-      status: 'Rejected',
-      appliedDate: '2 weeks ago',
-      salary: '$90,000',
-      rating: 3,
-    },
-  ]);
+  // State for candidates from database
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+
+  // Fetch candidates from the backend
+  useEffect(() => {
+    fetchCandidates();
+  }, []);
+
+  const fetchCandidates = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await axios.get(`${API_BASE_URL}/candidates`, {
+        params: {
+          page: 1,
+          page_size: 50
+        }
+      });
+
+      // Transform the backend data to match our frontend Candidate interface
+      const transformedCandidates = response.data.candidates.map((candidate: any) => ({
+        id: candidate._id,
+        name: `${candidate.user_id?.firstName || ''} ${candidate.user_id?.lastName || ''}`.trim() || 'Unknown',
+        email: candidate.user_id?.email || '',
+        phone: candidate.phone || 'N/A',
+        location: candidate.location || 'Not specified',
+        position: candidate.work_experience?.[0]?.position || 'Not specified',
+        experience: `${candidate.years_of_experience || 0}+ years`,
+        skills: candidate.skills?.map((s: any) => s.skill_id?.name || '').filter(Boolean) || [],
+        status: 'Applied', // Default status since it's not in the backend model
+        appliedDate: new Date(candidate.created_at).toLocaleDateString(),
+        salary: candidate.job_preferences?.desired_salary_min 
+          ? `$${candidate.job_preferences.desired_salary_min.toLocaleString()}`
+          : 'Not specified',
+        rating: 4, // Default rating
+      }));
+
+      setCandidates(transformedCandidates);
+    } catch (err) {
+      console.error('Error fetching candidates:', err);
+      setError('Failed to load candidates. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filter candidates based on search term and filters
   const filteredCandidates = candidates.filter(candidate => {
@@ -152,22 +115,47 @@ const CandidatesPage = () => {
     );
   };
 
+  // State for selected candidate detail
+  const [selectedCandidate, setSelectedCandidate] = useState<any>(null);
+  const [showCandidateModal, setShowCandidateModal] = useState(false);
+  const [loadingCandidate, setLoadingCandidate] = useState(false);
+
   // Handle candidate actions
-  const handleCandidateAction = (candidateId: string, action: 'view' | 'edit' | 'delete') => {
-    const candidate = candidates.find(c => c.id === candidateId);
+  const handleCandidateAction = async (candidateId: string, action: 'view' | 'edit' | 'delete') => {
     switch (action) {
       case 'view':
-        console.log('View candidate:', candidate);
-        // TODO: Open candidate detail modal
+        try {
+          setLoadingCandidate(true);
+          // Fetch full candidate details from API
+          const response = await axios.get(`${API_BASE_URL}/candidates/${candidateId}`);
+          setSelectedCandidate(response.data);
+          setShowCandidateModal(true);
+        } catch (err) {
+          console.error('Error fetching candidate details:', err);
+          // If API fails, use the basic data we already have
+          const candidate = candidates.find(c => c.id === candidateId);
+          if (candidate) {
+            setSelectedCandidate(candidate);
+            setShowCandidateModal(true);
+          }
+        } finally {
+          setLoadingCandidate(false);
+        }
         break;
       case 'edit':
-        console.log('Edit candidate:', candidate);
+        console.log('Edit candidate:', candidateId);
         // TODO: Open candidate edit modal
         break;
       case 'delete':
-        console.log('Delete candidate:', candidate);
-        // TODO: Show confirmation dialog
-        setCandidates(prev => prev.filter(c => c.id !== candidateId));
+        if (window.confirm('Are you sure you want to delete this candidate?')) {
+          try {
+            // TODO: Add API call to delete candidate
+            // await axios.delete(`${API_BASE_URL}/candidates/${candidateId}`);
+            setCandidates(prev => prev.filter(c => c.id !== candidateId));
+          } catch (err) {
+            console.error('Error deleting candidate:', err);
+          }
+        }
         break;
     }
   };
@@ -203,6 +191,19 @@ const CandidatesPage = () => {
         </p>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-600">{error}</p>
+          <button
+            onClick={fetchCandidates}
+            className="mt-2 text-sm text-red-600 underline hover:text-red-800"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+
       {/* Search and Filter Bar */}
       <div className="mb-6">
         <SearchFilterBar
@@ -220,23 +221,233 @@ const CandidatesPage = () => {
         />
       </div>
 
-      {/* Candidates Cards */}
-      <div className="space-y-6">
-        <CandidatesCard
-          candidates={filteredCandidates}
-          viewMode={viewMode}
-          onCandidateUpdate={handleCandidateUpdate}
-          onCandidateAction={handleCandidateAction}
-        />
-      </div>
+      {/* Loading State */}
+      {loading ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      ) : (
+        <>
+          {/* Candidates Cards */}
+          <div className="space-y-6">
+            <CandidatesCard
+              candidates={filteredCandidates}
+              viewMode={viewMode}
+              onCandidateUpdate={handleCandidateUpdate}
+              onCandidateAction={handleCandidateAction}
+            />
+          </div>
 
-      {/* Results Summary */}
-      {searchTerm && (
-        <div className="mt-6 text-center">
-          <p className="text-sm" style={{ color: colors.text, opacity: 0.6 }}>
-            Showing {filteredCandidates.length} of {candidates.length} candidates
-            {searchTerm && ` for "${searchTerm}"`}
-          </p>
+          {/* Results Summary */}
+          {(searchTerm || filterCount > 0) && (
+            <div className="mt-6 text-center">
+              <p className="text-sm" style={{ color: colors.text, opacity: 0.6 }}>
+                Showing {filteredCandidates.length} of {candidates.length} candidates
+                {searchTerm && ` for "${searchTerm}"`}
+              </p>
+            </div>
+          )}
+
+          {/* No candidates message */}
+          {!loading && candidates.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No candidates found.</p>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Candidate Detail Modal */}
+      {showCandidateModal && selectedCandidate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div 
+            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-auto"
+            style={{ backgroundColor: colors.card }}
+          >
+            {/* Modal Header */}
+            <div className="p-6 border-b" style={{ borderColor: colors.border }}>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold" style={{ color: colors.text }}>
+                  Candidate Details
+                </h2>
+                <button
+                  onClick={() => {
+                    setShowCandidateModal(false);
+                    setSelectedCandidate(null);
+                  }}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6">
+              {loadingCandidate ? (
+                <div className="flex justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {/* Basic Info */}
+                  <div>
+                    <h3 className="text-lg font-medium mb-3" style={{ color: colors.text }}>
+                      Basic Information
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-600">Name</p>
+                        <p className="font-medium" style={{ color: colors.text }}>
+                          {selectedCandidate.name || `${selectedCandidate.user_id?.firstName} ${selectedCandidate.user_id?.lastName}`}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Email</p>
+                        <p className="font-medium" style={{ color: colors.text }}>
+                          {selectedCandidate.email || selectedCandidate.user_id?.email}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Phone</p>
+                        <p className="font-medium" style={{ color: colors.text }}>
+                          {selectedCandidate.phone || 'Not provided'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Location</p>
+                        <p className="font-medium" style={{ color: colors.text }}>
+                          {selectedCandidate.location || 'Not specified'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Professional Summary */}
+                  {selectedCandidate.summary && (
+                    <div>
+                      <h3 className="text-lg font-medium mb-3" style={{ color: colors.text }}>
+                        Professional Summary
+                      </h3>
+                      <p className="text-gray-700">{selectedCandidate.summary}</p>
+                    </div>
+                  )}
+
+                  {/* Skills */}
+                  <div>
+                    <h3 className="text-lg font-medium mb-3" style={{ color: colors.text }}>
+                      Skills
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {(selectedCandidate.skills || []).map((skill: any, index: number) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"
+                        >
+                          {typeof skill === 'string' ? skill : skill.skill_id?.name || skill.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Experience */}
+                  {selectedCandidate.work_experience && selectedCandidate.work_experience.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-medium mb-3" style={{ color: colors.text }}>
+                        Work Experience
+                      </h3>
+                      <div className="space-y-4">
+                        {selectedCandidate.work_experience.map((exp: any, index: number) => (
+                          <div key={index} className="border-l-2 border-gray-300 pl-4">
+                            <h4 className="font-medium" style={{ color: colors.text }}>
+                              {exp.position}
+                            </h4>
+                            <p className="text-sm text-gray-600">{exp.company_name}</p>
+                            <p className="text-sm text-gray-500">
+                              {exp.start_date && new Date(exp.start_date).toLocaleDateString()} - 
+                              {exp.is_current ? ' Present' : (exp.end_date && new Date(exp.end_date).toLocaleDateString())}
+                            </p>
+                            {exp.description && (
+                              <p className="text-sm mt-2">{exp.description}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Education */}
+                  {selectedCandidate.education && selectedCandidate.education.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-medium mb-3" style={{ color: colors.text }}>
+                        Education
+                      </h3>
+                      <div className="space-y-4">
+                        {selectedCandidate.education.map((edu: any, index: number) => (
+                          <div key={index}>
+                            <h4 className="font-medium" style={{ color: colors.text }}>
+                              {edu.degree} in {edu.field_of_study}
+                            </h4>
+                            <p className="text-sm text-gray-600">{edu.institution}</p>
+                            <p className="text-sm text-gray-500">
+                              {edu.start_date && new Date(edu.start_date).getFullYear()} - 
+                              {edu.end_date && new Date(edu.end_date).getFullYear()}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Job Preferences */}
+                  {selectedCandidate.job_preferences && (
+                    <div>
+                      <h3 className="text-lg font-medium mb-3" style={{ color: colors.text }}>
+                        Job Preferences
+                      </h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        {selectedCandidate.job_preferences.desired_salary_min && (
+                          <div>
+                            <p className="text-sm text-gray-600">Salary Expectation</p>
+                            <p className="font-medium" style={{ color: colors.text }}>
+                              ${selectedCandidate.job_preferences.desired_salary_min.toLocaleString()} - 
+                              ${selectedCandidate.job_preferences.desired_salary_max?.toLocaleString() || 'Open'}
+                            </p>
+                          </div>
+                        )}
+                        {selectedCandidate.job_preferences.remote_preference && (
+                          <div>
+                            <p className="text-sm text-gray-600">Work Preference</p>
+                            <p className="font-medium capitalize" style={{ color: colors.text }}>
+                              {selectedCandidate.job_preferences.remote_preference}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 border-t" style={{ borderColor: colors.border }}>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => {
+                    setShowCandidateModal(false);
+                    setSelectedCandidate(null);
+                  }}
+                  className="px-4 py-2 border rounded-lg hover:bg-gray-50"
+                  style={{ borderColor: colors.border }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

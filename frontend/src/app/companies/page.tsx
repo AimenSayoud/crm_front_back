@@ -6,10 +6,11 @@ import { useTheme } from '@/app/context/ThemeContext';
 
 import { motion } from 'framer-motion';
 import { Company } from '@/types';
-import { mockData } from '@/store/mockData';
 import SearchFilterBar, { ViewMode, FilterState } from './components/SearchFilterBar';
 import CompaniesCard from './components/CompaniesCard';
 import CompanyDetailModal from '@/components/companies/CompanyDetailModal';
+import axios from 'axios';
+import { API_BASE_URL } from '@/services/api/config';
 
 const CompaniesPage = () => {
   const { colors, theme } = useTheme();
@@ -35,38 +36,49 @@ const CompaniesPage = () => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
 
-  // Load mock data
+  // Load companies from MongoDB
   useEffect(() => {
-    console.log('🎭 Loading mock companies data');
-    
-    // Simulate loading delay
-    setTimeout(() => {
-      try {
-        // Map mock companies to match the Company type from types/index.ts
-        const mappedCompanies = mockData.companies.map(company => ({
-          id: company.id,
-          name: company.name,
-          industry: company.industry,
-          website: company.website,
-          contactPerson: `Contact Person ${company.id}`,
-          contactEmail: company.email || `contact@${company.name.toLowerCase().replace(/\s+/g, '')}.com`,
-          contactPhone: company.phone,
-          address: company.address,
-          notes: company.description,
-          createdAt: new Date(company.created_at),
-          updatedAt: new Date(company.updated_at),
-          openPositions: company.active_jobs,
-          officeId: 'default-office',
-        })) as Company[];
-        
-        setCompanies(mappedCompanies);
-        setIsLoading(false);
-      } catch (err) {
-        console.error('Failed to load mock data:', err);
-        setIsLoading(false);
-      }
-    }, 500);
+    fetchCompanies();
   }, []);
+
+  const fetchCompanies = async () => {
+    try {
+      setIsLoading(true);
+      console.log('Fetching companies from MongoDB...');
+      
+      const response = await axios.get(`${API_BASE_URL}/companies`, {
+        params: {
+          page: 1,
+          page_size: 50
+        }
+      });
+
+      // Transform the backend data to match our frontend Company interface
+      const transformedCompanies = response.data.companies.map((company: any) => ({
+        id: company._id,
+        name: company.name || 'Unknown Company',
+        industry: company.industry || 'Not specified',
+        website: company.website || '',
+        contactPerson: company.contact_person || 'Not specified',
+        contactEmail: company.email || '',
+        contactPhone: company.phone || '',
+        address: company.address || 'Not specified',
+        notes: company.description || '',
+        createdAt: new Date(company.created_at),
+        updatedAt: new Date(company.updated_at),
+        openPositions: company.active_jobs || 0,
+        officeId: 'default-office',
+      })) as Company[];
+      
+      setCompanies(transformedCompanies);
+      console.log(`Loaded ${transformedCompanies.length} companies from database`);
+    } catch (err) {
+      console.error('Error fetching companies:', err);
+      setCompanies([]); // Set empty array on error
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Get unique industries for filter
   const uniqueIndustries = useMemo(() => {

@@ -112,6 +112,7 @@ UserSchema.virtual('sent_messages', {
 UserSchema.index({ email: 1 }, { unique: true });
 UserSchema.index({ role: 1 });
 
-const User = mongoose.model('User', UserSchema);
+// Avoid OverwriteModelError by checking if the model already exists
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 module.exports = User;

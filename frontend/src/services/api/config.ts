@@ -2,8 +2,8 @@
 // Configuration for the API client
 
 // API base URL from environment variables
-export const API_BASE_URL =  'http://localhost:8000/api/v1';
-export const API_URL = 'http://localhost:8000/api/v1';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 // Request timeout in milliseconds
 export const DEFAULT_TIMEOUT = 10000; // 10 seconds
