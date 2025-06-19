@@ -197,9 +197,9 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
   return (
     <div className="relative" ref={containerRef}>
       <div 
-        className="flex flex-wrap items-center gap-2 p-2 border rounded-lg"
+        className="flex flex-wrap items-center gap-2 p-3 border rounded-lg transition-all duration-200"
         style={{
-          backgroundColor: disabled ? (theme === 'light' ? '#F3F4F6' : '#374151') : colors.card,
+          backgroundColor: disabled ? (theme === 'light' ? '#F3F4F6' : '#374151') : colors.background,
           borderColor: showDropdown ? colors.primary : colors.border,
           boxShadow: showDropdown ? `0 0 0 2px ${colors.primary}20` : 'none',
           cursor: disabled ? 'not-allowed' : 'text'
@@ -214,23 +214,32 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
         {selectedRecipients.map(recipient => (
           <div 
             key={recipient.id}
-            className="flex items-center gap-1.5 px-2 py-1 rounded-md"
+            className="flex items-center gap-1.5 px-2 py-1 rounded-md border"
             style={{ 
-              backgroundColor: getRecipientChipColor(recipient.type),
-              color: getRecipientChipTextColor(recipient.type)
+              backgroundColor: colors.card,
+              borderColor: colors.border,
+              color: colors.text
             }}
           >
-            {getParticipantIcon(recipient.type)}
-            <span className="text-sm">{recipient.name}</span>
+            <div className="w-4 h-4 rounded flex items-center justify-center text-white text-xs" style={{ backgroundColor: getRecipientChipTextColor(recipient.type) }}>
+              {getParticipantIcon(recipient.type)}
+            </div>
+            <span className="text-xs font-medium">{recipient.name}</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{
+              backgroundColor: `${getRecipientChipTextColor(recipient.type)}15`,
+              color: getRecipientChipTextColor(recipient.type)
+            }}>
+              {recipient.type}
+            </span>
             {!disabled && (
               <button
                 type="button"
-                className={`rounded-full p-0.5 hover:${theme === 'light' ? 'bg-black/10' : 'bg-white/10'}`}
-                style={{ transition: 'background-color 0.2s' }}
+                className="rounded-full p-0.5 transition-all duration-200 hover:opacity-80"
+                style={{ backgroundColor: '#EF4444', color: 'white' }}
                 onClick={() => onRemoveRecipient(recipient.id)}
                 aria-label={`Remove ${recipient.name}`}
               >
-                <FiX className="w-3.5 h-3.5" />
+                <FiX className="w-2.5 h-2.5" />
               </button>
             )}
           </div>
@@ -243,7 +252,7 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
             type="text"
             className="flex-1 min-w-[150px] py-1 px-2 outline-none bg-transparent text-sm"
             style={{ color: colors.text }}
-            placeholder={selectedRecipients.length === 0 ? placeholder : ''}
+            placeholder={selectedRecipients.length === 0 ? placeholder : 'Add more...'}
             value={searchTerm}
             onChange={handleInputChange}
             onFocus={handleFocus}
@@ -265,19 +274,19 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
               backgroundColor: colors.card,
               borderColor: colors.border,
               maxHeight: '300px', 
-              overflowY: 'auto' 
+              overflowY: 'auto',
+              boxShadow: theme === 'light' ? '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' : '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
             }}
           >
             {/* Type Filters */}
-            <div className="px-2 mb-2 flex gap-1 overflow-x-auto pb-2">
+            <div className="px-3 mb-2 flex gap-1 overflow-x-auto pb-1">
               <button
-                className={`px-3 py-1.5 text-xs rounded-md whitespace-nowrap ${
-                  activeTypeFilter !== null ? `hover:${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}` : ''
+                className={`px-3 py-1.5 text-xs rounded-md whitespace-nowrap font-medium transition-all duration-200 ${
+                  activeTypeFilter !== null ? 'hover:bg-opacity-80' : ''
                 }`}
                 style={{
-                  backgroundColor: activeTypeFilter === null ? colors.primary : (theme === 'light' ? '#F3F4F6' : '#374151'),
-                  color: activeTypeFilter === null ? '#FFFFFF' : (theme === 'light' ? '#4B5563' : '#D1D5DB'),
-                  transition: 'background-color 0.2s'
+                  backgroundColor: activeTypeFilter === null ? colors.primary : `${colors.primary}10`,
+                  color: activeTypeFilter === null ? '#FFFFFF' : colors.primary
                 }}
                 onClick={() => handleTypeFilter(null)}
               >
@@ -285,13 +294,10 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
               </button>
               {allowedTypes.includes('candidate') && (
                 <button
-                  className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1 whitespace-nowrap ${
-                    activeTypeFilter !== 'candidate' ? `hover:${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}` : ''
-                  }`}
+                  className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 hover:bg-opacity-80`}
                   style={{
-                    backgroundColor: activeTypeFilter === 'candidate' ? colors.primary : (theme === 'light' ? '#F3F4F6' : '#374151'),
-                    color: activeTypeFilter === 'candidate' ? '#FFFFFF' : (theme === 'light' ? '#4B5563' : '#D1D5DB'),
-                    transition: 'background-color 0.2s'
+                    backgroundColor: activeTypeFilter === 'candidate' ? colors.primary : `${colors.primary}10`,
+                    color: activeTypeFilter === 'candidate' ? '#FFFFFF' : colors.primary
                   }}
                   onClick={() => handleTypeFilter('candidate')}
                 >
@@ -301,10 +307,10 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
               )}
               {allowedTypes.includes('employer') && (
                 <button
-                  className="px-3 py-1.5 text-xs rounded-md flex items-center gap-1 whitespace-nowrap"
+                  className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 hover:bg-opacity-80`}
                   style={{
-                    backgroundColor: activeTypeFilter === 'employer' ? colors.primary : (theme === 'light' ? '#F3F4F6' : '#374151'),
-                    color: activeTypeFilter === 'employer' ? '#FFFFFF' : (theme === 'light' ? '#4B5563' : '#D1D5DB')
+                    backgroundColor: activeTypeFilter === 'employer' ? colors.primary : `${colors.primary}10`,
+                    color: activeTypeFilter === 'employer' ? '#FFFFFF' : colors.primary
                   }}
                   onClick={() => handleTypeFilter('employer')}
                 >
@@ -314,10 +320,10 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
               )}
               {allowedTypes.includes('admin') && (
                 <button
-                  className="px-3 py-1.5 text-xs rounded-md flex items-center gap-1 whitespace-nowrap"
+                  className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 hover:bg-opacity-80`}
                   style={{
-                    backgroundColor: activeTypeFilter === 'admin' ? colors.primary : (theme === 'light' ? '#F3F4F6' : '#374151'),
-                    color: activeTypeFilter === 'admin' ? '#FFFFFF' : (theme === 'light' ? '#4B5563' : '#D1D5DB')
+                    backgroundColor: activeTypeFilter === 'admin' ? colors.primary : `${colors.primary}10`,
+                    color: activeTypeFilter === 'admin' ? '#FFFFFF' : colors.primary
                   }}
                   onClick={() => handleTypeFilter('admin')}
                 >
@@ -327,10 +333,10 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
               )}
               {allowedTypes.includes('consultant') && (
                 <button
-                  className="px-3 py-1.5 text-xs rounded-md flex items-center gap-1 whitespace-nowrap"
+                  className={`px-3 py-1.5 text-xs rounded-md flex items-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 hover:bg-opacity-80`}
                   style={{
-                    backgroundColor: activeTypeFilter === 'consultant' ? colors.primary : (theme === 'light' ? '#F3F4F6' : '#374151'),
-                    color: activeTypeFilter === 'consultant' ? '#FFFFFF' : (theme === 'light' ? '#4B5563' : '#D1D5DB')
+                    backgroundColor: activeTypeFilter === 'consultant' ? colors.primary : `${colors.primary}10`,
+                    color: activeTypeFilter === 'consultant' ? '#FFFFFF' : colors.primary
                   }}
                   onClick={() => handleTypeFilter('consultant')}
                 >
@@ -357,22 +363,30 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
                 {filteredSuggestions.map(recipient => (
                   <div
                     key={recipient.id}
-                    className={`px-3 py-2 cursor-pointer flex items-center gap-3 hover:${theme === 'light' ? 'bg-gray-100' : 'bg-gray-700'}`}
-                    style={{ transition: 'background-color 0.2s' }}
+                    className={`px-3 py-2 cursor-pointer flex items-center gap-3 rounded-md transition-all duration-200 hover:bg-opacity-5`}
+                    style={{ 
+                      backgroundColor: 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = `${colors.primary}05`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                    }}
                     onClick={() => handleAddRecipient(recipient)}
                   >
                     <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center"
                       style={{ 
-                        backgroundColor: getRecipientChipColor(recipient.type),
-                        color: getRecipientChipTextColor(recipient.type)
+                        backgroundColor: getRecipientChipTextColor(recipient.type),
+                        color: 'white'
                       }}
                     >
                       {getParticipantIcon(recipient.type)}
                     </div>
-                    <div>
-                      <div className="font-medium text-sm">{recipient.name}</div>
-                      <div className="text-xs capitalize" style={{ color: `${colors.text}80` }}>{recipient.type}</div>
+                    <div className="flex-1">
+                      <div className="font-medium text-sm" style={{ color: colors.text }}>{recipient.name}</div>
+                      <div className="text-xs capitalize" style={{ color: `${colors.text}60` }}>{recipient.type}</div>
                     </div>
                   </div>
                 ))}
@@ -388,22 +402,30 @@ const RecipientSelector: React.FC<RecipientSelectorProps> = ({
                 {filteredSuggestions.map(recipient => (
                   <div
                     key={recipient.id}
-                    className={`px-3 py-2 cursor-pointer flex items-center gap-3 hover:${theme === 'light' ? 'bg-gray-100' : 'bg-gray-700'}`}
-                    style={{ transition: 'background-color 0.2s' }}
+                    className={`px-3 py-2 cursor-pointer flex items-center gap-3 rounded-md transition-all duration-200 hover:bg-opacity-5`}
+                    style={{ 
+                      backgroundColor: 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = `${colors.primary}05`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                    }}
                     onClick={() => handleAddRecipient(recipient)}
                   >
                     <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center"
                       style={{ 
-                        backgroundColor: getRecipientChipColor(recipient.type),
-                        color: getRecipientChipTextColor(recipient.type)
+                        backgroundColor: getRecipientChipTextColor(recipient.type),
+                        color: 'white'
                       }}
                     >
                       {getParticipantIcon(recipient.type)}
                     </div>
-                    <div>
-                      <div className="font-medium text-sm">{recipient.name}</div>
-                      <div className="text-xs capitalize" style={{ color: `${colors.text}80` }}>{recipient.type}</div>
+                    <div className="flex-1">
+                      <div className="font-medium text-sm" style={{ color: colors.text }}>{recipient.name}</div>
+                      <div className="text-xs capitalize" style={{ color: `${colors.text}60` }}>{recipient.type}</div>
                     </div>
                   </div>
                 ))}

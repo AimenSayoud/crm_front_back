@@ -280,28 +280,29 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
   };
   
   return (
-    <div className="border-t pt-3" style={{ borderColor: colors.border }}>
+    <div className="px-4 py-3" style={{ backgroundColor: colors.card }}>
       {/* Selected Entities Rendered Above Composer */}
       {selectedEntities.length > 0 && (
-        <div className="px-4 mb-2 flex flex-wrap gap-2">
+        <div className="mb-2 flex flex-wrap gap-2">
           {selectedEntities.map(entity => (
             <div 
               key={`${entity.type}-${entity.id}`}
-              className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs"
+              className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium"
               style={{ 
-                backgroundColor: theme === 'light' ? `${colors.primary}15` : `${colors.primary}30`,
-                color: colors.primary
+                backgroundColor: `${colors.primary}10`,
+                color: colors.primary,
+                border: `1px solid ${colors.primary}20`
               }}
             >
-              <span>{getEntityIcon(entity.type)}</span>
+              <span className="text-sm">{getEntityIcon(entity.type)}</span>
               <span>{entity.name}</span>
               <button
                 type="button"
-                className="hover:bg-black/10 rounded-full p-0.5"
+                className="hover:bg-black/10 rounded-full p-0.5 transition-colors duration-200"
                 onClick={() => toggleEntitySelection(entity)}
                 aria-label={`Remove ${entity.name}`}
               >
-                <FiX className="w-3.5 h-3.5" />
+                <FiX className="w-3 h-3" />
               </button>
             </div>
           ))}
@@ -310,19 +311,19 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
       
       {/* Attachments */}
       {attachments.length > 0 && (
-        <div className="px-4 mb-3">
+        <div className="mb-2">
           <div className="flex flex-wrap gap-2">
             {attachments.map(attachment => (
               <div 
                 key={attachment.id}
-                className="relative group p-2 border rounded-lg flex items-center gap-2"
+                className="relative group p-2 border rounded-lg flex items-center gap-2 transition-all duration-200 hover:bg-opacity-50"
                 style={{
-                  backgroundColor: theme === 'light' ? '#F9FAFB' : '#1F2937',
+                  backgroundColor: colors.background,
                   borderColor: colors.border
                 }}
               >
                 {attachment.file_type.startsWith('image/') ? (
-                  <div className="w-10 h-10 rounded overflow-hidden flex items-center justify-center"
+                  <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center"
                     style={{ backgroundColor: theme === 'light' ? '#E5E7EB' : '#374151' }}>
                     <img 
                       src={attachment.url} 
@@ -331,19 +332,23 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
                     />
                   </div>
                 ) : (
-                  <div className="w-10 h-10 rounded flex items-center justify-center"
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
                     style={{ backgroundColor: theme === 'light' ? '#E5E7EB' : '#374151' }}>
-                    <FiPaperclip className="w-5 h-5" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }} />
+                    <FiPaperclip className="w-4 h-4" style={{ color: theme === 'light' ? '#6B7280' : '#9CA3AF' }} />
                   </div>
                 )}
                 <div className="overflow-hidden">
-                  <div className="text-sm font-medium truncate max-w-[150px]">{attachment.name}</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs font-medium truncate max-w-[120px]" style={{ color: colors.text }}>{attachment.name}</div>
+                  <div className="text-[10px]" style={{ color: `${colors.text}50` }}>
                     {(attachment.file_size / 1024).toFixed(0)} KB
                   </div>
                 </div>
                 <button
-                  className="absolute -top-2 -right-2 bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-200 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute -top-1 -right-1 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  style={{
+                    backgroundColor: '#EF4444',
+                    color: 'white'
+                  }}
                   onClick={() => removeAttachment(attachment.id)}
                   aria-label="Remove attachment"
                 >
@@ -355,16 +360,16 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
             {isUploadingAttachment && (
               <div className="p-2 border rounded-lg flex items-center gap-2"
                 style={{
-                  backgroundColor: theme === 'light' ? '#F9FAFB' : '#1F2937',
+                  backgroundColor: colors.background,
                   borderColor: colors.border
                 }}>
-                <div className="w-10 h-10 rounded flex items-center justify-center"
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: theme === 'light' ? '#E5E7EB' : '#374151' }}>
-                  <div className="w-5 h-5 border-2 border-gray-400 border-t-primary rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-t-primary rounded-full animate-spin" style={{ borderColor: `${colors.border}`, borderTopColor: colors.primary }} />
                 </div>
                 <div>
-                  <div className="text-sm font-medium">Uploading...</div>
-                  <div className="text-xs" style={{ color: `${colors.text}80` }}>Please wait</div>
+                  <div className="text-xs font-medium" style={{ color: colors.text }}>Uploading...</div>
+                  <div className="text-[10px]" style={{ color: `${colors.text}50` }}>Please wait</div>
                 </div>
               </div>
             )}
@@ -608,16 +613,14 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
       </AnimatePresence>
       
       {/* Composer Main UI */}
-      <div className="px-4 flex items-end gap-2">
+      <div className="flex items-center gap-2">
         {/* Actions Toolbar */}
-        <div className="flex flex-col">
+        <div className="flex items-center gap-1">
           <button
-            className={`p-2 mb-1 rounded-full ${showFormatting ? 'text-primary' : ''}`}
+            className={`p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80`}
             style={{ 
-              backgroundColor: showFormatting 
-                ? (theme === 'light' ? '#F3F4F6' : '#374151') 
-                : 'transparent',
-              color: showFormatting ? colors.primary : colors.text
+              backgroundColor: showFormatting ? colors.primary : `${colors.primary}10`,
+              color: showFormatting ? 'white' : colors.primary
             }}
             onClick={toggleFormatting}
             disabled={disabled}
@@ -626,12 +629,10 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
             <FiType className="w-4 h-4" />
           </button>
           <button
-            className={`p-2 mb-1 rounded-full ${showEmojiPicker ? 'text-primary' : ''}`}
+            className={`p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80`}
             style={{ 
-              backgroundColor: showEmojiPicker 
-                ? (theme === 'light' ? '#F3F4F6' : '#374151') 
-                : 'transparent',
-              color: showEmojiPicker ? colors.primary : colors.text
+              backgroundColor: showEmojiPicker ? colors.primary : `${colors.primary}10`,
+              color: showEmojiPicker ? 'white' : colors.primary
             }}
             onClick={toggleEmojiPicker}
             disabled={disabled}
@@ -640,10 +641,10 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
             <FiSmile className="w-4 h-4" />
           </button>
           <button
-            className="p-2 mb-1 rounded-full relative"
+            className="p-2 rounded-lg relative transition-all duration-200 hover:bg-opacity-80"
             style={{ 
-              backgroundColor: 'transparent',
-              color: colors.text
+              backgroundColor: `${colors.primary}10`,
+              color: colors.primary
             }}
             onClick={handleAttachmentClick}
             disabled={disabled || attachments.length >= 5}
@@ -651,7 +652,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
           >
             <FiPaperclip className="w-4 h-4" />
             {attachments.length > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-4 h-4 text-white text-[10px] rounded-full flex items-center justify-center font-bold" style={{ backgroundColor: colors.primary }}>
                 {attachments.length}
               </span>
             )}
@@ -670,15 +671,17 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
         <div className="flex-1 relative">
           <textarea
             ref={textareaRef}
-            className={`w-full p-3 pr-10 rounded-lg border focus:ring-2 focus:ring-primary focus:border-transparent resize-none overflow-auto
+            className={`w-full px-3 py-2 pr-12 rounded-lg border focus:ring-2 focus:ring-opacity-50 resize-none overflow-auto transition-all duration-200 text-sm
               ${disabled ? 'cursor-not-allowed' : ''}
             `}
             style={{ 
-              backgroundColor: disabled ? (theme === 'light' ? '#F3F4F6' : '#374151') : colors.card,
+              backgroundColor: disabled ? (theme === 'light' ? '#F3F4F6' : '#374151') : colors.background,
               borderColor: colors.border,
               color: colors.text,
-              minHeight: '44px',
-              maxHeight: '200px'
+              minHeight: '40px',
+              maxHeight: '120px',
+              lineHeight: '1.4',
+              focusRingColor: `${colors.primary}50`
             }}
             placeholder={placeholder}
             value={content}
@@ -691,52 +694,46 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
           <div className="absolute right-2 bottom-2 flex gap-1">
             {messageTemplates.length > 0 && (
               <button
-                className={`p-2 rounded-full ${showTemplates ? 'text-primary' : ''}`}
+                className={`p-1 rounded transition-all duration-200 hover:bg-opacity-20`}
                 style={{ 
-                  backgroundColor: showTemplates 
-                    ? (theme === 'light' ? '#F3F4F6' : '#374151') 
-                    : 'transparent',
-                  color: showTemplates ? colors.primary : colors.text
+                  backgroundColor: showTemplates ? colors.primary : `${colors.primary}10`,
+                  color: showTemplates ? 'white' : colors.primary
                 }}
                 onClick={toggleTemplates}
                 disabled={disabled}
                 aria-label="Message templates"
               >
-                <FiChevronDown className="w-4 h-4" />
+                <FiChevronDown className="w-3.5 h-3.5" />
               </button>
             )}
             
             {onScheduleMessage && (
               <button
-                className={`p-2 rounded-full ${showScheduler ? 'text-primary' : ''}`}
+                className={`p-1 rounded transition-all duration-200 hover:bg-opacity-20`}
                 style={{ 
-                  backgroundColor: showScheduler 
-                    ? (theme === 'light' ? '#F3F4F6' : '#374151') 
-                    : 'transparent',
-                  color: showScheduler ? colors.primary : colors.text
+                  backgroundColor: showScheduler ? colors.primary : `${colors.primary}10`,
+                  color: showScheduler ? 'white' : colors.primary
                 }}
                 onClick={toggleScheduler}
                 disabled={disabled}
                 aria-label="Schedule message"
               >
-                <FiClock className="w-4 h-4" />
+                <FiClock className="w-3.5 h-3.5" />
               </button>
             )}
             
             {availableEntities.length > 0 && (
               <button
-                className={`p-2 rounded-full ${showEntities ? 'text-primary' : ''}`}
+                className={`p-1 rounded transition-all duration-200 hover:bg-opacity-20`}
                 style={{ 
-                  backgroundColor: showEntities 
-                    ? (theme === 'light' ? '#F3F4F6' : '#374151') 
-                    : 'transparent',
-                  color: showEntities ? colors.primary : colors.text
+                  backgroundColor: showEntities ? colors.primary : `${colors.primary}10`,
+                  color: showEntities ? 'white' : colors.primary
                 }}
                 onClick={toggleEntities}
                 disabled={disabled}
                 aria-label="Attach entities"
               >
-                <FiLink className="w-4 h-4" />
+                <FiLink className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
@@ -744,8 +741,8 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
         
         {/* Send Button */}
         <button 
-          className={`p-3 rounded-full transition-colors ${
-            !disabled && content.trim() ? '' : 'cursor-not-allowed'
+          className={`p-2.5 rounded-lg transition-all duration-200 ${
+            !disabled && content.trim() ? 'hover:opacity-90' : 'cursor-not-allowed'
           }`}
           style={{
             backgroundColor: !disabled && content.trim() ? colors.primary : theme === 'light' ? '#E5E7EB' : '#374151',
@@ -765,9 +762,31 @@ const MessageComposer: React.FC<MessageComposerProps> = ({
       
       {/* Error messages */}
       {(sendError || uploadError) && (
-        <div className="px-4 mt-2 text-xs text-red-500">
-          {sendError && <p>Error sending message: {sendError}</p>}
-          {uploadError && <p>Error uploading attachment: {uploadError}</p>}
+        <div className="mt-4">
+          {sendError && (
+            <div 
+              className="px-4 py-3 rounded-xl text-sm font-medium border"
+              style={{ 
+                backgroundColor: theme === 'light' ? '#FEF2F2' : '#7F1D1D',
+                color: theme === 'light' ? '#DC2626' : '#FCA5A5',
+                borderColor: theme === 'light' ? '#FECACA' : '#991B1B'
+              }}
+            >
+              Error sending message: {sendError}
+            </div>
+          )}
+          {uploadError && (
+            <div 
+              className="px-4 py-3 rounded-xl text-sm font-medium mt-2 border"
+              style={{ 
+                backgroundColor: theme === 'light' ? '#FEF2F2' : '#7F1D1D',
+                color: theme === 'light' ? '#DC2626' : '#FCA5A5',
+                borderColor: theme === 'light' ? '#FECACA' : '#991B1B'
+              }}
+            >
+              Error uploading attachment: {uploadError}
+            </div>
+          )}
         </div>
       )}
     </div>

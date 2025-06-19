@@ -440,33 +440,36 @@ const MessagingPage: React.FC = () => {
   };
   
   return (
-    <div className="flex flex-col h-screen">
-      {/* Mobile Header - shown on small screens */}
+    <div className="flex flex-col h-screen" style={{ backgroundColor: colors.background }}>
+      {/* Mobile Header */}
       <div 
-        className="md:hidden px-4 py-3 flex items-center justify-between border-b relative z-10"
-        style={{ borderColor: colors.border }}
+        className="md:hidden px-4 py-2 flex items-center justify-between border-b"
+        style={{ 
+          borderColor: colors.border,
+          backgroundColor: colors.card
+        }}
       >
         {isMobileConversationView() ? (
-          // Show back button when viewing conversation on mobile
           <button
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="p-1.5 rounded-lg transition-colors duration-200"
+            style={{ backgroundColor: `${colors.primary}10` }}
             onClick={handleBack}
             aria-label="Back to messages"
           >
-            <FiArrowLeft className="w-5 h-5" style={{ color: colors.text }} />
+            <FiArrowLeft className="w-4 h-4" style={{ color: colors.primary }} />
           </button>
         ) : (
-          // Show menu toggle when viewing inbox on mobile
           <button
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="p-1.5 rounded-lg transition-colors duration-200"
+            style={{ backgroundColor: `${colors.primary}10` }}
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             aria-label="Toggle menu"
           >
-            <FiMenu className="w-5 h-5" style={{ color: colors.text }} />
+            <FiMenu className="w-4 h-4" style={{ color: colors.primary }} />
           </button>
         )}
         
-        <h1 className="text-lg font-medium" style={{ color: colors.text }}>
+        <h1 className="text-sm font-medium" style={{ color: colors.text }}>
           {isMobileConversationView()
             ? (activeConversation?.title || (activeConversation?.participants[0]?.name || 'New Message'))
             : 'Messages'}
@@ -476,64 +479,80 @@ const MessagingPage: React.FC = () => {
           {isMobileConversationView() ? (
             activeConversation && (
               <button
-                className={`p-2 rounded-full ${showContactDetails ? 'bg-gray-100 dark:bg-gray-800' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`p-1.5 rounded-lg transition-all duration-200`}
+                style={{ 
+                  backgroundColor: showContactDetails ? colors.primary : `${colors.primary}10`,
+                  color: showContactDetails ? 'white' : colors.primary
+                }}
                 onClick={toggleContactDetails}
                 aria-label="Contact info"
               >
-                <FiInfo className="w-5 h-5" style={{ color: showContactDetails ? colors.primary : colors.text }} />
+                <FiInfo className="w-4 h-4" />
               </button>
             )
           ) : (
             <button
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="p-1.5 rounded-lg transition-colors duration-200"
+              style={{ backgroundColor: colors.primary, color: 'white' }}
               onClick={() => {
                 startComposing();
                 router.push('/messages?compose=new');
               }}
               aria-label="Compose new message"
             >
-              <FiPlus className="w-5 h-5" style={{ color: colors.text }} />
+              <FiPlus className="w-4 h-4" />
             </button>
           )}
         </div>
       </div>
       
-      {/* Desktop Header - shown on md+ screens */}
+      {/* Desktop Header */}
       <div 
         className="hidden md:flex px-4 py-3 items-center justify-between border-b"
-        style={{ borderColor: colors.border }}
+        style={{ 
+          borderColor: colors.border,
+          backgroundColor: colors.card
+        }}
       >
         <div className="flex items-center gap-3">
-          <h1 className="text-xl font-medium" style={{ color: colors.text }}>Messaging</h1>
+          <div 
+            className="w-8 h-8 rounded-lg flex items-center justify-center"
+            style={{ backgroundColor: colors.primary }}
+          >
+            <FiMessageCircle className="w-4 h-4 text-white" />
+          </div>
+          <h1 className="text-lg font-semibold" style={{ color: colors.text }}>Messages</h1>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <div className="relative">
             <input
               type="text"
-              placeholder="Search messages..."
-              className="w-64 pl-9 pr-4 py-2 rounded-lg border outline-none"
+              placeholder="Search conversations..."
+              className="w-64 pl-9 pr-4 py-2 rounded-lg border transition-all duration-200 focus:ring-2 focus:ring-opacity-50 outline-none text-sm"
               style={{
-                backgroundColor: colors.card,
+                backgroundColor: theme === 'light' ? '#F8FAFC' : '#1E293B',
                 borderColor: colors.border,
-                color: colors.text
+                color: colors.text,
+                focusRingColor: `${colors.primary}50`
               }}
               value={searchTerm}
               onChange={handleSearchChange}
             />
-            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: `${colors.text}80` }} />
+            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: `${colors.text}60` }} />
           </div>
           
           <button
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+            style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
             onClick={() => fetchConversations("7")}
             aria-label="Refresh"
           >
-            <FiRefreshCw className="w-5 h-5" style={{ color: colors.text }} />
+            <FiRefreshCw className="w-4 h-4" />
           </button>
           
           <button
-            className="px-3 py-1.5 rounded-md flex items-center gap-1"
+            className="px-4 py-2 rounded-lg flex items-center gap-2 font-medium transition-all duration-200 hover:opacity-90 text-sm"
             style={{ 
               backgroundColor: colors.primary,
               color: 'white'
@@ -544,7 +563,7 @@ const MessagingPage: React.FC = () => {
             }}
           >
             <FiPlus className="w-4 h-4" />
-            <span className="font-medium">New Message</span>
+            <span>New Message</span>
           </button>
         </div>
       </div>
@@ -553,8 +572,11 @@ const MessagingPage: React.FC = () => {
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar - Folders and Filters */}
         <div 
-          className={`${showMobileMenu ? 'block' : 'hidden'} md:block w-full md:w-56 border-r flex-shrink-0 md:z-auto z-20 md:relative absolute inset-0 bg-inherit`}
-          style={{ borderColor: colors.border }}
+          className={`${showMobileMenu ? 'block' : 'hidden'} md:block w-full md:w-56 border-r flex-shrink-0 md:z-auto z-20 md:relative absolute inset-0`}
+          style={{ 
+            borderColor: colors.border,
+            backgroundColor: colors.card
+          }}
         >
           <div className="h-full flex flex-col">
             {/* Mobile Close Button */}
@@ -569,24 +591,25 @@ const MessagingPage: React.FC = () => {
             
             {/* Mobile Search */}
             <div className="md:hidden p-4">
-              <div className="relative mb-4">
+              <div className="relative mb-3">
                 <input
                   type="text"
-                  placeholder="Search messages..."
-                  className="w-full pl-9 pr-4 py-2 rounded-lg border outline-none"
+                  placeholder="Search conversations..."
+                  className="w-full pl-9 pr-3 py-2 rounded-lg border outline-none focus:ring-2 focus:ring-opacity-50 text-sm"
                   style={{
-                    backgroundColor: colors.card,
+                    backgroundColor: theme === 'light' ? '#F8FAFC' : '#1E293B',
                     borderColor: colors.border,
-                    color: colors.text
+                    color: colors.text,
+                    focusRingColor: `${colors.primary}50`
                   }}
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
-                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: `${colors.text}80` }} />
+                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" style={{ color: `${colors.text}60` }} />
               </div>
               
               <button
-                className="w-full px-3 py-2 rounded-md flex items-center justify-center gap-1 mb-2"
+                className="w-full px-4 py-2 rounded-lg flex items-center justify-center gap-2 mb-3 font-medium transition-all duration-200 text-sm"
                 style={{ 
                   backgroundColor: colors.primary,
                   color: 'white'
@@ -598,33 +621,32 @@ const MessagingPage: React.FC = () => {
                 }}
               >
                 <FiPlus className="w-4 h-4" />
-                <span className="font-medium">New Message</span>
+                <span>New Message</span>
               </button>
             </div>
             
             {/* Folders */}
-            <div className="p-4">
-              <h3 className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: `${colors.text}80` }}>
+            <div className="px-4 py-3">
+              <h3 className="text-xs font-semibold mb-2 uppercase tracking-wider" style={{ color: `${colors.text}60` }}>
                 Folders
               </h3>
               <ul className="space-y-1">
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'all' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'all' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'all' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'all' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'all' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('all');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiInbox className="w-4 h-4" style={{ color: activeFilter === 'all' ? colors.primary : colors.text }} />
-                    <span>Inbox</span>
+                    <FiInbox className="w-4 h-4" />
+                    <span className="flex-1 text-left">Inbox</span>
                     {unreadCount > 0 && (
-                      <span className="ml-auto px-2 py-0.5 text-xs rounded-full" style={{ 
+                      <span className="px-1.5 py-0.5 text-xs rounded-full font-medium" style={{ 
                         backgroundColor: colors.primary,
                         color: 'white'
                       }}>
@@ -635,172 +657,165 @@ const MessagingPage: React.FC = () => {
                 </li>
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'unread' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'unread' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'unread' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'unread' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'unread' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('unread');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiMail className="w-4 h-4" style={{ color: activeFilter === 'unread' ? colors.primary : colors.text }} />
-                    <span>Unread</span>
+                    <FiMail className="w-4 h-4" />
+                    <span className="flex-1 text-left">Unread</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'group' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'group' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'group' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'group' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'group' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('group');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiUsers className="w-4 h-4" style={{ color: activeFilter === 'group' ? colors.primary : colors.text }} />
-                    <span>Groups</span>
+                    <FiUsers className="w-4 h-4" />
+                    <span className="flex-1 text-left">Groups</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'archived' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'archived' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'archived' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'archived' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'archived' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('archived');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiArchive className="w-4 h-4" style={{ color: activeFilter === 'archived' ? colors.primary : colors.text }} />
-                    <span>Archived</span>
+                    <FiArchive className="w-4 h-4" />
+                    <span className="flex-1 text-left">Archived</span>
                   </button>
                 </li>
               </ul>
             </div>
             
             {/* Contact Types */}
-            <div className="p-4 border-t" style={{ borderColor: colors.border }}>
-              <h3 className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: `${colors.text}80` }}>
+            <div className="px-4 py-3 border-t" style={{ borderColor: colors.border }}>
+              <h3 className="text-xs font-semibold mb-2 uppercase tracking-wider" style={{ color: `${colors.text}60` }}>
                 Contact Types
               </h3>
               <ul className="space-y-1">
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'candidate' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'candidate' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'candidate' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'candidate' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'candidate' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('candidate');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiUser className="w-4 h-4" style={{ color: activeFilter === 'candidate' ? colors.primary : colors.text }} />
-                    <span>Candidates</span>
+                    <FiUser className="w-4 h-4" />
+                    <span className="flex-1 text-left">Candidates</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'employer' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'employer' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'employer' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'employer' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'employer' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('employer');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiBriefcase className="w-4 h-4" style={{ color: activeFilter === 'employer' ? colors.primary : colors.text }} />
-                    <span>Companies</span>
+                    <FiBriefcase className="w-4 h-4" />
+                    <span className="flex-1 text-left">Companies</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'admin' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'admin' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'admin' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'admin' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'admin' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('admin');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiCheck className="w-4 h-4" style={{ color: activeFilter === 'admin' ? colors.primary : colors.text }} />
-                    <span>Team</span>
+                    <FiCheck className="w-4 h-4" />
+                    <span className="flex-1 text-left">Team</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-md ${activeFilter === 'consultant' ? 'font-medium' : ''}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-sm ${activeFilter === 'consultant' ? 'font-medium' : ''}`}
                     style={{ 
-                      backgroundColor: activeFilter === 'consultant' ? 
-                        (theme === 'light' ? '#F3F4F6' : '#374151') : 'transparent',
-                      color: colors.text
+                      backgroundColor: activeFilter === 'consultant' ? `${colors.primary}15` : 'transparent',
+                      color: activeFilter === 'consultant' ? colors.primary : colors.text
                     }}
                     onClick={() => {
                       setActiveFilter('consultant');
                       setShowMobileMenu(false);
                     }}
                   >
-                    <FiCalendar className="w-4 h-4" style={{ color: activeFilter === 'consultant' ? colors.primary : colors.text }} />
-                    <span>Consultants</span>
+                    <FiCalendar className="w-4 h-4" />
+                    <span className="flex-1 text-left">Consultants</span>
                   </button>
                 </li>
               </ul>
             </div>
             
-            {/* Labels/Tags section (would connect to a real tag system) */}
-            <div className="p-4 border-t" style={{ borderColor: colors.border }}>
-              <h3 className="text-xs font-semibold mb-3 uppercase tracking-wider flex items-center justify-between" style={{ color: `${colors.text}80` }}>
+            {/* Labels/Tags section */}
+            <div className="px-4 py-3 border-t" style={{ borderColor: colors.border }}>
+              <h3 className="text-xs font-semibold mb-2 uppercase tracking-wider flex items-center justify-between" style={{ color: `${colors.text}60` }}>
                 <span>Labels</span>
-                <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <FiPlus className="w-3.5 h-3.5" style={{ color: `${colors.text}80` }} />
+                <button className="p-1 rounded transition-colors duration-200 hover:bg-opacity-20" style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}>
+                  <FiPlus className="w-3 h-3" />
                 </button>
               </h3>
               <ul className="space-y-1">
                 <li>
                   <button 
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-md"
-                    style={{ color: colors.text }}
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-opacity-5 text-sm"
+                    style={{ color: colors.text, backgroundColor: 'transparent' }}
                     onClick={() => setShowMobileMenu(false)}
                   >
                     <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                    <span>Important</span>
+                    <span className="flex-1 text-left">Important</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-md"
-                    style={{ color: colors.text }}
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-opacity-5 text-sm"
+                    style={{ color: colors.text, backgroundColor: 'transparent' }}
                     onClick={() => setShowMobileMenu(false)}
                   >
                     <span className="w-3 h-3 rounded-full bg-blue-500"></span>
-                    <span>Work</span>
+                    <span className="flex-1 text-left">Work</span>
                   </button>
                 </li>
                 <li>
                   <button 
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-md"
-                    style={{ color: colors.text }}
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-opacity-5 text-sm"
+                    style={{ color: colors.text, backgroundColor: 'transparent' }}
                     onClick={() => setShowMobileMenu(false)}
                   >
                     <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-                    <span>Follow-up</span>
+                    <span className="flex-1 text-left">Follow-up</span>
                   </button>
                 </li>
               </ul>
@@ -811,11 +826,17 @@ const MessagingPage: React.FC = () => {
         {/* Conversations List */}
         <div 
           className={`${(window.innerWidth < 768 && (activeConversation || isComposing)) ? 'hidden' : 'block'} md:block w-full md:w-80 flex-shrink-0 border-r flex flex-col`}
-          style={{ borderColor: colors.border }}
+          style={{ 
+            borderColor: colors.border,
+            backgroundColor: colors.background
+          }}
         >
           {/* Conversations List Header */}
-          <div className="p-4 border-b flex justify-between items-center" style={{ borderColor: colors.border }}>
-            <h2 className="font-medium" style={{ color: colors.text }}>
+          <div className="px-4 py-3 border-b flex justify-between items-center" style={{ 
+            borderColor: colors.border,
+            backgroundColor: colors.card
+          }}>
+            <h2 className="font-semibold text-sm" style={{ color: colors.text }}>
               {selectedConversations.length > 0 
                 ? `${selectedConversations.length} selected` 
                 : activeFilter === 'all' 
@@ -827,29 +848,32 @@ const MessagingPage: React.FC = () => {
               {selectedConversations.length > 0 ? (
                 <>
                   <button
-                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                    style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                     onClick={() => setSelectedConversations([])}
                     aria-label="Cancel selection"
                   >
-                    <FiX className="w-5 h-5" style={{ color: colors.text }} />
+                    <FiX className="w-4 h-4" />
                   </button>
                   <button
-                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-red-500"
+                    className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80 text-red-500"
+                    style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)' }}
                     onClick={handleBulkDelete}
                     aria-label="Delete selected"
                   >
-                    <FiTrash2 className="w-5 h-5" />
+                    <FiTrash2 className="w-4 h-4" />
                   </button>
                 </>
               ) : (
                 <>
                   <div className="relative">
                     <button
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                      className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                      style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                       onClick={() => setShowFilterMenu(!showFilterMenu)}
                       aria-label="Filter"
                     >
-                      <FiFilter className="w-5 h-5" style={{ color: colors.text }} />
+                      <FiFilter className="w-4 h-4" />
                     </button>
                     
                     {showFilterMenu && (
@@ -908,11 +932,12 @@ const MessagingPage: React.FC = () => {
                   
                   <div className="relative">
                     <button
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                      className="p-2 rounded-lg hover:bg-opacity-80"
+                      style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                       onClick={() => setShowSortMenu(!showSortMenu)}
                       aria-label="Sort"
                     >
-                      <FiChevronDown className="w-5 h-5" style={{ color: colors.text }} />
+                      <FiChevronDown className="w-4 h-4" />
                     </button>
                     
                     {showSortMenu && (
@@ -963,11 +988,12 @@ const MessagingPage: React.FC = () => {
                   </div>
                   
                   <button
-                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="p-2 rounded-lg hover:bg-opacity-80"
+                    style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                     onClick={handleSelectAll}
                     aria-label="Select all"
                   >
-                    <FiSquare className="w-5 h-5" style={{ color: colors.text }} />
+                    <FiSquare className="w-4 h-4" />
                   </button>
                 </>
               )}
@@ -1045,25 +1071,28 @@ const MessagingPage: React.FC = () => {
                   return (
                     <div 
                       key={conversation.id}
-                      className={`border-b px-4 py-3 flex items-center gap-3 cursor-pointer ${
-                        isActive ? (theme === 'light' ? 'bg-blue-50' : 'bg-blue-900/20') : ''
-                      } hover:${theme === 'light' ? 'bg-gray-50' : 'bg-gray-800'}`}
-                      style={{ borderColor: colors.border }}
+                      className={`border-b px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200 ${
+                        isActive ? 'bg-opacity-5' : 'hover:bg-opacity-5'
+                      }`}
+                      style={{ 
+                        borderColor: colors.border,
+                        backgroundColor: isActive ? `${colors.primary}05` : 'transparent'
+                      }}
                       onClick={() => handleConversationClick(conversation)}
                     >
                       <div className="flex-shrink-0">
                         {selectedConversations.length > 0 ? (
                           <div 
-                            className={`w-10 h-10 rounded-md border-2 flex items-center justify-center`}
+                            className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all duration-200`}
                             style={{
                               borderColor: isSelected ? colors.primary : colors.border,
-                              backgroundColor: isSelected ? `${colors.primary}30` : 'transparent'
+                              backgroundColor: isSelected ? `${colors.primary}15` : 'transparent'
                             }}
                           >
                             {isSelected && <FiCheck className="w-5 h-5" style={{ color: colors.primary }} />}
                           </div>
                         ) : (
-                          <div className="w-10 h-10 rounded-full overflow-hidden">
+                          <div className="w-10 h-10 rounded-lg overflow-hidden">
                             {getParticipantAvatar(participant)}
                           </div>
                         )}
@@ -1072,34 +1101,34 @@ const MessagingPage: React.FC = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-baseline">
                           <h3 
-                            className={`font-medium truncate ${hasUnread ? 'font-semibold' : ''}`}
+                            className={`font-medium truncate text-sm ${hasUnread ? 'font-semibold' : ''}`}
                             style={{ color: colors.text }}
                           >
                             {conversation.title || participant.name || 'Conversation'}
                             {conversation.type === 'group' && (
-                              <span className="ml-1 text-xs font-normal" style={{ color: `${colors.text}70` }}>
+                              <span className="ml-1 text-xs font-normal" style={{ color: `${colors.text}60` }}>
                                 ({conversation.participants.length})
                               </span>
                             )}
                           </h3>
-                          <span className="text-xs whitespace-nowrap" style={{ color: hasUnread ? colors.primary : `${colors.text}70` }}>
+                          <span className="text-xs whitespace-nowrap" style={{ color: hasUnread ? colors.primary : `${colors.text}50` }}>
                             {conversation.updated_at && formatConversationTime(conversation.updated_at)}
                           </span>
                         </div>
                         
                         <div className="flex justify-between items-center mt-1">
                           <p 
-                            className={`text-sm truncate ${hasUnread ? 'font-medium' : ''}`}
-                            style={{ color: hasUnread ? colors.text : `${colors.text}70` }}
+                            className={`text-xs truncate ${hasUnread ? 'font-medium' : ''}`}
+                            style={{ color: hasUnread ? colors.text : `${colors.text}50` }}
                           >
                             {conversation.last_message?.content 
-                              ? getTruncatedPreview(conversation.last_message.content)
+                              ? getTruncatedPreview(conversation.last_message.content, 60)
                               : 'No messages yet'}
                           </p>
                           
                           <div className="flex items-center gap-1 ml-2">
                             {conversation.is_starred && (
-                              <FiStar className="w-4 h-4 text-yellow-400" />
+                              <FiStar className="w-3 h-3 text-yellow-400" />
                             )}
                             
                             {hasUnread && (
@@ -1110,7 +1139,7 @@ const MessagingPage: React.FC = () => {
                             )}
                             
                             {conversation.has_attachments && (
-                              <FiPaperclip className="w-3.5 h-3.5" style={{ color: `${colors.text}70` }} />
+                              <FiPaperclip className="w-3 h-3" style={{ color: `${colors.text}50` }} />
                             )}
                           </div>
                         </div>
@@ -1124,25 +1153,30 @@ const MessagingPage: React.FC = () => {
         </div>
         
         {/* Conversation View / Message Content */}
-        <div className={`${(window.innerWidth < 768 && !(activeConversation || isComposing)) ? 'hidden' : 'flex'} flex-1 flex flex-col overflow-hidden ${showContactDetails ? 'contact-details-open' : ''}`}>
+        <div className={`${(window.innerWidth < 768 && !(activeConversation || isComposing)) ? 'hidden' : 'flex'} flex-1 flex flex-col overflow-hidden ${showContactDetails ? 'contact-details-open' : ''}`}
+          style={{ backgroundColor: colors.background }}
+        >
           {/* Conversation Header */}
           {activeConversation && !isComposing && (
             <div 
               className="hidden md:flex px-4 py-3 items-center justify-between border-b"
-              style={{ borderColor: colors.border }}
+              style={{ 
+                borderColor: colors.border,
+                backgroundColor: colors.card
+              }}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden">
+                <div className="w-10 h-10 rounded-lg overflow-hidden">
                   {activeConversation.participants.length > 0 && activeConversation.participants[0] && 
                     getParticipantAvatar(activeConversation.participants[0])}
                 </div>
                 <div>
-                  <h1 className="font-medium" style={{ color: colors.text }}>
+                  <h1 className="font-semibold text-base" style={{ color: colors.text }}>
                     {activeConversation.title || 
                       (activeConversation.participants.length > 0 ? 
                       activeConversation.participants[0].name : 'Conversation')}
                   </h1>
-                  <p className="text-xs" style={{ color: `${colors.text}80` }}>
+                  <p className="text-xs" style={{ color: `${colors.text}60` }}>
                     {activeConversation.type === 'group' 
                       ? `${activeConversation.participants.length} participants`
                       : 'Active now'}
@@ -1152,35 +1186,43 @@ const MessagingPage: React.FC = () => {
               
               <div className="flex items-center gap-1">
                 <button
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                  style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                   aria-label="Mark as starred"
                 >
-                  <FiStar className="w-5 h-5" style={{ color: colors.text }} />
+                  <FiStar className="w-4 h-4" />
                 </button>
                 <button
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                  style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                   aria-label="Call"
                 >
-                  <FiPhone className="w-5 h-5" style={{ color: colors.text }} />
+                  <FiPhone className="w-4 h-4" />
                 </button>
                 <button
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                  style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                   aria-label="Video call"
                 >
-                  <FiVideo className="w-5 h-5" style={{ color: colors.text }} />
+                  <FiVideo className="w-4 h-4" />
                 </button>
                 <button
-                  className={`p-2 rounded-full ${showContactDetails ? 'bg-gray-100 dark:bg-gray-800' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                  className={`p-2 rounded-lg transition-all duration-200`}
+                  style={{ 
+                    backgroundColor: showContactDetails ? colors.primary : `${colors.primary}10`,
+                    color: showContactDetails ? 'white' : colors.primary
+                  }}
                   onClick={toggleContactDetails}
                   aria-label="Contact info"
                 >
-                  <FiInfo className="w-5 h-5" style={{ color: showContactDetails ? colors.primary : colors.text }} />
+                  <FiInfo className="w-4 h-4" />
                 </button>
                 <button
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                  style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                   aria-label="More options"
                 >
-                  <FiMoreVertical className="w-5 h-5" style={{ color: colors.text }} />
+                  <FiMoreVertical className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -1190,23 +1232,35 @@ const MessagingPage: React.FC = () => {
           {isComposing && (
             <div 
               className="hidden md:flex px-4 py-3 items-center justify-between border-b"
-              style={{ borderColor: colors.border }}
+              style={{ 
+                borderColor: colors.border,
+                backgroundColor: colors.card
+              }}
             >
-              <div>
-                <h1 className="font-medium" style={{ color: colors.text }}>
-                  New Message
-                </h1>
-                <p className="text-xs" style={{ color: `${colors.text}80` }}>
-                  Select recipients to start a conversation
-                </p>
+              <div className="flex items-center gap-3">
+                <div 
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: colors.primary }}
+                >
+                  <FiPlus className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h1 className="font-semibold text-base" style={{ color: colors.text }}>
+                    New Message
+                  </h1>
+                  <p className="text-xs" style={{ color: `${colors.text}60` }}>
+                    Select recipients to start a conversation
+                  </p>
+                </div>
               </div>
               
               <button
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="p-2 rounded-lg transition-all duration-200 hover:bg-opacity-80"
+                style={{ backgroundColor: `${colors.primary}10`, color: colors.primary }}
                 onClick={cancelComposing}
                 aria-label="Cancel"
               >
-                <FiX className="w-5 h-5" style={{ color: colors.text }} />
+                <FiX className="w-4 h-4" />
               </button>
             </div>
           )}
@@ -1214,8 +1268,11 @@ const MessagingPage: React.FC = () => {
           {/* Message Content Area */}
           <div className="flex-1 flex flex-col relative">
             {isComposing ? (
-              <div className="p-4">
-                <h2 className="text-sm font-medium mb-2" style={{ color: colors.text }}>To:</h2>
+              <div className="px-4 py-3 border-b" style={{ 
+                borderColor: colors.border,
+                backgroundColor: colors.card
+              }}>
+                <h2 className="text-sm font-semibold mb-2" style={{ color: colors.text }}>To:</h2>
                 <RecipientSelector
                   selectedRecipients={selectedRecipients}
                   onAddRecipient={selectRecipient}
@@ -1227,8 +1284,9 @@ const MessagingPage: React.FC = () => {
             
             {/* Messages container */}
             <div 
-              className="flex-1 overflow-y-auto p-4 space-y-4"
+              className="flex-1 overflow-y-auto px-4 py-4"
               onScroll={handleScroll}
+              style={{ backgroundColor: colors.background }}
             >
               {isLoadingMessages && messages.length === 0 ? (
                 <div className="flex justify-center items-center h-full">
@@ -1298,14 +1356,15 @@ const MessagingPage: React.FC = () => {
               ) : (
                 // Group messages by date
                 groupMessagesByDate().map(group => (
-                  <div key={group.date} className="space-y-4">
+                  <div key={group.date} className="space-y-2">
                     {/* Date header */}
-                    <div className="flex justify-center">
+                    <div className="flex justify-center my-3">
                       <div 
-                        className="px-3 py-1 rounded-full text-xs"
+                        className="px-3 py-1 rounded-lg text-xs font-medium"
                         style={{ 
-                          backgroundColor: theme === 'light' ? '#F1F5F9' : '#1E293B',
-                          color: `${colors.text}80`
+                          backgroundColor: colors.card,
+                          color: `${colors.text}60`,
+                          border: `1px solid ${colors.border}`
                         }}
                       >
                         {formatDateHeader(group.date)}
@@ -1328,19 +1387,19 @@ const MessagingPage: React.FC = () => {
                       return (
                         <div 
                           key={message.id}
-                          className={`flex ${isYou ? 'justify-end' : 'justify-start'}`}
+                          className={`flex ${isYou ? 'justify-end' : 'justify-start'} mb-2`}
                           onMouseEnter={() => handleMessageInView(message.id)}
                         >
-                          <div className={`flex ${isYou ? 'flex-row-reverse' : 'flex-row'} max-w-[80%]`}>
+                          <div className={`flex ${isYou ? 'flex-row-reverse' : 'flex-row'} max-w-[70%] group`}>
                             {/* Avatar - only show for first message in a group */}
                             {isNewSender && !isYou && (
-                              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 mt-1">
+                              <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0 mt-1">
                                 {getParticipantAvatar(message.sender)}
                               </div>
                             )}
                             
                             <div 
-                              className={`flex flex-col mx-2 ${isNewSender ? '' : isYou ? 'mr-9' : 'ml-9'}`}
+                              className={`flex flex-col mx-2 ${isNewSender ? '' : isYou ? 'mr-10' : 'ml-10'}`}
                             >
                               {/* Sender name - only show for first message in a group */}
                               {isNewSender && !isYou && (
@@ -1351,16 +1410,17 @@ const MessagingPage: React.FC = () => {
                               
                               {/* Message bubble */}
                               <div
-                                className={`p-3 rounded-lg shadow-sm ${isYou ? 'rounded-tr-none' : 'rounded-tl-none'}`}
+                                className={`px-3 py-2 rounded-lg ${isYou ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}
                                 style={{ 
                                   backgroundColor: isYou 
                                     ? colors.primary 
-                                    : theme === 'light' ? '#F1F5F9' : '#1E293B',
-                                  color: isYou ? 'white' : colors.text
+                                    : colors.card,
+                                  color: isYou ? 'white' : colors.text,
+                                  border: isYou ? 'none' : `1px solid ${colors.border}`
                                 }}
                               >
                                 {/* Message content */}
-                                <div className="whitespace-pre-wrap break-words">
+                                <div className="whitespace-pre-wrap break-words text-sm leading-normal">
                                   {message.content}
                                 </div>
                                 
@@ -1398,7 +1458,7 @@ const MessagingPage: React.FC = () => {
                                 {isLastFromSender && (
                                   <div 
                                     className={`text-[10px] mt-1 flex items-center gap-1 ${isYou ? 'justify-end' : 'justify-start'}`}
-                                    style={{ color: isYou ? 'rgba(255, 255, 255, 0.8)' : `${colors.text}70` }}
+                                    style={{ color: isYou ? 'rgba(255, 255, 255, 0.7)' : `${colors.text}50` }}
                                   >
                                     <span>{formatMessageTime(message.created_at)}</span>
                                     {isYou && renderMessageStatus(message.status)}
@@ -1407,32 +1467,32 @@ const MessagingPage: React.FC = () => {
                               </div>
                               
                               {/* Message Actions - only visible on hover */}
-                              <div className={`opacity-0 hover:opacity-100 transition-opacity flex items-center gap-1 mt-1 ${isYou ? 'justify-end' : 'justify-start'}`}>
+                              <div className={`opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1 mt-1 ${isYou ? 'justify-end' : 'justify-start'}`}>
                                 <button 
-                                  className="p-1 rounded-full"
+                                  className="p-1 rounded transition-all duration-200 hover:bg-opacity-10"
                                   style={{ 
-                                    backgroundColor: theme === 'light' ? '#F1F5F9' : '#1E293B',
-                                    color: `${colors.text}70`
+                                    backgroundColor: `${colors.primary}10`,
+                                    color: `${colors.text}60`
                                   }}
                                   aria-label="Reply"
                                 >
                                   <FiCornerDownLeft className="w-3.5 h-3.5" />
                                 </button>
                                 <button 
-                                  className="p-1 rounded-full"
+                                  className="p-1 rounded transition-all duration-200 hover:bg-opacity-10"
                                   style={{ 
-                                    backgroundColor: theme === 'light' ? '#F1F5F9' : '#1E293B',
-                                    color: `${colors.text}70`
+                                    backgroundColor: `${colors.primary}10`,
+                                    color: `${colors.text}60`
                                   }}
                                   aria-label="Forward"
                                 >
                                   <FiSend className="w-3.5 h-3.5" />
                                 </button>
                                 <button 
-                                  className="p-1 rounded-full"
+                                  className="p-1 rounded transition-all duration-200 hover:bg-opacity-10"
                                   style={{ 
-                                    backgroundColor: theme === 'light' ? '#F1F5F9' : '#1E293B',
-                                    color: `${colors.text}70`
+                                    backgroundColor: `${colors.primary}10`,
+                                    color: `${colors.text}60`
                                   }}
                                   aria-label="More options"
                                 >
@@ -1466,7 +1526,10 @@ const MessagingPage: React.FC = () => {
             </div>
             
             {/* Message composer */}
-            <div className="border-t" style={{ borderColor: colors.border }}>
+            <div className="border-t" style={{ 
+              borderColor: colors.border,
+              backgroundColor: colors.card
+            }}>
               <MessageComposer 
                 disabled={isComposing && selectedRecipients.length === 0}
                 placeholder={isComposing && selectedRecipients.length === 0 
