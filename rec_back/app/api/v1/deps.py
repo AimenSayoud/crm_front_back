@@ -20,15 +20,21 @@ CurrentUser = User
 # Security
 security = HTTPBearer()
 
-# Database dependency (import directly from session)
+# Database dependencies
 def get_database() -> Generator:
-    """Database dependency"""
+    """SQL Database dependency"""
     from app.db.session import SessionLocal
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+async def get_mongodb():
+    """MongoDB dependency"""
+    from app.db.mongodb import mongodb
+    db = await mongodb.get_db()
+    return db
 
 # Authentication dependencies
 async def get_current_user(

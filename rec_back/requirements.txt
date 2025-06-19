@@ -3,11 +3,16 @@ fastapi>=0.103.1
 uvicorn>=0.23.2
 starlette>=0.31.1
 
-# Database
+# Database - SQL
 sqlalchemy>=2.0.21
 psycopg2-binary>=2.9.7
 alembic>=1.12.0
 asyncpg>=0.28.0
+
+# Database - MongoDB
+pymongo>=4.6.0
+motor>=3.3.2  # Async MongoDB driver
+beanie>=1.25.0  # ODM for MongoDB
 
 # Authentication & Security
 python-jose>=3.3.0
@@ -30,6 +35,7 @@ pytest>=7.4.2
 pytest-asyncio>=0.21.1
 pytest-cov>=4.1.0
 httpx>=0.25.0
+mongomock>=4.1.2  # MongoDB mocking for tests
 
 # Development Tools
 black>=23.9.1
